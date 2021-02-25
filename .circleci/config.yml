@@ -1,0 +1,226 @@
+version: 2.1
+
+orbs:
+  aws-cli: circleci/aws-cli@0.1.22
+  aws-eks: circleci/aws-eks@0.2.3
+  kubernetes: circleci/kubernetes@0.4.0
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:14.15.0
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}--{{ arch }}
+
+      - restore_cache:
+          key: node-v1-{{ checksum "package.json" }}--{{ arch }}
+
+      - run: yarn install
+
+      - save_cache:
+          key: yarn-v1-{{ checksum "yarn.lock" }}--{{ arch }}
+          paths:
+            - .cache/yarn
+
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}--{{ arch }}
+          paths:
+            - node_modules
+
+      - run:
+          name: test
+          command: yarn test
+
+  # build-and-push-image:
+  #   executor: aws-cli/default
+  #   parameters:
+  #     reg:
+  #       type: string
+  #       default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
+  #     repo:
+  #       type: string
+  #     base_url:
+  #       type: string
+  #       default: "https://hooli-api.dev-unumid.org"
+  #     issuer_did:
+  #       type: string
+  #       default: "did:unum:d620f77a-b454-4294-a6db-47af171897a6"
+
+  #   steps:
+  #     - checkout
+  #     - aws-cli/setup
+  #     - setup_remote_docker:
+  #         version: 19.03.13
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "ae:c4:5c:af:ef:ea:57:12:99:a3:bb:aa:09:e0:57:14"
+  #     - run:
+  #         command: |
+  #           echo Logging in to Amazon ECR...
+  #           $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  #           echo Building the Docker image...
+  #           DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg BASE_URL=<< parameters.base_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+  #           docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
+  #           docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+  #           echo Pushing the Docker image...
+  #           docker push << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+  #           docker push << parameters.reg >>/<< parameters.repo >>:dev-latest
+  #         name: Update container image
+
+  # build-and-push-image-sandbox:
+  #   executor: aws-cli/default
+  #   parameters:
+  #     reg:
+  #       type: string
+  #       default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
+  #     repo:
+  #       type: string
+  #     base_url:
+  #       type: string
+  #       default: "https://hooli-api.sandbox-unumid.org"
+  #     issuer_did:
+  #       type: string
+  #       default: "did:unum:a52c01bb-aaa7-461a-aac7-e912c5206228"
+
+  #   steps:
+  #     - checkout
+  #     - aws-cli/setup
+  #     - setup_remote_docker:
+  #         version: 19.03.13
+  #     - add_ssh_keys:
+  #         fingerprints:
+  #           - "ae:c4:5c:af:ef:ea:57:12:99:a3:bb:aa:09:e0:57:14"
+  #     - run:
+  #         command: |
+  #           echo Logging in to Amazon ECR...
+  #           $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+  #           echo Building the Docker image...
+  #           DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg BASE_URL=<< parameters.base_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+  #           docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-latest
+  #           docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
+  #           echo Pushing the Docker image...
+  #           docker push << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
+  #           docker push << parameters.reg >>/<< parameters.repo >>:sandbox-latest
+  #         name: Update container image
+
+  # deploy-image:
+  #   parameters:
+  #     cluster-name:
+  #       type: string
+  #       default: "dev-customer-cluster"
+  #     repo:
+  #       type: string
+  #     deployment:
+  #       type: string
+  #   executor: aws-eks/python3
+  #   steps:
+  #     - kubernetes/install
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         install-kubectl: true
+  #         aws-region: ${AWS_REGION}
+  #         cluster-name: << parameters.cluster-name >>
+  #     - run:
+  #         command: |
+  #           kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:"dev-${CIRCLE_BRANCH}-${CIRCLE_PREVIOUS_BUILD_NUM}"
+  #         name: Update container image
+
+  # deploy-image-sandbox:
+  #   parameters:
+  #     cluster-name:
+  #       type: string
+  #       default: "sandbox-customer-cluster"
+  #     repo:
+  #       type: string
+  #     deployment:
+  #       type: string
+  #     namespace:
+  #       type: string
+  #       default: "demos"
+
+  #   executor: aws-eks/python3
+  #   steps:
+  #     - kubernetes/install
+  #     - aws-eks/update-kubeconfig-with-authenticator:
+  #         install-kubectl: true
+  #         aws-region: ${AWS_REGION}
+  #         cluster-name: << parameters.cluster-name >>
+  #     - run:
+  #         command: |
+  #           kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}" -n << parameters.namespace >>
+  #         name: Update container image
+
+workflows:
+  build-and-deploy-release:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      # - build-and-push-image-sandbox:
+      #     requires:
+      #       - test
+      #     context: AWS-Dev
+      #     repo: hooli-demo-client
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+
+      # - deploy-image-sandbox:
+      #     requires:
+      #       - build-and-push-image-sandbox
+      #     context: AWS-Dev
+      #     repo: hooli-demo-client
+      #     deployment: hooli-demo-client
+      #     filters:
+      #       tags:
+      #         only: /^v.*/
+      #       branches:
+      #         ignore: /.*/
+
+  test:
+    jobs:
+      - test:
+          filters:
+            branches:
+              ignore:
+                - main
+                - test-circleci
+                - sandbox
+  build-and-deploy:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - main
+                - test-circleci
+                - sandbox
+      # - build-and-push-image:
+      #     requires:
+      #       - test
+      #     context: AWS-Dev
+      #     repo: hooli-demo-client
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
+      #           - test-circleci
+
+      # - deploy-image:
+      #     context: AWS-Dev
+      #     repo: hooli-demo-client
+      #     deployment: hooli-demo-client
+      #     requires:
+      #       - build-and-push-image
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
+      #           - test-circleci
