@@ -14,6 +14,8 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
+    "@unumid/demo-types": "git+ssh://git@github.com/UnumID/demo-types.git#v0.0.1",
+    "@unumid/types": "git+ssh://git@github.com/UnumID/types.git#v0.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

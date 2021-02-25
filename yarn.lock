@@ -2067,6 +2067,16 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
+"@unumid/demo-types@git+ssh://git@github.com/UnumID/demo-types.git#v0.0.1":
+  version "0.0.1"
+  resolved "git+ssh://git@github.com/UnumID/demo-types.git#0779d8cc2135cc5940a98ccc391653df8a9af8b0"
+  dependencies:
+    "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#v0.0.3"
+
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v0.0.3":
+  version "0.0.1"
+  resolved "git+ssh://git@github.com/UnumID/types.git#c11cdc69f2657d131bae551a80ff36d1b1134e51"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.yarnpkg.com/@webassemblyjs/ast/-/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
