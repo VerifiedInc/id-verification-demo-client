@@ -7,7 +7,7 @@ import { dummyDemoPresentationRequestoDto } from '../../mocks';
 
 describe('presentationRequest reducer', () => {
   it('sets an initial state', () => {
-    const action = { type: 'dargle' };
+    const action = { type: 'dargle' } as unknown as PresentationRequestAction;
     const state = reducer(undefined, action);
     expect(state).toEqual(initialState);
   });
@@ -40,7 +40,7 @@ describe('presentationRequest reducer', () => {
   });
 
   it('handles unrecognized actions', () => {
-    const action = { type: 'dargle', payload: 'bargle' };
+    const action = { type: 'dargle', payload: 'bargle' } as unknown as PresentationRequestAction;
     const state = reducer(initialState, action);
     expect(state).toEqual(initialState);
   });

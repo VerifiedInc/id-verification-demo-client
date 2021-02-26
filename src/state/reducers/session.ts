@@ -1,7 +1,7 @@
 import { FeathersError } from '@feathersjs/errors';
 import { DemoSession } from '@unumid/demo-types';
 
-import { Action } from '../actions/base';
+import { SessionAction } from '../actions/session';
 import { SessionActionType } from '../actionTypes/session';
 
 export interface SessionState {
@@ -18,7 +18,7 @@ export const initialState: SessionState = {
 
 const reducer = (
   state: SessionState = initialState,
-  action: Action
+  action: SessionAction
 ) => {
   switch (action.type) {
     case SessionActionType.CREATE_SESSION:

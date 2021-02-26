@@ -1,7 +1,7 @@
 import { FeathersError } from '@feathersjs/errors';
 import { DemoPresentationRequestDto } from '@unumid/demo-types';
 
-import { Action } from '../actions/base';
+import { PresentationRequestAction } from '../actions/presentationRequest';
 import { PresentationRequestActionType } from '../actionTypes/presentationRequest';
 
 export interface PresentationRequestState {
@@ -18,7 +18,7 @@ export const initialState: PresentationRequestState = {
 
 const reducer = (
   state: PresentationRequestState = initialState,
-  action: Action
+  action: PresentationRequestAction
 ): PresentationRequestState => {
   switch (action.type) {
     case PresentationRequestActionType.CREATE_PRESENTATION_REQUEST:
