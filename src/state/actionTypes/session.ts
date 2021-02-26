@@ -1,0 +1,7 @@
+
+/* eslint-disable no-unused-vars */
+export enum SessionActionType {
+  CREATE_SESSION = 'CREATE_SESSION',
+  CREATE_SESSION_SUCCESS = 'CREATE_SESSION_SUCCESS',
+  CREATE_SESSION_ERROR = 'CREATE_SESSION_ERROR'
+}
