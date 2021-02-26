@@ -13,11 +13,18 @@
     "@types/node": "^12.0.0",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
+    "@types/react-redux": "^7.1.16",
+    "@unumid/demo-types": "git+ssh://git@github.com/UnumID/demo-types.git#v0.0.1",
+    "@unumid/types": "git+ssh://git@github.com/UnumID/types.git#v0.0.3",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
     "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "socket.io-client": "2.3.0",
     "typescript": "^4.1.2",
+    "uuid": "^8.3.2",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
@@ -46,6 +53,7 @@
     ]
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.0",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
     "eslint": "^7.20.0",
@@ -53,6 +61,12 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-jest": "^24.1.5",
     "eslint-plugin-semistandard-react": "^4.1.0",
-    "semistandard": "^16.0.0"
+    "semistandard": "^16.0.0",
+    "ts-jest": "^26.5.2"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx|js|jsx)$": "ts-jest"
+    }
   }
 }
