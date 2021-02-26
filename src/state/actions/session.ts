@@ -2,19 +2,12 @@ import { FeathersError } from '@feathersjs/errors';
 import { DemoSession } from '@unumid/demo-types';
 
 import { SessionActionType } from '../actionTypes/session';
+import { ActionWithoutPayload, ActionWithPayload } from './base';
 
-interface CreateSessionAction {
-  type: SessionActionType.CREATE_SESSION;
-}
+type CreateSessionAction = ActionWithoutPayload<SessionActionType.CREATE_SESSION>;
 
-interface CreateSessionSuccessAction {
-  type: SessionActionType.CREATE_SESSION_SUCCESS;
-  payload: DemoSession;
-}
+type CreateSessionSuccessAction = ActionWithPayload<SessionActionType.CREATE_SESSION_SUCCESS, DemoSession>;
 
-interface CreateSessionErrorAction {
-  type: SessionActionType.CREATE_SESSION_ERROR;
-  payload: FeathersError;
-}
+type CreateSessionErrorAction = ActionWithPayload<SessionActionType.CREATE_SESSION_ERROR, FeathersError>;
 
 export type SessionAction = CreateSessionAction | CreateSessionSuccessAction | CreateSessionErrorAction;

@@ -7,7 +7,7 @@ import { dummySession } from '../../mocks';
 
 describe('session reducer', () => {
   it('sets the initial state by default', () => {
-    const action = { type: 'dargle' } as unknown as SessionAction;
+    const action = { type: 'dargle' };
     const state = reducer(undefined, action);
     expect(state).toEqual(initialState);
   });

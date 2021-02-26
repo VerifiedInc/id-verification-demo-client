@@ -18,7 +18,7 @@ export const initialState: PresentationRequestState = {
 
 const reducer = (
   state: PresentationRequestState = initialState,
-  action: Action<any>
+  action: Action
 ): PresentationRequestState => {
   switch (action.type) {
     case PresentationRequestActionType.CREATE_PRESENTATION_REQUEST:
