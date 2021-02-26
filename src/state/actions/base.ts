@@ -11,4 +11,4 @@ export interface ActionWithPayload<T extends string, P = any> extends Action<T, 
   payload: P;
 }
 
-export type FeathersErrorAction<T extends string> = Action<T, FeathersError>;
+export type FeathersErrorAction<T extends string> = ActionWithPayload<T, FeathersError>;

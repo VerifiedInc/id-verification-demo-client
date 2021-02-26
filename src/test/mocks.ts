@@ -1,5 +1,11 @@
-import { DemoPresentationRequestDto, DemoPresentationRequestOptions, DemoSession } from '@unumid/demo-types';
-import { PresentationRequestPostDto } from '@unumid/types';
+import {
+  DemoPresentationRequestDto,
+  DemoPresentationRequestOptions,
+  DemoSession,
+  DemoPresentationDto,
+  DemoNoPresentationDto
+} from '@unumid/demo-types';
+import { Presentation, NoPresentation, PresentationRequestPostDto } from '@unumid/types';
 import { v4 } from 'uuid';
 
 const now = new Date();
@@ -65,4 +71,111 @@ export const dummyDemoPresentationRequestoDto: DemoPresentationRequestDto = {
   uuid: v4(),
   createdAt: now,
   updatedAt: now
+};
+
+export const dummyPresentation: Presentation = {
+  '@context': [
+    'https://www.w3.org/2018/credentials/v1'
+  ],
+  presentationRequestUuid: '256e9461-4b65-4941-a6cd-e379276a45b4',
+  proof: {
+    created: '2021-02-22T11:36:34.113-0800',
+    proofPurpose: 'Presentations',
+    signatureValue: '381yXZEx4Z3tfBztX1o6xHbkqRija3svPYfTygUfK6uh8dHjeexaCq7nNvW17Sedd9Y93BJ9HsT17RtsCQ6NfFQomSF4pyx5',
+    unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"presentationRequestUuid":"256e9461-4b65-4941-a6cd-e379276a45b4","type":["VerifiablePresentation"],"uuid":"e0d0951a-190c-4dcb-9655-092012b7f265","verifiableCredential":[{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.sandbox-unumid.org//credentialStatus/d90b1bac-4805-410b-b81f-10b96fea8e98","type":"CredentialStatus"},"credentialSubject":{"accounts":{"checking":{"accountNumber":"543888430912","routingNumber":"021000021"}},"confidence":"99%","contactInformation":{"emailAddress":"AnvilAvoider@gmail.com","homeAddress":{"city":"Desert","country":"United States","line1":"98765 Runner Rd.","state":"AZ","zip":12345},"phoneNumber":"1234567890"},"driversLicense":{"expiration":"2026-01-14T00:00:00.000Z","number":"n-123456789","state":"AZ"},"firstName":"Wile","id":"did:unum:8de4666d-9692-4762-a015-0b8b1f8e08f7","lastName":"Coyote","middleInitial":"E.","ssn4":4321,"username":"state-Montana-211"},"expirationDate":"2022-02-11T00:00:00.000Z","id":"d90b1bac-4805-410b-b81f-10b96fea8e98","issuanceDate":"2021-02-11T22:23:05.590Z","issuer":"did:unum:de9523d0-b97e-466c-80f4-ae312dd091ae","proof":{"created":"2021-02-11T22:23:05.590Z","proofPurpose":"AssertionMethod","signatureValue":"iKx1CJPw1Yog6jfUhEtzasgP3gC8AKzc9L4GXh3Zox8AYLjymu83P5SPsw4zx2JuVy7PXWYakgbDUdgS5CvH22rNcF2N9tYQ4b","type":"secp256r1Signature2020","verificationMethod":"did:unum:de9523d0-b97e-466c-80f4-ae312dd091ae"},"type":["VerifiableCredential","BankIdentityCredential"]}]}',
+    type: 'secp256r1Signature2020',
+    verificationMethod: 'did:unum:8de4666d-9692-4762-a015-0b8b1f8e08f7#5ab4997a-73c2-498a-b6f1-53a6787cfd22'
+  },
+  type: [
+    'VerifiablePresentation'
+  ],
+  uuid: 'e0d0951a-190c-4dcb-9655-092012b7f265',
+  verifiableCredential: [
+    {
+      '@context': [
+        'https://www.w3.org/2018/credentials/v1'
+      ],
+      credentialStatus: {
+        id: 'https://api.sandbox-unumid.org//credentialStatus/d90b1bac-4805-410b-b81f-10b96fea8e98',
+        type: 'CredentialStatus'
+      },
+      credentialSubject: {
+        accounts: {
+          checking: {
+            accountNumber: '543888430912',
+            routingNumber: '021000021'
+          }
+        },
+        confidence: '99%',
+        contactInformation: {
+          emailAddress: 'AnvilAvoider@gmail.com',
+          homeAddress: {
+            city: 'Desert',
+            country: 'United States',
+            line1: '98765 Runner Rd.',
+            state: 'AZ',
+            zip: 12345
+          },
+          phoneNumber: '1234567890'
+        },
+        driversLicense: {
+          expiration: '2026-01-14T00:00:00.000Z',
+          number: 'n-123456789',
+          state: 'AZ'
+        },
+        firstName: 'Wile',
+        id: 'did:unum:8de4666d-9692-4762-a015-0b8b1f8e08f7',
+        lastName: 'Coyote',
+        middleInitial: 'E.',
+        ssn4: 4321,
+        username: 'state-Montana-211'
+      },
+      expirationDate: new Date('2022-02-11T00:00:00.000Z'),
+      id: 'd90b1bac-4805-410b-b81f-10b96fea8e98',
+      issuanceDate: new Date('2021-02-11T22:23:05.590Z'),
+      issuer: 'did:unum:de9523d0-b97e-466c-80f4-ae312dd091ae',
+      proof: {
+        created: '2021-02-11T22:23:05.590Z',
+        proofPurpose: 'AssertionMethod',
+        signatureValue: 'iKx1CJPw1Yog6jfUhEtzasgP3gC8AKzc9L4GXh3Zox8AYLjymu83P5SPsw4zx2JuVy7PXWYakgbDUdgS5CvH22rNcF2N9tYQ4b',
+        unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.sandbox-unumid.org//credentialStatus/d90b1bac-4805-410b-b81f-10b96fea8e98","type":"CredentialStatus"},"credentialSubject":{"accounts":{"checking":{"accountNumber":"543888430912","routingNumber":"021000021"}},"confidence":"99%","contactInformation":{"emailAddress":"AnvilAvoider@gmail.com","homeAddress":{"city":"Desert","country":"United States","line1":"98765 Runner Rd.","state":"AZ","zip":12345},"phoneNumber":"1234567890"},"driversLicense":{"expiration":"2026-01-14T00:00:00.000Z","number":"n-123456789","state":"AZ"},"firstName":"Wile","id":"did:unum:8de4666d-9692-4762-a015-0b8b1f8e08f7","lastName":"Coyote","middleInitial":"E.","ssn4":4321,"username":"state-Montana-211"},"expirationDate":"2022-02-11T00:00:00.000Z","id":"d90b1bac-4805-410b-b81f-10b96fea8e98","issuanceDate":"2021-02-11T22:23:05.590Z","issuer":"did:unum:de9523d0-b97e-466c-80f4-ae312dd091ae","type":["VerifiableCredential","BankIdentityCredential"]}',
+        type: 'secp256r1Signature2020',
+        verificationMethod: 'did:unum:de9523d0-b97e-466c-80f4-ae312dd091ae'
+      },
+      type: [
+        'VerifiableCredential',
+        'BankIdentityCredential'
+      ]
+    }
+  ]
+};
+
+export const dummyDemoPresentationDto: DemoPresentationDto = {
+  presentation: dummyPresentation,
+  uuid: v4(),
+  createdAt: now,
+  updatedAt: now,
+  isVerified: true
+};
+
+export const dummyNoPresentation: NoPresentation = {
+  holder: 'did:unum:5b329cd1-4832-448c-8d7d-08f49e3c6c6d#bab80ad2-08ad-44e7-8549-3d10dd6f7c03',
+  presentationRequestUuid: '256e9461-4b65-4941-a6cd-e379276a45b4',
+  type: ['NoPresentation', 'NoPresentation'],
+  proof: {
+    created: '2021-02-22T21:30:03.377Z',
+    signatureValue: 'AN1rKvszAWeMwUW7ghrEG9BfWr7a5n9kWpvqQrW5bQKM9sCS4KDmiwX6PZidMNcYRTvwQ9RLyHELQu33TbcUPVwWEqE23wJHs',
+    unsignedValue: '{"holder":"did:unum:5b329cd1-4832-448c-8d7d-08f49e3c6c6d#bab80ad2-08ad-44e7-8549-3d10dd6f7c03","presentationRequestUuid":"256e9461-4b65-4941-a6cd-e379276a45b4","type":["NoPresentation","NoPresentation"]}',
+    type: 'secp256r1Signature2020',
+    verificationMethod: 'did:unum:5b329cd1-4832-448c-8d7d-08f49e3c6c6d#bab80ad2-08ad-44e7-8549-3d10dd6f7c03',
+    proofPurpose: 'assertionMethod'
+  }
+};
+
+export const dummyDemoNoPresentationDto: DemoNoPresentationDto = {
+  noPresentation: dummyNoPresentation,
+  uuid: v4(),
+  createdAt: now,
+  updatedAt: now,
+  isVerified: true
 };
