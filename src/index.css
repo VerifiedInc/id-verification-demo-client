@@ -1,0 +1,21 @@
+:root {
+  --primary-background-color: #01abe8;
+  --secondary-background-color: #ffffff;
+  --primary-text-color: #000000;
+  --secondary-text-color: #ffffff;
+}
+
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}

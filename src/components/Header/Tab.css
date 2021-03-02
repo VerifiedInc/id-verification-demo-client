@@ -1,0 +1,7 @@
+.tab {
+  height: 100%;
+  margin-right: 35px;
+  display: flex;
+  align-items: center;
+  background-color: inherit;
+}

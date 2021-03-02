@@ -1,0 +1,19 @@
+
+.header {
+  height: 96px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding-right: 40px;
+  padding-left: 40px;
+}
+
+.header.mobile-header {
+  height: 60px;
+}
+
+@media (max-width: 1224px) {
+  .header {
+    height: 60px;
+  }
+}

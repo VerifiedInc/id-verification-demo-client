@@ -1,0 +1,14 @@
+.header-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.header-center img {
+  height: 80px;
+}
+
+.header-center.mobile img {
+  height: 40px;
+}
