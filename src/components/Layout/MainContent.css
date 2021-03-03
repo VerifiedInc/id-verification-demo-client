@@ -1,0 +1,16 @@
+.main-content {
+  margin: 0 auto;
+  width: 1200px;
+  text-align: center;
+}
+
+@media (max-width: 1224px) {
+  .main-content {
+    width: 100vw;
+  }
+
+  .main-content h1, .main-content h2 {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+}

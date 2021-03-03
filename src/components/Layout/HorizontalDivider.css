@@ -1,0 +1,26 @@
+.horizontal-divider {
+  display: flex;
+  flex: 1;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  align-items: center;
+}
+
+.horizontal-divider hr {
+  flex-grow: 1;
+  height: 0;
+  color: #979797;
+}
+
+.horizontal-divider hr.left {
+  margin-right: 20px;
+}
+
+.horizontal-divider hr.right {
+  margin-left: 20px;
+}
+
+.horizontal-divider h2 {
+  margin: 0;
+  color: #979797;
+}

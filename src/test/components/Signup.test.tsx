@@ -2,10 +2,11 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { when } from 'jest-when';
 
-import { store } from '../../../src/state';
-import App from '../../components/App';
+import Signup from '../../components/Signup';
+import { store } from '../../state';
 import { client } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
+import { createSession } from '../../state/actionCreators';
 
 jest.mock('../../feathers', () => ({
   client: {
@@ -13,7 +14,7 @@ jest.mock('../../feathers', () => ({
   }
 }));
 
-describe('app', () => {
+describe('signup', () => {
   const mockSessionCreate = jest.fn();
   const mockPresentationRequestCreate = jest.fn();
 
@@ -25,14 +26,20 @@ describe('app', () => {
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate });
 
-    render(<Provider store={store}><App /></Provider>);
+    createSession()(store.dispatch);
+    render(<Provider store={store}><Signup /></Provider>);
   });
 
-  it('creates a session', () => {
-    expect(mockSessionCreate).toBeCalled();
-  });
-
-  it('shows the signup page by default', async () => {
+  it('displays a welcome header', async () => {
     expect(await screen.findByText('Welcome to (Verifier)!')).toBeInTheDocument();
+  });
+
+  it('creates a presentationRequest', async () => {
+    await screen.findByText('Welcome to (Verifier)!');
+    expect(mockPresentationRequestCreate).toBeCalled();
+  });
+
+  it('shows the web sdk widget', async () => {
+    expect(await screen.findByAltText('Powered by Unum ID')).toBeInTheDocument();
   });
 });

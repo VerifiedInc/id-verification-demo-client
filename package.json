@@ -17,8 +17,9 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-redux": "^7.1.16",
-    "@unumid/demo-types": "git+ssh://git@github.com/UnumID/demo-types.git#v0.0.1",
+    "@unumid/demo-types": "git+ssh://git@github.com/UnumID/demo-types.git#v0.0.2",
     "@unumid/types": "git+ssh://git@github.com/UnumID/types.git#v0.0.3",
+    "@unumid/web-sdk": "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.1.4",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",
@@ -58,6 +59,7 @@
     ]
   },
   "devDependencies": {
+    "@types/jest-when": "^2.7.2",
     "@types/react-responsive": "^8.0.2",
     "@types/react-router-dom": "^5.1.7",
     "@types/uuid": "^8.3.0",
@@ -68,6 +70,7 @@
     "eslint-import-resolver-typescript": "^2.4.0",
     "eslint-plugin-jest": "^24.1.5",
     "eslint-plugin-semistandard-react": "^4.1.0",
+    "jest-when": "^3.2.0",
     "semistandard": "^16.0.0",
     "ts-jest": "^26.5.2"
   },

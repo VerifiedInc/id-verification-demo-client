@@ -19,3 +19,37 @@ html {
 body {
   margin: 0;
 }
+
+h1 {
+  font-weight: 900;
+  font-size: 75px;
+  padding-top: 60px;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-weight: 900;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+h3 {
+  font-weight: 300;
+  font-size: 24px;
+}
+
+@media (max-width: 1224px) {
+  h1 {
+    font-size: 50px;
+    padding-top: 30px;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: 30px;
+    font-weight: 700;
+  }
+}

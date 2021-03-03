@@ -26,7 +26,8 @@ export const dummyDemoPresentationRequestOptions: DemoPresentationRequestOptions
   credentialRequests: [{
     type: 'TestCredential',
     issuers: [dummyIssuerDid]
-  }]
+  }],
+  metadata: { sessionUuid: v4() }
 };
 
 export const dummyPresentationRequestPostDto: PresentationRequestPostDto = {
