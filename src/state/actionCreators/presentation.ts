@@ -4,7 +4,8 @@ import { DemoPresentationDto, DemoNoPresentationDto } from '@unumid/demo-types';
 import {
   PresentationSharedSuccessAction,
   NoPresentationSharedSuccessAction,
-  PresentationSharedErrorAction
+  PresentationSharedErrorAction,
+  ResetPresentationStateAction
 } from '../actions/presentation';
 import { PresentationActionType } from '../actionTypes/presentation';
 
@@ -16,3 +17,6 @@ export const handleNoPresentationShared = (dto: DemoNoPresentationDto): NoPresen
 
 export const handlePresentationSharedError = (err: FeathersError): PresentationSharedErrorAction =>
   ({ type: PresentationActionType.PRESENTATION_SHARED_ERROR, payload: err });
+
+export const resetPresentationState = (): ResetPresentationStateAction =>
+  ({ type: PresentationActionType.RESET_PRESENTATION_STATE });

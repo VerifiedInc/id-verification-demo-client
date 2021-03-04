@@ -27,6 +27,8 @@ const reducer = (
       return { isLoading: false, error: null, request: action.payload };
     case PresentationRequestActionType.CREATE_PRESENTATION_REQUEST_ERROR:
       return { isLoading: false, error: action.payload, request: null };
+    case PresentationRequestActionType.RESET_PRESENTATION_REQUEST_STATE:
+      return initialState;
     default:
       return state;
   }

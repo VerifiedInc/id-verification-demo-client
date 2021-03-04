@@ -27,6 +27,8 @@ const reducer = (
       return { sharedPresentation: null, sharedNoPresentation: action.payload, error: null };
     case PresentationActionType.PRESENTATION_SHARED_ERROR:
       return { sharedPresentation: null, sharedNoPresentation: null, error: action.payload };
+    case PresentationActionType.RESET_PRESENTATION_STATE:
+      return initialState;
     default: return state;
   }
 };

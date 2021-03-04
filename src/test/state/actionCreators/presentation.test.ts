@@ -3,7 +3,8 @@ import { GeneralError } from '@feathersjs/errors';
 import {
   handlePresentationShared,
   handleNoPresentationShared,
-  handlePresentationSharedError
+  handlePresentationSharedError,
+  resetPresentationState
 } from '../../../state/actionCreators/presentation';
 import { PresentationActionType } from '../../../state/actionTypes/presentation';
 import { dummyDemoPresentationDto, dummyDemoNoPresentationDto } from '../../mocks';
@@ -40,6 +41,13 @@ describe('presentation action creators', () => {
         payload: err
       };
       expect(action).toEqual(expected);
+    });
+  });
+
+  describe('resetPresentationState', () => {
+    it('returns a ResetPresentationStateAction', () => {
+      const action = resetPresentationState();
+      expect(action).toEqual({ type: PresentationActionType.RESET_PRESENTATION_STATE });
     });
   });
 });

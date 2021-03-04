@@ -39,6 +39,15 @@ describe('session reducer', () => {
     expect(state).toEqual({ isLoading: false, session: null, error: err });
   });
 
+  it(`handles actions with type ${SessionActionType.RESET_SESSION_STATE}`, () => {
+    const action: SessionAction = { type: SessionActionType.RESET_SESSION_STATE };
+    const state = reducer({
+      ...initialState,
+      session: dummySession
+    }, action);
+    expect(state).toEqual(initialState);
+  });
+
   it('handles unrecognized actions', () => {
     const action = { type: 'dargle' } as unknown as SessionAction;
     const state = reducer(initialState, action);

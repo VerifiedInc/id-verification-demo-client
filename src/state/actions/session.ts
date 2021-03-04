@@ -9,4 +9,9 @@ type CreateSessionSuccessAction = ActionWithPayload<SessionActionType.CREATE_SES
 
 type CreateSessionErrorAction = FeathersErrorAction<SessionActionType.CREATE_SESSION_ERROR>;
 
-export type SessionAction = CreateSessionAction | CreateSessionSuccessAction | CreateSessionErrorAction;
+export type ResetSessionStateAction = ActionWithoutPayload<SessionActionType.RESET_SESSION_STATE>;
+
+export type SessionAction = CreateSessionAction
+  | CreateSessionSuccessAction
+  | CreateSessionErrorAction
+  | ResetSessionStateAction;

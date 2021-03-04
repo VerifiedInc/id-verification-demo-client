@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 
 import { client } from '../../feathers';
 import { SessionActionType } from '../actionTypes/session';
-import { SessionAction } from '../actions/session';
+import { SessionAction, ResetSessionStateAction } from '../actions/session';
 
 export const createSession = () => {
   return async (dispatch: Dispatch<SessionAction>) => {
@@ -23,3 +23,6 @@ export const createSession = () => {
     }
   };
 };
+
+export const resetSessionState = (): ResetSessionStateAction =>
+  ({ type: SessionActionType.RESET_SESSION_STATE });

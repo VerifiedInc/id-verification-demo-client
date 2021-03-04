@@ -27,6 +27,8 @@ const reducer = (
       return { isLoading: false, error: null, session: action.payload };
     case SessionActionType.CREATE_SESSION_ERROR:
       return { isLoading: false, error: action.payload, session: null };
+    case SessionActionType.RESET_SESSION_STATE:
+      return initialState;
     default:
       return state;
   }

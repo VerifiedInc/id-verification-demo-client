@@ -6,6 +6,7 @@ import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import LinkTab from './LinkTab';
 import Tab from './Tab';
+import LogoutTab from './LogoutTab';
 
 import './PrimaryHeader.css';
 
@@ -15,6 +16,7 @@ const PrimaryHeader: FC = () => {
       <HeaderLeft>
         <LinkTab to='/route1'>Link 1</LinkTab>
         <LinkTab to='/route2'>Link 2</LinkTab>
+        <LogoutTab />
       </HeaderLeft>
       <HeaderCenter />
       <HeaderRight>

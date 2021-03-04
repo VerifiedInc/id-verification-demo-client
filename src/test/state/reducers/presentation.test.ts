@@ -63,4 +63,16 @@ describe('presentationReducer', () => {
     };
     expect(state).toEqual(expected);
   });
+
+  it(`handles actions with type ${PresentationActionType.RESET_PRESENTATION_STATE}`, () => {
+    const action: PresentationAction = {
+      type: PresentationActionType.RESET_PRESENTATION_STATE
+    };
+
+    const state = reducer({
+      ...initialState,
+      sharedPresentation: dummyDemoPresentationDto
+    }, action);
+    expect(state).toEqual(initialState);
+  });
 });

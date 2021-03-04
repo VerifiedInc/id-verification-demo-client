@@ -1,6 +1,6 @@
 import { GeneralError } from '@feathersjs/errors';
 
-import { createPresentationRequest } from '../../../state/actionCreators/presentationRequest';
+import { createPresentationRequest, resetPresentationRequestState } from '../../../state/actionCreators/presentationRequest';
 import { PresentationRequestActionType } from '../../../state/actionTypes/presentationRequest';
 import { dummyDemoPresentationRequestoDto, dummyDemoPresentationRequestOptions } from '../../mocks';
 import { client } from '../../../feathers';
@@ -57,6 +57,13 @@ describe('presentationRequest action creators', () => {
           payload: err
         });
       });
+    });
+  });
+
+  describe('resetPresentationRequestState', () => {
+    it('returns a ResetPresentationStateAction', () => {
+      const action = resetPresentationRequestState();
+      expect(action).toEqual({ type: PresentationRequestActionType.RESET_PRESENTATION_REQUEST_STATE });
     });
   });
 });

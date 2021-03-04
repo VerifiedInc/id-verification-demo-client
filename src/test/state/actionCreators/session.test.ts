@@ -1,6 +1,6 @@
 import { GeneralError } from '@feathersjs/errors';
 
-import { createSession } from '../../../state/actionCreators/session';
+import { createSession, resetSessionState } from '../../../state/actionCreators/session';
 import { SessionActionType } from '../../../state/actionTypes/session';
 import { dummySession } from '../../mocks';
 import { client } from '../../../feathers';
@@ -56,6 +56,13 @@ describe('session action creators', () => {
           payload: err
         });
       });
+    });
+  });
+
+  describe('resetSessionState', () => {
+    it('returns a ResetSessionStateAction', () => {
+      const action = resetSessionState();
+      expect(action).toEqual({ type: SessionActionType.RESET_SESSION_STATE });
     });
   });
 });

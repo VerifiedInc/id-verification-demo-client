@@ -39,6 +39,15 @@ describe('presentationRequest reducer', () => {
     expect(state).toEqual({ isLoading: false, error: err, request: null });
   });
 
+  it(`handles actions with type ${PresentationRequestActionType.RESET_PRESENTATION_REQUEST_STATE}`, () => {
+    const action: PresentationRequestAction = { type: PresentationRequestActionType.RESET_PRESENTATION_REQUEST_STATE };
+    const state = reducer({
+      ...initialState,
+      request: dummyDemoPresentationRequestoDto
+    }, action);
+    expect(state).toEqual(initialState);
+  });
+
   it('handles unrecognized actions', () => {
     const action = { type: 'dargle', payload: 'bargle' } as unknown as PresentationRequestAction;
     const state = reducer(initialState, action);

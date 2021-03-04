@@ -3,6 +3,7 @@ import { DemoPresentationRequestOptions } from '@unumid/demo-types';
 
 import { client } from '../../feathers';
 import { PresentationRequestActionType } from '../actionTypes/presentationRequest';
+import { ResetPresentationRequestStateAction } from '../actions/presentationRequest';
 
 export const createPresentationRequest = (options: DemoPresentationRequestOptions) => {
   return async (dispatch: Dispatch) => {
@@ -23,3 +24,6 @@ export const createPresentationRequest = (options: DemoPresentationRequestOption
     }
   };
 };
+
+export const resetPresentationRequestState = (): ResetPresentationRequestStateAction =>
+  ({ type: PresentationRequestActionType.RESET_PRESENTATION_REQUEST_STATE });
