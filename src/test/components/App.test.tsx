@@ -22,17 +22,13 @@ describe('app', () => {
     when(client.service as unknown as jest.Mock)
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
-      .calledWith('presentation').mockReturnValue({ on: mockOn });
+      .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
 
     render(<Provider store={store}><App /></Provider>);
   });
 
   it('creates a session', () => {
     expect(mockSessionCreate).toBeCalled();
-  });
-
-  it('listens for created presentations', () => {
-    expect(mockOn.mock.calls[0][0]).toEqual('created');
   });
 
   it('shows the signup page by default', async () => {

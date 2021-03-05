@@ -17,6 +17,7 @@ jest.mock('../../feathers', () => ({
 describe('signup', () => {
   const mockSessionCreate = jest.fn();
   const mockPresentationRequestCreate = jest.fn();
+  const mockOn = jest.fn();
 
   beforeEach(() => {
     mockSessionCreate.mockResolvedValueOnce(dummySession);
@@ -24,7 +25,8 @@ describe('signup', () => {
 
     when(client.service as unknown as jest.Mock)
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
-      .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate });
+      .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
+      .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
 
     createSession()(store.dispatch);
     render(<Provider store={store}><Signup /></Provider>);
@@ -37,6 +39,11 @@ describe('signup', () => {
   it('creates a presentationRequest', async () => {
     await screen.findByText('Welcome to (Verifier)!');
     expect(mockPresentationRequestCreate).toBeCalled();
+  });
+
+  it('listens for created presentations', async () => {
+    await screen.findByAltText('Powered by Unum ID');
+    expect(mockOn.mock.calls[0][0]).toEqual('created');
   });
 
   it('shows the web sdk widget', async () => {

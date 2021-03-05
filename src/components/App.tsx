@@ -1,20 +1,17 @@
-import { DemoNoPresentationDto, DemoPresentationDto } from '@unumid/demo-types';
 import { FC, useEffect } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { client } from '../feathers';
 
 import { useActionCreators } from '../hooks/useActionCreators';
 import { useTypedSelector } from '../hooks/useTypedSelector';
+import Authenticated from './Authenticated';
+import Declined from './Declined';
 
 import AltHeader from './Header/AltHeader';
 import PrimaryHeader from './Header/PrimaryHeader';
 import Signup from './Signup';
 
-const isDemoPresentationDto = (obj: DemoPresentationDto | DemoNoPresentationDto): obj is DemoPresentationDto =>
-  !!(obj as DemoPresentationDto).presentation;
-
 const App: FC = () => {
-  const { createSession, handlePresentationShared, handleNoPresentationShared } = useActionCreators();
+  const { createSession } = useActionCreators();
   const { session } = useTypedSelector(state => state.session);
 
   useEffect(() => {
@@ -22,19 +19,6 @@ const App: FC = () => {
       createSession();
     }
   }, [session]);
-
-  useEffect(() => {
-    const presentationService = client.service('presentation');
-    presentationService.on('created', (data: DemoPresentationDto | DemoNoPresentationDto) => {
-      console.log('on presentation created, data', data);
-
-      if (isDemoPresentationDto(data)) {
-        handlePresentationShared(data);
-      } else {
-        handleNoPresentationShared(data);
-      }
-    });
-  }, []);
 
   return (
     <div>
@@ -45,6 +29,14 @@ const App: FC = () => {
         </Route>
         <Route path='/route1'>
           <PrimaryHeader />
+        </Route>
+        <Route path='/authenticated'>
+          <PrimaryHeader />
+          <Authenticated />
+        </Route>
+        <Route path='/declined'>
+          <AltHeader />
+          <Declined />
         </Route>
       </BrowserRouter>
     </div>

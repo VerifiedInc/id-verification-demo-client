@@ -1,6 +1,7 @@
 import { FC, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { CredentialRequest } from '@unumid/types';
-import { DemoPresentationRequestOptions } from '@unumid/demo-types';
+import { DemoNoPresentationDto, DemoPresentationDto, DemoPresentationRequestOptions } from '@unumid/demo-types';
 import VerifierWidget from '@unumid/web-sdk';
 
 import { config } from '../config';
@@ -14,10 +15,19 @@ import ContentBox from './Layout/ContentBox';
 import LightFont from './Layout/LightFont';
 
 import './Signup.css';
+import { client } from '../feathers';
+
+const isDemoPresentationDto = (obj: DemoPresentationDto | DemoNoPresentationDto): obj is DemoPresentationDto =>
+  !!(obj as DemoPresentationDto).presentation;
 
 const Signup: FC = () => {
-  const { createPresentationRequest } = useActionCreators();
+  const {
+    createPresentationRequest,
+    handlePresentationShared,
+    handleNoPresentationShared
+  } = useActionCreators();
 
+  const history = useHistory();
   const { session } = useTypedSelector(state => state.session);
   const { request } = useTypedSelector(state => state.presentationRequest);
 
@@ -38,6 +48,33 @@ const Signup: FC = () => {
 
     createPresentationRequest(presentationRequestOptions);
   }, [session]);
+
+  useEffect(() => {
+    if (!request?.presentationRequest) {
+      return;
+    }
+
+    // now that we've created the request, listen for a presentation
+    const presentationService = client.service('presentation');
+    presentationService.on('created', (data: DemoPresentationDto | DemoNoPresentationDto) => {
+      console.log('on presentation created, data', data);
+
+      if (isDemoPresentationDto(data)) {
+        handlePresentationShared(data);
+
+        // customize this route for the specific demo if you want
+        history.push('/authenticated');
+      } else {
+        handleNoPresentationShared(data);
+
+        history.push('/declined');
+      }
+    });
+
+    return () => {
+      presentationService.removeAllListeners();
+    };
+  }, [request?.presentationRequest]);
 
   if (!session) return null;
 
