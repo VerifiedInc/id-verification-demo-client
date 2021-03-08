@@ -1,6 +1,6 @@
 import {
   DemoPresentationRequestDto,
-  DemoPresentationRequestOptions,
+  DemoPresentationRequestCreateOptions,
   DemoSession,
   DemoPresentationDto,
   DemoNoPresentationDto
@@ -22,7 +22,7 @@ export const dummySession: DemoSession = {
   updatedAt: now
 };
 
-export const dummyDemoPresentationRequestOptions: DemoPresentationRequestOptions = {
+export const dummyDemoPresentationRequestCreateOptions: DemoPresentationRequestCreateOptions = {
   credentialRequests: [{
     type: 'TestCredential',
     issuers: [dummyIssuerDid]
@@ -68,7 +68,7 @@ export const dummyPresentationRequestPostDto: PresentationRequestPostDto = {
 };
 
 export const dummyDemoPresentationRequestoDto: DemoPresentationRequestDto = {
-  presentationRequest: dummyPresentationRequestPostDto,
+  presentationRequestPostDto: dummyPresentationRequestPostDto,
   uuid: v4(),
   createdAt: now,
   updatedAt: now

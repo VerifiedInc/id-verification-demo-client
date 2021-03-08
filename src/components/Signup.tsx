@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CredentialRequest } from '@unumid/types';
-import { DemoNoPresentationDto, DemoPresentationDto, DemoPresentationRequestOptions } from '@unumid/demo-types';
+import { DemoNoPresentationDto, DemoPresentationDto, DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
 import VerifierWidget from '@unumid/web-sdk';
 
 import { config } from '../config';
@@ -41,7 +41,7 @@ const Signup: FC = () => {
       issuers: [config.issuerDid]
     }];
 
-    const presentationRequestOptions: DemoPresentationRequestOptions = {
+    const presentationRequestOptions: DemoPresentationRequestCreateOptions = {
       credentialRequests,
       metadata: { sessionUuid: session.uuid }
     };
@@ -50,7 +50,7 @@ const Signup: FC = () => {
   }, [session]);
 
   useEffect(() => {
-    if (!request?.presentationRequest) {
+    if (!request?.presentationRequestPostDto) {
       return;
     }
 
@@ -74,7 +74,7 @@ const Signup: FC = () => {
     return () => {
       presentationService.removeAllListeners();
     };
-  }, [request?.presentationRequest]);
+  }, [request?.presentationRequestPostDto]);
 
   if (!session) return null;
 
@@ -89,7 +89,7 @@ const Signup: FC = () => {
           <h2>Instant sign up! <LightFont>(takes 10 seconds)</LightFont></h2>
           <h3>Instantly sign up for (Verifier) using your verified ACME account.</h3>
           <VerifierWidget
-            presentationRequest={request?.presentationRequest}
+            presentationRequest={request?.presentationRequestPostDto}
             applicationTitle='ACME'
           />
 
