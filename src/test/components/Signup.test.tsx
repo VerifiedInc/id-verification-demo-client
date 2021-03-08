@@ -4,12 +4,12 @@ import { when } from 'jest-when';
 
 import Signup from '../../components/Signup';
 import { store } from '../../state';
-import { client } from '../../feathers';
+import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
 import { createSession } from '../../state/actionCreators';
 
 jest.mock('../../feathers', () => ({
-  client: {
+  verifierClient: {
     service: jest.fn()
   }
 }));
@@ -23,7 +23,7 @@ describe('signup', () => {
     mockSessionCreate.mockResolvedValueOnce(dummySession);
     mockPresentationRequestCreate.mockResolvedValueOnce(dummyDemoPresentationRequestoDto);
 
-    when(client.service as unknown as jest.Mock)
+    when(verifierClient.service as unknown as jest.Mock)
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
       .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });

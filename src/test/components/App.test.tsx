@@ -4,7 +4,7 @@ import { when } from 'jest-when';
 
 import { store } from '../../../src/state';
 import App from '../../components/App';
-import { client } from '../../feathers';
+import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
 import userEvent from '@testing-library/user-event';
 
@@ -19,7 +19,7 @@ describe('app', () => {
     mockSessionCreate.mockResolvedValueOnce(dummySession);
     mockPresentationRequestCreate.mockResolvedValueOnce(dummyDemoPresentationRequestoDto);
 
-    when(client.service as unknown as jest.Mock)
+    when(verifierClient.service as unknown as jest.Mock)
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
       .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });

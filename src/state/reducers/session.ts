@@ -19,7 +19,7 @@ export const initialState: SessionState = {
 const reducer = (
   state: SessionState = initialState,
   action: SessionAction
-) => {
+): SessionState => {
   switch (action.type) {
     case SessionActionType.CREATE_SESSION:
       return { isLoading: true, error: null, session: null };

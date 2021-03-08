@@ -15,7 +15,7 @@ import ContentBox from './Layout/ContentBox';
 import LightFont from './Layout/LightFont';
 
 import './Signup.css';
-import { client } from '../feathers';
+import { verifierClient } from '../feathers';
 
 const isDemoPresentationDto = (obj: DemoPresentationDto | DemoNoPresentationDto): obj is DemoPresentationDto =>
   !!(obj as DemoPresentationDto).presentation;
@@ -55,7 +55,7 @@ const Signup: FC = () => {
     }
 
     // now that we've created the request, listen for a presentation
-    const presentationService = client.service('presentation');
+    const presentationService = verifierClient.service('presentation');
     presentationService.on('created', (data: DemoPresentationDto | DemoNoPresentationDto) => {
       console.log('on presentation created, data', data);
 

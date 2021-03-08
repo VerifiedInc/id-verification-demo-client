@@ -1,15 +1,15 @@
 import { Dispatch } from 'redux';
-import { DemoPresentationRequestOptions } from '@unumid/demo-types';
+import { DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
 
-import { client } from '../../feathers';
+import { verifierClient } from '../../feathers';
 import { PresentationRequestActionType } from '../actionTypes/presentationRequest';
 import { ResetPresentationRequestStateAction } from '../actions/presentationRequest';
 
-export const createPresentationRequest = (options: DemoPresentationRequestOptions) => {
-  return async (dispatch: Dispatch) => {
+export const createPresentationRequest = (options: DemoPresentationRequestCreateOptions) => {
+  return async (dispatch: Dispatch): Promise<void> => {
     dispatch({ type: PresentationRequestActionType.CREATE_PRESENTATION_REQUEST });
 
-    const service = client.service('presentationRequest');
+    const service = verifierClient.service('presentationRequest');
     try {
       const response = await service.create(options);
       dispatch({

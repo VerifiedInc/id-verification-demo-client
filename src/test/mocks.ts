@@ -3,10 +3,14 @@ import {
   DemoPresentationRequestCreateOptions,
   DemoSession,
   DemoPresentationDto,
-  DemoNoPresentationDto
+  DemoNoPresentationDto,
+  DemoUserWithoutPassword,
+  DemoUserCreateOptions
 } from '@unumid/demo-types';
 import { Presentation, NoPresentation, PresentationRequestPostDto } from '@unumid/types';
 import { v4 } from 'uuid';
+
+import { DemoUserAuthenticationResult } from '../types';
 
 const now = new Date();
 const tenMinutesFromNow = new Date(now.getTime() + 10 * 60 * 1000);
@@ -179,4 +183,33 @@ export const dummyDemoNoPresentationDto: DemoNoPresentationDto = {
   createdAt: now,
   updatedAt: now,
   isVerified: true
+};
+
+export const dummyUserCreateOptions: DemoUserCreateOptions = {
+  email: 'test@unum.id',
+  password: 'test'
+};
+
+export const dummyUser: DemoUserWithoutPassword = {
+  email: dummyUserCreateOptions.email,
+  uuid: v4(),
+  createdAt: now,
+  updatedAt: now
+};
+
+export const dummyLocalAuthResult: DemoUserAuthenticationResult = {
+  accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2MTUyMzQwNTksImV4cCI6MTYxNTMyMDQ1OSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNWJhNzFiZmYtOTVlZi00ZTY5LTkxMjEtNmEwZjcyYzY5YjFkIiwianRpIjoiMjlhMGMyODgtMzliNy00ZTY0LWEwMWQtODQ3MTEyMWNhYzkxIn0.JQfcsD4esZqIzhTFE8rr4Q3kHnBGpNsUyBKDURjkfNo',
+  authentication: {
+    strategy: 'local',
+    accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cCI6ImFjY2VzcyJ9.eyJpYXQiOjE2MTUyMzQwNTksImV4cCI6MTYxNTMyMDQ1OSwiYXVkIjoiaHR0cHM6Ly95b3VyZG9tYWluLmNvbSIsImlzcyI6ImZlYXRoZXJzIiwic3ViIjoiNWJhNzFiZmYtOTVlZi00ZTY5LTkxMjEtNmEwZjcyYzY5YjFkIiwianRpIjoiMjlhMGMyODgtMzliNy00ZTY0LWEwMWQtODQ3MTEyMWNhYzkxIn0.JQfcsD4esZqIzhTFE8rr4Q3kHnBGpNsUyBKDURjkfNo',
+    payload: {
+      iat: now.getTime(),
+      exp: now.getTime() + 24 * 60 * 60 * 1000,
+      aud: 'https://yourdomain.com',
+      iss: 'feathers',
+      sub: v4(),
+      jti: v4()
+    }
+  },
+  user: dummyUser
 };

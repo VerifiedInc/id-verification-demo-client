@@ -1,14 +1,14 @@
 import { Dispatch } from 'redux';
 
-import { client } from '../../feathers';
+import { verifierClient } from '../../feathers';
 import { SessionActionType } from '../actionTypes/session';
 import { SessionAction, ResetSessionStateAction } from '../actions/session';
 
 export const createSession = () => {
-  return async (dispatch: Dispatch<SessionAction>) => {
+  return async (dispatch: Dispatch<SessionAction>): Promise<void> => {
     dispatch({ type: SessionActionType.CREATE_SESSION });
 
-    const service = client.service('session');
+    const service = verifierClient.service('session');
     try {
       const session = await service.create({});
       dispatch({

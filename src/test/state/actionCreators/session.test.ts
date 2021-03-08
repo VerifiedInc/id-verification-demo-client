@@ -3,7 +3,7 @@ import { GeneralError } from '@feathersjs/errors';
 import { createSession, resetSessionState } from '../../../state/actionCreators/session';
 import { SessionActionType } from '../../../state/actionTypes/session';
 import { dummySession } from '../../mocks';
-import { client } from '../../../feathers';
+import { verifierClient } from '../../../feathers';
 
 jest.mock('../../../feathers');
 const mockCreate = jest.fn();
@@ -18,7 +18,7 @@ describe('session action creators', () => {
       const dispatch = jest.fn();
 
       beforeEach(() => {
-        (client.service as unknown as jest.Mock).mockReturnValue({ create: mockCreate });
+        (verifierClient.service as unknown as jest.Mock).mockReturnValue({ create: mockCreate });
       });
 
       afterEach(() => {
@@ -27,14 +27,14 @@ describe('session action creators', () => {
 
       it(`dispatches a ${SessionActionType.CREATE_SESSION} action`, async () => {
         mockCreate.mockResolvedValueOnce(dummySession);
-        createSession()(dispatch);
+        await createSession()(dispatch);
         expect(dispatch.mock.calls[0][0]).toEqual({ type: SessionActionType.CREATE_SESSION });
       });
 
       it('creates a session', async () => {
         mockCreate.mockResolvedValueOnce(dummySession);
         await createSession()(dispatch);
-        expect(client.service).toBeCalledWith('session');
+        expect(verifierClient.service).toBeCalledWith('session');
         expect(mockCreate).toBeCalled();
       });
 

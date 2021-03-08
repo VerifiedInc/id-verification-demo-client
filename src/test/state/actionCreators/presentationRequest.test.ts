@@ -3,11 +3,11 @@ import { GeneralError } from '@feathersjs/errors';
 import { createPresentationRequest, resetPresentationRequestState } from '../../../state/actionCreators/presentationRequest';
 import { PresentationRequestActionType } from '../../../state/actionTypes/presentationRequest';
 import { dummyDemoPresentationRequestoDto, dummyDemoPresentationRequestCreateOptions } from '../../mocks';
-import { client } from '../../../feathers';
+import { verifierClient } from '../../../feathers';
 
 jest.mock('../../../feathers');
 const mockCreate = jest.fn();
-const mockService = (client.service as unknown as jest.Mock);
+const mockService = (verifierClient.service as unknown as jest.Mock);
 
 describe('presentationRequest action creators', () => {
   describe('createPresentationRequest', () => {
