@@ -20,7 +20,7 @@ const Declined: FC = () => {
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout, etc */}
         Declined
-        <div className='start-over' onClick={logout}>Return to Signup</div>
+        <div className='start-over' onClick={logout}>Return to Authentication</div>
       </MainContent>
     </div>
   );

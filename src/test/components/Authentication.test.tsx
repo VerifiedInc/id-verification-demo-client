@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { when } from 'jest-when';
 
-import Signup from '../../components/Signup';
+import Authentication from '../../components/Authentication';
 import { store } from '../../state';
 import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
@@ -14,7 +14,7 @@ jest.mock('../../feathers', () => ({
   }
 }));
 
-describe('signup', () => {
+describe('Authentication', () => {
   const mockSessionCreate = jest.fn();
   const mockPresentationRequestCreate = jest.fn();
   const mockOn = jest.fn();
@@ -29,7 +29,7 @@ describe('signup', () => {
       .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
 
     createSession()(store.dispatch);
-    render(<Provider store={store}><Signup /></Provider>);
+    render(<Provider store={store}><Authentication /></Provider>);
   });
 
   it('displays a welcome header', async () => {

@@ -31,7 +31,7 @@ describe('app', () => {
     expect(mockSessionCreate).toBeCalled();
   });
 
-  it('shows the signup page by default', async () => {
+  it('shows the authentication page by default', async () => {
     expect(await screen.findByText('Welcome to (Verifier)!')).toBeInTheDocument();
   });
 

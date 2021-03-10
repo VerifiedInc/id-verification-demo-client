@@ -1,20 +1,23 @@
 import { Dispatch } from 'redux';
 import { DemoUserCreateOptions } from '@unumid/demo-types';
 
-import { verifierClient } from '../../feathers';
+import { issuerClient } from '../../feathers';
 import { UserActionType } from '../actionTypes/user';
 import { UserAction, ResetUserStateAction } from '../actions/user';
+import { login } from './auth';
+import { AuthAction } from '../actions/auth';
 
 export const createUser = (options: DemoUserCreateOptions) => {
-  return async (dispatch: Dispatch<UserAction>): Promise<void> => {
+  return async (dispatch: Dispatch<UserAction | AuthAction>): Promise<void> => {
     dispatch({ type: UserActionType.CREATE_USER, payload: options });
-    const service = verifierClient.service('user');
+    const service = issuerClient.service('user');
     try {
       const user = await service.create(options);
       dispatch({
         type: UserActionType.CREATE_USER_SUCCESS,
         payload: user
       });
+      await login({ email: options.email, password: options.password })(dispatch);
     } catch (e) {
       dispatch({
         type: UserActionType.CREATE_USER_ERROR,

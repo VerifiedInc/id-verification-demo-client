@@ -1,11 +1,13 @@
 import { GeneralError } from '@feathersjs/errors';
 
 import { createUser, resetUserState } from '../../../state/actionCreators/user';
+import { login } from '../../../state/actionCreators/auth';
 import { UserActionType } from '../../../state/actionTypes/user';
 import { dummyUser, dummyUserCreateOptions } from '../../mocks';
-import { verifierClient } from '../../../feathers';
+import { issuerClient } from '../../../feathers';
 
 jest.mock('../../../feathers');
+jest.mock('../../../state/actionCreators/auth');
 const mockCreate = jest.fn();
 
 describe('user action creators', () => {
@@ -18,7 +20,7 @@ describe('user action creators', () => {
       const dispatch = jest.fn();
 
       beforeEach(() => {
-        (verifierClient.service as unknown as jest.Mock).mockReturnValue({ create: mockCreate });
+        (issuerClient.service as unknown as jest.Mock).mockReturnValue({ create: mockCreate });
       });
 
       it(`dispatches a ${UserActionType.CREATE_USER} action`, async () => {
@@ -33,7 +35,7 @@ describe('user action creators', () => {
       it('creates a user', async () => {
         mockCreate.mockResolvedValueOnce(dummyUser);
         await createUser(dummyUserCreateOptions)(dispatch);
-        expect(verifierClient.service).toBeCalledWith('user');
+        expect(issuerClient.service).toBeCalledWith('user');
         expect(mockCreate).toBeCalledWith(dummyUserCreateOptions);
       });
 
@@ -44,6 +46,12 @@ describe('user action creators', () => {
           type: UserActionType.CREATE_USER_SUCCESS,
           payload: dummyUser
         });
+      });
+
+      it('logs in the created user', async () => {
+        mockCreate.mockResolvedValueOnce(dummyUser);
+        await createUser(dummyUserCreateOptions)(dispatch);
+        expect(login).toBeCalled();
       });
 
       it(`dispatches a ${UserActionType.CREATE_USER_ERROR} action if there is an error creating the user`, async () => {

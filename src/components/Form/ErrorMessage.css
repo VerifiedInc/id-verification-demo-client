@@ -1,0 +1,5 @@
+.error-message {
+  color: var(--unumid-red);
+  font-weight: 700;
+  margin-top: 10px;
+}

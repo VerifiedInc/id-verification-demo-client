@@ -1,0 +1,48 @@
+.unum-id {
+  font-family: Lato;
+  font-weight: 300;
+  padding: 100px;
+  text-align: left;
+  background-color: var(--unumid-background-color);
+  height: 100vh;
+}
+
+.unum-id h1, .unum-id h2 {
+  font-family: Playfair Display;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+.unum-id h1 {
+  font-size: 48px;
+  padding-top: 0;
+}
+
+.unum-id h2 {
+  font-size: 32px;
+  margin-top: 30px;
+}
+
+.unum-id a {
+  color: var(--unuimd-green);
+  text-decoration: none;
+}
+
+.unum-id input {
+  font-weight: 400;
+}
+
+
+@media (max-width: 767px) {
+  .unum-id {
+    padding: 20px;
+  }
+
+  .unum-id h1 {
+    font-size: 32px;
+  }
+
+  .unum-id h2 {
+    font-size: 24px;
+  }
+}

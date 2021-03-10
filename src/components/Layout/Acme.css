@@ -1,0 +1,5 @@
+.acme {
+  background-color: var(--secondary-background-color);
+  font-family: Open Sans;
+  height: 100vh;
+}

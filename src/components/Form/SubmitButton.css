@@ -1,0 +1,14 @@
+.submit-button {
+  height: 40px;
+  min-width: 180px;
+  background-color: var(--unuimd-green);
+  border: none;
+  color: var(--secondary-text-color);
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:disabled {
+  background-color: var(--unumid-dull-green);
+}

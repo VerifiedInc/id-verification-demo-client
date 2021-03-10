@@ -1,8 +1,12 @@
 :root {
-  --primary-background-color: #01abe8;
-  --secondary-background-color: #ffffff;
+  --primary-background-color: #1f61cc;
+  --secondary-background-color: #f5f5f5;
   --primary-text-color: #000000;
   --secondary-text-color: #ffffff;
+  --unumid-background-color: #ffffff;
+  --unuimd-green: #0dbc3d;
+  --unumid-dull-green: #86dd9e;
+  --unumid-red: #eb0d28;
 }
 
 
@@ -40,6 +44,16 @@ h3 {
   font-size: 24px;
 }
 
+button {
+  font: inherit;
+  font-family: inherit;
+}
+
+input {
+  font: inherit;
+  font-family: inherit;
+}
+
 @media (max-width: 1224px) {
   h1 {
     font-size: 50px;
@@ -52,4 +66,9 @@ h3 {
     font-size: 30px;
     font-weight: 700;
   }
+}
+
+@font-face {
+  font-family: 'Silom';
+  src: url(./assets/fonts/Silom.ttf) format('truetype');
 }

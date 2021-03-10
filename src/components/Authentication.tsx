@@ -14,13 +14,13 @@ import ContentBox from './Layout/ContentBox';
 // import HorizontalDivider from './Layout/HorizontalDivider';
 import LightFont from './Layout/LightFont';
 
-import './Signup.css';
+import './Authentication.css';
 import { verifierClient } from '../feathers';
 
 const isDemoPresentationDto = (obj: DemoPresentationDto | DemoNoPresentationDto): obj is DemoPresentationDto =>
   !!(obj as DemoPresentationDto).presentation;
 
-const Signup: FC = () => {
+const Authentication: FC = () => {
   const {
     createPresentationRequest,
     handlePresentationShared,
@@ -79,7 +79,7 @@ const Signup: FC = () => {
   if (!session) return null;
 
   return (
-    <div className='signup'>
+    <div className='authentication'>
       <MainContent>
         {/* customize these headers with branding for the specific demo, or remove them entirely */}
         <h1>Welcome to (Verifier)!</h1>
@@ -103,4 +103,4 @@ const Signup: FC = () => {
   );
 };
 
-export default Signup;
+export default Authentication;
