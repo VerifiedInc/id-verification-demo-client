@@ -18,7 +18,7 @@ describe('Declined component', () => {
 
   it('redirects if there is no Presentation in state', async () => {
     render(component);
-    expect(screen.queryByText('Declined')).not.toBeInTheDocument();
+    expect(screen.queryByText('Declined', { exact: false })).not.toBeInTheDocument();
   });
 
   it('displays Declined if there is a presentation in state', () => {
@@ -28,6 +28,6 @@ describe('Declined component', () => {
     });
 
     render(component);
-    expect(screen.getByText('Declined')).toBeInTheDocument();
+    expect(screen.getByText('You declined to authenticate.')).toBeInTheDocument();
   });
 });

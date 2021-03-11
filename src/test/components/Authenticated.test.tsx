@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Authenticated from '../../components/Authenticated';
 import { store } from '../../state';
 import { PresentationActionType } from '../../state/actionTypes/presentation';
-import { dummyDemoPresentationDto } from '../mocks';
+import { dummyDemoPresentationDto, dummyPresentation } from '../mocks';
 
 describe('Authenticated component', () => {
   const component = (
@@ -28,6 +28,6 @@ describe('Authenticated component', () => {
     });
 
     render(component);
-    expect(screen.getByText('Authenticated')).toBeInTheDocument();
+    expect(screen.getByText(`Authenticated as ${dummyPresentation.verifiableCredential[0].credentialSubject.userEmail}!`)).toBeInTheDocument();
   });
 });

@@ -1,3 +1,16 @@
 .declined {
   background-color: var(--secondary-background-color);
 }
+
+.declined h3 {
+  color: var(--unumid-red);
+  font-weight: 700;
+}
+
+.declined .start-over {
+  cursor: pointer;
+}
+
+.declined .start-over:hover {
+  font-weight: 700;
+}

@@ -1,3 +1,12 @@
 .authenticated {
   background-color: var(--secondary-background-color);
 }
+
+.authenticated .logout {
+  color: var(--unumid-red);
+  cursor: pointer;
+}
+
+.authenticated .logout:hover {
+  font-weight: 700;
+}

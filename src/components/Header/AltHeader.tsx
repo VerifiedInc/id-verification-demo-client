@@ -1,10 +1,12 @@
 import { FC } from 'react';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars, faSearch } from '@fortawesome/free-solid-svg-icons';
+
 import Header from './Header';
 import HeaderCenter from './HeaderCenter';
 import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
-import LinkTab from './LinkTab';
 import Tab from './Tab';
 
 import './AltHeader.css';
@@ -13,12 +15,11 @@ const AltHeader: FC = () => {
   return (
     <Header className='alternate-header'>
       <HeaderLeft>
-        <LinkTab to='/route1'>Link 1</LinkTab>
-        <LinkTab to='/route2'>Link 2</LinkTab>
+        <Tab><FontAwesomeIcon icon={faBars} size='lg' title='bars' /></Tab>
       </HeaderLeft>
-      <HeaderCenter />
+      <HeaderCenter><h1>ACME, Inc.</h1></HeaderCenter>
       <HeaderRight>
-        <Tab>Right side tab</Tab>
+        <Tab><FontAwesomeIcon icon={faSearch} size='lg' title='search' /></Tab>
       </HeaderRight>
     </Header>
   );

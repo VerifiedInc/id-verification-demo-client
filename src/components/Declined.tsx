@@ -19,7 +19,7 @@ const Declined: FC = () => {
     <div className='declined'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout, etc */}
-        Declined
+        <h3>You declined to authenticate.</h3>
         <div className='start-over' onClick={logout}>Return to Authentication</div>
       </MainContent>
     </div>

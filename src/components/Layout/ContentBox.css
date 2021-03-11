@@ -1,8 +1,8 @@
 .content-box {
   background-color: white;
   color: var(--primary-text-color);
-  max-width: 800px;
+  max-width: 600px;
   margin: 0 auto;
-  padding: 60px 30px;
+  padding: 40px 20px;
   margin-top: 60px;
 }

@@ -5,10 +5,26 @@
   align-items: center;
 }
 
+.header-center h1 {
+    font-family: Silom;
+    font-size: 32px;
+    padding: 0;
+    margin: 0;
+}
+
 .header-center img {
   height: 80px;
 }
 
 .header-center.mobile img {
   height: 40px;
+}
+
+@media (max-width: 767px) {
+  .header-center {
+    flex: 2;
+  }
+  .header-center h1 {
+    font-size: 24px;
+  }
 }

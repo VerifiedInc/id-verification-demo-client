@@ -47,12 +47,16 @@ const App: FC = () => {
           </Unumid>
         </Route>
         <Route path='/authenticated'>
-          <PrimaryHeader />
-          <Authenticated />
+          <Acme>
+            <AltHeader />
+            <Authenticated />
+          </Acme>
         </Route>
         <Route path='/declined'>
-          <AltHeader />
-          <Declined />
+          <Acme>
+            <AltHeader />
+            <Declined />
+          </Acme>
         </Route>
       </BrowserRouter>
     </div>

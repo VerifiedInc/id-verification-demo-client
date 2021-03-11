@@ -40,3 +40,9 @@
     line-height: 3em;
   }
 }
+
+@media (max-width: 767px) {
+  .header-left {
+    flex: 1;
+  }
+}
