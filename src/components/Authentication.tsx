@@ -13,6 +13,8 @@ import MainContent from './Layout/MainContent';
 import ContentBox from './Layout/ContentBox';
 
 import './Authentication.css';
+import deeplinkImgSrc from '../assets/deeplink-button.png';
+
 import { verifierClient } from '../feathers';
 
 const isDemoPresentationDto = (obj: DemoPresentationDto | DemoNoPresentationDto): obj is DemoPresentationDto =>
@@ -107,6 +109,7 @@ const Authentication: FC = () => {
             sendEmail={sendEmail}
             goToLogin={goToLogin}
             userInfo={loggedInUser}
+            deeplinkImgSrc={deeplinkImgSrc}
           />
         </ContentBox>
       </MainContent>

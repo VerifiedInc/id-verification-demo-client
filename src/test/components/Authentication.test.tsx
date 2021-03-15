@@ -1,12 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { when } from 'jest-when';
+import { mockUserAgent, clear } from 'jest-useragent-mock';
 
 import Authentication from '../../components/Authentication';
 import { store } from '../../state';
 import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
 import { createSession } from '../../state/actionCreators';
+import deeplinkImgSrc from '../../assets/deeplink-button.png';
 
 jest.mock('../../feathers', () => ({
   verifierClient: {
@@ -32,6 +34,10 @@ describe('Authentication', () => {
     render(<Provider store={store}><Authentication /></Provider>);
   });
 
+  afterEach(() => {
+    clear();
+  });
+
   it('creates a presentationRequest', async () => {
     await screen.findByAltText('Powered by Unum ID');
     expect(mockPresentationRequestCreate).toBeCalled();
@@ -44,5 +50,13 @@ describe('Authentication', () => {
 
   it('shows the web sdk widget', async () => {
     expect(await screen.findByAltText('Powered by Unum ID')).toBeInTheDocument();
+  });
+
+  it('provides an image for the deeplink button', async () => {
+    mockUserAgent('iPhone');
+    render(<Provider store={store}><Authentication /></Provider>);
+    const deeplinkBtn = await screen.findByAltText('Verify with ACME')
+    expect(deeplinkBtn).toBeInTheDocument();
+    expect(deeplinkBtn).toHaveAttribute('src', deeplinkImgSrc)
   });
 });
