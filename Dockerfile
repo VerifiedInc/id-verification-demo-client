@@ -1,4 +1,3 @@
-
 # syntax=docker/dockerfile:1.0.0-experimental
 # Stage 0, "build-stage" to build and compile the frontend
 FROM node:14.15.0-alpine as build-stage
@@ -19,9 +18,11 @@ RUN --mount=type=ssh,id=github yarn install
 
 COPY ./ /app/
 
-ARG BASE_URL
+ARG ISSUER_SERVER_URL
+ARG VERIFIER_SERVER_URL
 ARG ISSUER_DID
-ENV REACT_APP_BASE_URL=${BASE_URL}
+ENV REACT_APP_ISSUER_SERVER_URL=${ISSUER_SERVER_URL}
+ENV REACT_APP_VERIFIER_SERVER_URL=${VERIFIER_SERVER_URL}
 ENV REACT_APP_ISSUER_DID=${ISSUER_DID}
 
 RUN yarn build

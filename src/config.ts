@@ -15,3 +15,5 @@ export const config: Config = {
   issuerServerUrl: REACT_APP_ISSUER_SERVER_URL,
   issuerDid: REACT_APP_ISSUER_DID
 };
+
+console.log('config', config);

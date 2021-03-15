@@ -93,6 +93,8 @@ const Authentication: FC = () => {
 
   if (!session) return null;
 
+  console.log('presentationRequestUuid', request?.presentationRequestPostDto.presentationRequest.uuid);
+
   return (
     <div className='authentication'>
       <MainContent>
