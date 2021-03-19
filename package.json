@@ -20,7 +20,7 @@
     "@types/react-redux": "^7.1.16",
     "@unumid/demo-types": "git+ssh://git@github.com/UnumID/demo-types.git#v0.1.0",
     "@unumid/types": "git+ssh://git@github.com/UnumID/types.git#v0.0.3",
-    "@unumid/web-sdk": "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.1.5",
+    "@unumid/web-sdk": "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.2.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-redux": "^7.2.2",

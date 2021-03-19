@@ -2245,9 +2245,9 @@
   version "0.0.1"
   resolved "git+ssh://git@github.com/UnumID/types.git#c11cdc69f2657d131bae551a80ff36d1b1134e51"
 
-"@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.1.5":
+"@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.2.0":
   version "1.0.0"
-  resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#257ecb5e4a3a641b58363b044c9b15844184b0c5"
+  resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#9b8210cb11185a3b36d690961028c890d6b58285"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"

@@ -32,7 +32,7 @@ const Authentication: FC = () => {
   const { request } = useTypedSelector(state => state.presentationRequest);
   const { loggedInUser } = useTypedSelector(state => state.auth);
 
-  useEffect(() => {
+  const actuallyCreatePresentationRequest = () => {
     if (!session) return;
 
     // customize these values for the specific demo (or not)
@@ -48,6 +48,10 @@ const Authentication: FC = () => {
     };
 
     createPresentationRequest(presentationRequestOptions);
+  };
+
+  useEffect(() => {
+    actuallyCreatePresentationRequest();
   }, [session]);
 
   useEffect(() => {
@@ -103,6 +107,7 @@ const Authentication: FC = () => {
         <ContentBox>
           <VerifierWidget
             presentationRequest={request?.presentationRequestPostDto}
+            createPresentationRequest={actuallyCreatePresentationRequest}
             applicationTitle='ACME'
             sendPushNotification={sendPushNotification}
             sendSms={sendSms}
@@ -110,6 +115,7 @@ const Authentication: FC = () => {
             goToLogin={goToLogin}
             userInfo={loggedInUser}
             deeplinkImgSrc={deeplinkImgSrc}
+            createInitialPresentationRequest={false}
           />
         </ContentBox>
       </MainContent>
