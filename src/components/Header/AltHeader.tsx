@@ -9,6 +9,7 @@ import HeaderLeft from './HeaderLeft';
 import HeaderRight from './HeaderRight';
 import Tab from './Tab';
 
+import headerLogo from '../../assets/header-logo@2x.png';
 import './AltHeader.css';
 
 const AltHeader: FC = () => {
@@ -17,7 +18,7 @@ const AltHeader: FC = () => {
       <HeaderLeft>
         <Tab><FontAwesomeIcon icon={faBars} size='lg' title='bars' /></Tab>
       </HeaderLeft>
-      <HeaderCenter><h1>ACME, Inc.</h1></HeaderCenter>
+      <HeaderCenter><img src={headerLogo} alt='ACME, Inc.' /></HeaderCenter>
       <HeaderRight>
         <Tab><FontAwesomeIcon icon={faSearch} size='lg' title='search' /></Tab>
       </HeaderRight>
