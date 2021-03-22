@@ -13,7 +13,7 @@ import MainContent from './Layout/MainContent';
 import ContentBox from './Layout/ContentBox';
 
 import './Authentication.css';
-import deeplinkImgSrc from '../assets/deeplink-button.png';
+import deeplinkImgSrc from '../assets/verify-with-acme-button.png';
 
 import { verifierClient } from '../feathers';
 
