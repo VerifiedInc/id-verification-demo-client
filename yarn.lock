@@ -2247,6 +2247,12 @@
   dependencies:
     runtypes "^6.0.0"
 
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
+  version "0.0.1"
+  resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
+  dependencies:
+    runtypes "^6.0.0"
+
 "@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.2.2":
   version "1.0.0"
   resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#94efc50416285568a727be448bb6ee18af3154c9"
