@@ -60,7 +60,7 @@ const Authentication: FC = () => {
     }
 
     // now that we've created the request, listen for a presentation
-    const presentationService = verifierClient.service('presentation');
+    const presentationService = verifierClient.service('presentationWebsocket');
     presentationService.on('created', (data: DemoPresentationDto | DemoNoPresentationDto) => {
       console.log('on presentation created, data', data);
 

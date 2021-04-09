@@ -28,6 +28,6 @@ describe('Authenticated component', () => {
     });
 
     render(component);
-    expect(screen.getByText(`Authenticated as ${dummyPresentation.verifiableCredential[0].credentialSubject.userEmail}!`)).toBeInTheDocument();
+    expect(screen.getByText(`Authenticated as ${dummyPresentation.verifiableCredentials[0].credentialSubject.userEmail}!`)).toBeInTheDocument();
   });
 });

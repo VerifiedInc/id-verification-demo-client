@@ -22,7 +22,7 @@ describe('app', () => {
     when(verifierClient.service as unknown as jest.Mock)
       .calledWith('session').mockReturnValue({ create: mockSessionCreate })
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
-      .calledWith('presentation').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
+      .calledWith('presentationWebsocket').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
 
     render(<Provider store={store}><App /></Provider>);
   });

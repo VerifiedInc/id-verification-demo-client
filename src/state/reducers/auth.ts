@@ -1,12 +1,12 @@
 import { FeathersError } from '@feathersjs/errors';
-import { DemoUserWithoutPassword } from '@unumid/demo-types';
+import { DemoUser } from '@unumid/demo-types';
 
 import { AuthActionType } from '../actionTypes/auth';
 import { AuthAction } from '../actions/auth';
 
 interface AuthState {
   isLoading: boolean;
-  loggedInUser: DemoUserWithoutPassword | null;
+  loggedInUser: DemoUser | null;
   error: FeathersError | null;
 }
 

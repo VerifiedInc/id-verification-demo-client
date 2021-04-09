@@ -1,5 +1,5 @@
 import { FeathersError } from '@feathersjs/errors';
-import { DemoUserCreateOptions, DemoUserWithoutPassword } from '@unumid/demo-types';
+import { DemoUserCreateOptions, DemoUser } from '@unumid/demo-types';
 
 import { UserAction } from '../actions/user';
 import { UserActionType } from '../actionTypes/user';
@@ -8,7 +8,7 @@ export interface UserState {
   isLoading: boolean;
   error: FeathersError | null;
   userOptions: DemoUserCreateOptions | null;
-  createdUser: DemoUserWithoutPassword | null;
+  createdUser: DemoUser | null;
 }
 
 export const initialState: UserState = {

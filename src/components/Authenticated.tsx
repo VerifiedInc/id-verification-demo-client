@@ -20,7 +20,7 @@ const Authenticated: FC = () => {
     <div className='authenticated'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout/content, etc */}
-        <h3><BoldFont>Authenticated as {sharedPresentation.presentation.verifiableCredential[0].credentialSubject.userEmail}!</BoldFont></h3>
+        <h3><BoldFont>Authenticated as {sharedPresentation.presentation.verifiableCredentials[0].credentialSubject.userEmail}!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
       </MainContent>
     </div>

@@ -4,7 +4,7 @@ import {
   DemoSession,
   DemoPresentationDto,
   DemoNoPresentationDto,
-  DemoUserWithoutPassword,
+  DemoUser,
   DemoUserCreateOptions
 } from '@unumid/demo-types';
 import { Presentation, NoPresentation, PresentationRequestPostDto } from '@unumid/types';
@@ -84,7 +84,7 @@ export const dummyPresentation: Presentation = {
   ],
   uuid: '1b42c5bd-f9e3-46ab-bf3a-1d886f712951',
   presentationRequestUuid: 'd0c0c19f-cdfb-422c-b1a1-416e5a6ab890',
-  verifiableCredential: [
+  verifiableCredentials: [
     {
       id: '808befa8-cb80-41f2-a092-3a2542bde1a0',
       issuer: 'did:unum:8af05d2e-abda-466b-a70b-7c176401f520',
@@ -164,11 +164,12 @@ export const dummyUserCreateOptions: DemoUserCreateOptions = {
   password: 'test'
 };
 
-export const dummyUser: DemoUserWithoutPassword = {
+export const dummyUser: DemoUser = {
   email: dummyUserCreateOptions.email,
   uuid: v4(),
   createdAt: now,
-  updatedAt: now
+  updatedAt: now,
+  fcmRegistrationTokens: []
 };
 
 export const dummyLocalAuthResult: DemoUserAuthenticationResult = {

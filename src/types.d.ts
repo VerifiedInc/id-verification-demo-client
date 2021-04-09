@@ -18,5 +18,5 @@ export interface DemoUserAuthenticationResult {
       jti: string;
     }
   },
-  user: DemoUserWithoutPassword
+  user: DemoUser
 }
