@@ -2241,21 +2241,17 @@
   dependencies:
     "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#v1.2.1"
 
-"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.2.1":
-  version "0.0.1"
-  resolved "git+ssh://git@github.com/UnumID/types.git#b8d350a9e97b7e9e23b70eaea62a136fecd3c136"
-  dependencies:
-    runtypes "^6.0.0"
-
-"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.2.1", "@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
   version "0.0.1"
   resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
   dependencies:
     runtypes "^6.0.0"
 
-"@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v0.2.2":
+"@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v1.0.0":
   version "1.0.0"
-  resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#94efc50416285568a727be448bb6ee18af3154c9"
+  resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#7e1f6ed365f6c5d2694d696ffefc650aadbad18e"
+  dependencies:
+    axios "^0.21.1"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
@@ -2807,6 +2803,13 @@ axe-core@^4.0.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/axe-core/-/axe-core-4.1.2.tgz#7cf783331320098bfbef620df3b3c770147bc224"
   integrity sha512-V+Nq70NxKhYt89ArVcaNL9FDryB3vQOd+BFXZIfO3RP6rwtj+2yqqqdHEkacutglPaZLkJeuXKCjCJDMGPtPqg==
+
+axios@^0.21.1:
+  version "0.21.1"
+  resolved "https://registry.yarnpkg.com/axios/-/axios-0.21.1.tgz#22563481962f4d6bde9a76d516ef0e5d3c09b2b8"
+  integrity sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==
+  dependencies:
+    follow-redirects "^1.10.0"
 
 axobject-query@^2.2.0:
   version "2.2.0"
@@ -5629,6 +5632,11 @@ follow-redirects@^1.0.0:
   version "1.13.2"
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.2.tgz#dd73c8effc12728ba5cf4259d760ea5fb83e3147"
   integrity sha512-6mPTgLxYm3r6Bkkg0vNM0HTjfGrOEtsfbhagQvbxDEsEkpNhw582upBaoRZylzen6krEmxXJgt9Ju6HiI4O7BA==
+
+follow-redirects@^1.10.0:
+  version "1.13.3"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.3.tgz#e5598ad50174c1bc4e872301e82ac2cd97f90267"
+  integrity sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==
 
 for-in@^1.0.2:
   version "1.0.2"

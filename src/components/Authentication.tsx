@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CredentialRequest } from '@unumid/types';
 import { DemoNoPresentationDto, DemoPresentationDto, DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
-import VerifierWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/web-sdk';
 
 import { config } from '../config';
 
@@ -13,7 +13,6 @@ import MainContent from './Layout/MainContent';
 import ContentBox from './Layout/ContentBox';
 
 import './Authentication.css';
-import deeplinkImgSrc from '../assets/verify-with-acme-button.png';
 
 import { verifierClient } from '../feathers';
 
@@ -81,40 +80,24 @@ const Authentication: FC = () => {
     };
   }, [request?.presentationRequestPostDto]);
 
-  const sendPushNotification = () => {
-    console.log('send push notification');
-  };
-
-  const sendSms = () => {
-    console.log('send sms');
-  };
-
-  const sendEmail = () => {
-    console.log('send email');
-  };
-
   const goToLogin = () => {
+    console.log('goToLogin');
     history.push('/login');
   };
 
   if (!session) return null;
 
-  console.log('presentationRequestUuid', request?.presentationRequestPostDto.presentationRequest.uuid);
-
   return (
     <div className='authentication'>
       <MainContent>
         <ContentBox>
-          <VerifierWidget
+          <UnumIDWidget
+            env={config.env}
+            apiKey='vARSYD/yDaHiWrcyfT7d7hLzz9YTy8wm7aNpE2gaVeE='
             presentationRequest={request?.presentationRequestPostDto}
             createPresentationRequest={actuallyCreatePresentationRequest}
-            applicationTitle='ACME'
-            sendPushNotification={sendPushNotification}
-            sendSms={sendSms}
-            sendEmail={sendEmail}
             goToLogin={goToLogin}
             userInfo={loggedInUser}
-            deeplinkImgSrc={deeplinkImgSrc}
             createInitialPresentationRequest={false}
           />
         </ContentBox>

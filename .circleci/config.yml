@@ -41,6 +41,9 @@ jobs:
         default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
       repo:
         type: string
+      env:
+        type: string
+        default: "development"
       issuer_server_url:
         type: string
         default: "https://issuer-api.demo.dev-unum.id"
@@ -64,7 +67,7 @@ jobs:
             echo Logging in to Amazon ECR...
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
             echo Pushing the Docker image...
@@ -80,6 +83,9 @@ jobs:
         default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
       repo:
         type: string
+      env:
+        type: string
+        default: "sandbox"
       issuer_server_url:
         type: string
         default: "https://issuer-api.demo.unum.id"
@@ -103,7 +109,7 @@ jobs:
             echo Logging in to Amazon ECR...
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-latest
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
             echo Pushing the Docker image...

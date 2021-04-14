@@ -8,7 +8,6 @@ import { store } from '../../state';
 import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
 import { createSession } from '../../state/actionCreators';
-import deeplinkImgSrc from '../../assets/verify-with-acme-button.png';
 
 jest.mock('../../feathers', () => ({
   verifierClient: {
@@ -50,13 +49,5 @@ describe('Authentication', () => {
 
   it('shows the web sdk widget', async () => {
     expect(await screen.findByAltText('Powered by Unum ID')).toBeInTheDocument();
-  });
-
-  it('provides an image for the deeplink button', async () => {
-    mockUserAgent('iPhone');
-    render(<Provider store={store}><Authentication /></Provider>);
-    const deeplinkBtn = await screen.findByAltText('Verify with ACME');
-    expect(deeplinkBtn).toBeInTheDocument();
-    expect(deeplinkBtn).toHaveAttribute('src', deeplinkImgSrc);
   });
 });
