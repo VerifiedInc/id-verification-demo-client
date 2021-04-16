@@ -87,6 +87,11 @@ const Authentication: FC = () => {
 
   if (!session) return null;
 
+  const userInfo = loggedInUser && {
+    ...loggedInUser,
+    pushToken: loggedInUser.pushTokens[0]
+  };
+
   return (
     <div className='authentication'>
       <MainContent>
@@ -97,7 +102,7 @@ const Authentication: FC = () => {
             presentationRequest={request?.presentationRequestPostDto}
             createPresentationRequest={actuallyCreatePresentationRequest}
             goToLogin={goToLogin}
-            userInfo={loggedInUser}
+            userInfo={userInfo}
             createInitialPresentationRequest={false}
           />
         </ContentBox>

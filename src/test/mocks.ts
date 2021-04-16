@@ -176,7 +176,7 @@ export const dummyUser: DemoUser = {
   uuid: v4(),
   createdAt: now,
   updatedAt: now,
-  fcmRegistrationTokens: []
+  pushTokens: []
 };
 
 export const dummyLocalAuthResult: DemoUserAuthenticationResult = {

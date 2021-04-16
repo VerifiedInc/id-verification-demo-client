@@ -2235,13 +2235,19 @@
     "@typescript-eslint/types" "4.15.2"
     eslint-visitor-keys "^2.0.0"
 
-"@unumid/demo-types@git+ssh://git@github.com/UnumID/demo-types#v0.4.1":
+"@unumid/demo-types@git+ssh://git@github.com/UnumID/demo-types#v0.5.0":
   version "0.0.1"
-  resolved "git+ssh://git@github.com/UnumID/demo-types#aad37868392d8148b537243044e91ef936e62fa2"
+  resolved "git+ssh://git@github.com/UnumID/demo-types#69587e7790cd897ca85bfd089d67a7c91de8e43e"
   dependencies:
-    "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#v1.2.1"
+    "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#1.5.0"
 
-"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.2.1", "@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#1.5.0":
+  version "1.5.0"
+  resolved "git+ssh://git@github.com/UnumID/types.git#ed25da7c28fa6a3de2e242442e9d512e1b0875d2"
+  dependencies:
+    runtypes "^6.0.0"
+
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
   version "0.0.1"
   resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
   dependencies:
