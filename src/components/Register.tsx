@@ -11,6 +11,7 @@ import { useActionCreators } from '../hooks/useActionCreators';
 import { useTypedSelector } from '../hooks/useTypedSelector';
 
 import './Register.css';
+import Italic from './Layout/Italic';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
@@ -63,18 +64,23 @@ const Register: FC = () => {
   return (
     <div className='register'>
       <h1>Register</h1>
-      <p>You need to (1) create an account and (2) install the ACME app from a link we email you.</p>
+      <p>You need to (1) create an account and (2) install the ACME app from the app store.</p>
+      <p>
+        <BoldFont>Important:</BoldFont> the email and password here simulate what ACME already has in place, prior to implementing Unum ID.
+        This shows that Unum ID can be used <Italic>on top of</Italic> an existing account system for additional authentication factors.
+        It can also fully replace that system, thereby eliminating passwords altogether.
+        We generally recommend a gradual transition from legacy password systems to a fully passwordless approach.
+      </p>
       {
         loggedInUser
           ? (
             <>
               <h2>2. Install ACME App</h2>
               <p>
-                We sent an installation link to {email}.&nbsp;
-                <BoldFont>Click the link to install the app. </BoldFont>
-                The app will pre-fill your email and a dummy password so you can log in.
+                Great, you're registered! Now, install the ACME app from the <a>Apple App Store</a> (for iOS) or <a>Google Play Store</a> (for Android).
               </p>
               <p>
+                You can get there by clicking the links above, scanning the QR Code below, or searching "ACME Unum ID" on the app stores.
                 The app will ask you for your permission to send push notifications.&nbsp;
                 <BoldFont>This is optional, </BoldFont>
                 but it will allow you to see how users can authenticate with push notifications.
