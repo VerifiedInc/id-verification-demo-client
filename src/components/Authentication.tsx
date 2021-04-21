@@ -98,7 +98,7 @@ const Authentication: FC = () => {
         <ContentBox>
           <UnumIDWidget
             env={config.env}
-            apiKey='vARSYD/yDaHiWrcyfT7d7hLzz9YTy8wm7aNpE2gaVeE='
+            apiKey={config.apiKey}
             presentationRequest={request?.presentationRequestPostDto}
             createPresentationRequest={actuallyCreatePresentationRequest}
             goToLogin={goToLogin}
