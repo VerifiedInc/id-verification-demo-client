@@ -2,7 +2,7 @@ import { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CredentialRequest } from '@unumid/types';
 import { DemoNoPresentationDto, DemoPresentationDto, DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
-import UnumIDWidget from '@unumid/web-sdk';
+import UnumIDWidget from '@unumid/react-web-sdk';
 
 import { config } from '../config';
 

@@ -2241,6 +2241,12 @@
   dependencies:
     "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#1.5.0"
 
+"@unumid/react-web-sdk@git+ssh://git@github.com/UnumID/react-web-sdk.git#v1.0.1":
+  version "1.0.0"
+  resolved "git+ssh://git@github.com/UnumID/react-web-sdk.git#300b4bdcd81c5a023a7ddb4c725f7f476305a631"
+  dependencies:
+    axios "^0.21.1"
+
 "@unumid/types@git+ssh://git@github.com/UnumID/types.git#1.5.0":
   version "1.5.0"
   resolved "git+ssh://git@github.com/UnumID/types.git#ed25da7c28fa6a3de2e242442e9d512e1b0875d2"
@@ -2252,12 +2258,6 @@
   resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
   dependencies:
     runtypes "^6.0.0"
-
-"@unumid/web-sdk@git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#v1.0.0":
-  version "1.0.0"
-  resolved "git+ssh://git@github.com/UnumID/Verifier-Client-SDK.git#7e1f6ed365f6c5d2694d696ffefc650aadbad18e"
-  dependencies:
-    axios "^0.21.1"
 
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
