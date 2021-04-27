@@ -2241,21 +2241,21 @@
   dependencies:
     "@unumid/types" "git+ssh://git@github.com/UnumID/types.git#1.5.0"
 
-"@unumid/react-web-sdk@git+ssh://git@github.com/UnumID/react-web-sdk.git#v1.0.1":
-  version "1.0.0"
-  resolved "git+ssh://git@github.com/UnumID/react-web-sdk.git#300b4bdcd81c5a023a7ddb4c725f7f476305a631"
+"@unumid/react-web-sdk@git+ssh://git@github.com/UnumID/react-web-sdk.git#1.0.10":
+  version "1.0.10"
+  resolved "git+ssh://git@github.com/UnumID/react-web-sdk.git#a71c50ebdc3a69807cefd6e05c50442d4190f4ab"
   dependencies:
     axios "^0.21.1"
 
-"@unumid/types@git+ssh://git@github.com/UnumID/types.git#1.5.0":
-  version "1.5.0"
-  resolved "git+ssh://git@github.com/UnumID/types.git#ed25da7c28fa6a3de2e242442e9d512e1b0875d2"
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#1.5.0", "@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
+  version "0.0.1"
+  resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
   dependencies:
     runtypes "^6.0.0"
 
-"@unumid/types@git+ssh://git@github.com/UnumID/types.git#v1.3.0":
-  version "0.0.1"
-  resolved "git+ssh://git@github.com/UnumID/types.git#a7899835c351d1a2f2402cc308bb1f3386189630"
+"@unumid/types@git+ssh://git@github.com/UnumID/types.git#1.5.1":
+  version "1.5.1"
+  resolved "git+ssh://git@github.com/UnumID/types.git#90a8e6882261e52787bb6d193bcfba00c400c79d"
   dependencies:
     runtypes "^6.0.0"
 
