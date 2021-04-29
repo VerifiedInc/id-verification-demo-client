@@ -19,3 +19,8 @@ export const resetState = () => async (dispatch: Dispatch): Promise<void> => {
   dispatch(resetUserState());
   await logout()(dispatch);
 };
+
+export const startOver = () => (dispatch: Dispatch): void => {
+  dispatch(resetPresentationState());
+  dispatch(resetPresentationRequestState());
+};

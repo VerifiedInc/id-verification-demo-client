@@ -1,5 +1,5 @@
 import { issuerClient } from '../../../feathers';
-import { resetState } from '../../../state/actionCreators';
+import { resetState, startOver } from '../../../state/actionCreators';
 import { AuthActionType } from '../../../state/actionTypes/auth';
 import { PresentationActionType } from '../../../state/actionTypes/presentation';
 import { PresentationRequestActionType } from '../../../state/actionTypes/presentationRequest';
@@ -33,6 +33,29 @@ describe('combined action creators', () => {
     it('logs out the user and dispatches a LogoutAction', () => {
       expect(dispatch).toBeCalledWith({ type: AuthActionType.LOG_OUT });
       expect(issuerClient.logout).toBeCalled();
+    });
+  });
+
+  describe('startOver', () => {
+    const dispatch = jest.fn();
+
+    beforeEach(() => {
+      startOver()(dispatch);
+    });
+
+    it('dispatches a ResetPresentationState action', () => {
+      expect(dispatch).toBeCalledWith({ type: PresentationActionType.RESET_PRESENTATION_STATE });
+    });
+
+    it('dispatches a ResetPresentationRequestState action', () => {
+      expect(dispatch).toBeCalledWith({ type: PresentationActionType.RESET_PRESENTATION_STATE });
+    });
+
+    it('does not reset user or session state or log out', () => {
+      expect(dispatch).not.toBeCalledWith({ type: SessionActionType.RESET_SESSION_STATE });
+      expect(dispatch).not.toBeCalledWith({ type: UserActionType.RESET_USER_STATE });
+      expect(dispatch).not.toBeCalledWith({ type: AuthActionType.LOG_OUT });
+      expect(issuerClient.logout).not.toBeCalled();
     });
   });
 });

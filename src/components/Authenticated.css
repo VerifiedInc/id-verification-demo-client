@@ -10,3 +10,12 @@
 .authenticated .logout:hover {
   font-weight: 700;
 }
+
+.authenticated .start-over {
+  color: #1f61cc;
+  cursor: pointer;
+}
+
+.authenticated .start-over:hover {
+  font-weight: 700;
+}

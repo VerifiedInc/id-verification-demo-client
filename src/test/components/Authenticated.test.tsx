@@ -30,4 +30,24 @@ describe('Authenticated component', () => {
     render(component);
     expect(screen.getByText(`Authenticated as ${dummyPresentation.verifiableCredentials[0].credentialSubject.userEmail}!`)).toBeInTheDocument();
   });
+
+  it('displays Log Out link', () => {
+    store.dispatch({
+      type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
+      payload: dummyDemoPresentationDto
+    });
+
+    render(component);
+    expect(screen.getByText('Log Out')).toBeInTheDocument();
+  });
+
+  it('displays Start Over link', () => {
+    store.dispatch({
+      type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
+      payload: dummyDemoPresentationDto
+    });
+
+    render(component);
+    expect(screen.getByText('Start Over')).toBeInTheDocument();
+  });
 });
