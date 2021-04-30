@@ -60,11 +60,11 @@ const Authentication: FC = () => {
 
     // now that we've created the request, listen for a presentation
     const presentationService = verifierClient.service('presentationWebsocket');
-    presentationService.on('created', (data: DemoPresentationDto | DemoNoPresentationDto) => {
+    presentationService.on('created', async (data: DemoPresentationDto | DemoNoPresentationDto) => {
       console.log('on presentation created, data', data);
 
       if (isDemoPresentationDto(data)) {
-        handlePresentationShared(data);
+        await handlePresentationShared(data);
 
         // customize this route for the specific demo if you want
         history.push('/authenticated');

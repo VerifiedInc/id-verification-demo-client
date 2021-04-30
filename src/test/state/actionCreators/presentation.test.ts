@@ -6,18 +6,32 @@ import {
   handlePresentationSharedError,
   resetPresentationState
 } from '../../../state/actionCreators/presentation';
+import { login } from '../../../state/actionCreators/auth';
 import { PresentationActionType } from '../../../state/actionTypes/presentation';
 import { dummyDemoPresentationDto, dummyDemoNoPresentationDto } from '../../mocks';
 
+jest.mock('../../../state/actionCreators/auth');
 describe('presentation action creators', () => {
   describe('handlePresentationShared', () => {
-    it('returns a PresentationSharedSuccessAction', () => {
-      const action = handlePresentationShared(dummyDemoPresentationDto);
+    it('logs the user in', async () => {
+      const mockInnerLogin = jest.fn();
+      (login as jest.Mock).mockReturnValue(mockInnerLogin);
+      const dispatch = jest.fn();
+      await handlePresentationShared(dummyDemoPresentationDto)(dispatch);
+
+      expect(mockInnerLogin).toBeCalled();
+    });
+
+    it('dispatches a PresentationSharedSuccessAction', async () => {
+      const mockInnerLogin = jest.fn();
+      (login as jest.Mock).mockReturnValue(mockInnerLogin);
+      const dispatch = jest.fn();
+      await handlePresentationShared(dummyDemoPresentationDto)(dispatch);
       const expected = {
         type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
         payload: dummyDemoPresentationDto
       };
-      expect(action).toEqual(expected);
+      expect(dispatch).toBeCalledWith(expected);
     });
   });
 
