@@ -3,7 +3,7 @@ import { GeneralError } from '@feathersjs/errors';
 import reducer, { initialState } from '../../../state/reducers/presentation';
 import { PresentationActionType } from '../../../state/actionTypes/presentation';
 import { PresentationAction } from '../../../state/actions/presentation';
-import { dummyDemoPresentationDto, dummyDemoNoPresentationDto } from '../../mocks';
+import { dummyDeprecatedDemoPresentationDto, dummyDeprecatedDemoNoPresentationDto } from '../../mocks';
 
 describe('presentationReducer', () => {
   it('sets an initial state', () => {
@@ -21,12 +21,12 @@ describe('presentationReducer', () => {
   it(`handles actions with type ${PresentationActionType.PRESENTATION_SHARED_SUCCESS}`, () => {
     const action: PresentationAction = {
       type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoPresentationDto
+      payload: dummyDeprecatedDemoPresentationDto
     };
 
     const state = reducer(initialState, action);
     const expected = {
-      sharedPresentation: dummyDemoPresentationDto,
+      sharedPresentation: dummyDeprecatedDemoPresentationDto,
       sharedNoPresentation: null,
       error: null
     };
@@ -36,13 +36,13 @@ describe('presentationReducer', () => {
   it(`handles actions with type ${PresentationActionType.NOPRESENTATION_SHARED_SUCCESS}`, () => {
     const action: PresentationAction = {
       type: PresentationActionType.NOPRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoNoPresentationDto
+      payload: dummyDeprecatedDemoNoPresentationDto
     };
 
     const state = reducer(initialState, action);
     const expected = {
       sharedPresentation: null,
-      sharedNoPresentation: dummyDemoNoPresentationDto,
+      sharedNoPresentation: dummyDeprecatedDemoNoPresentationDto,
       error: null
     };
     expect(state).toEqual(expected);
@@ -71,7 +71,7 @@ describe('presentationReducer', () => {
 
     const state = reducer({
       ...initialState,
-      sharedPresentation: dummyDemoPresentationDto
+      sharedPresentation: dummyDeprecatedDemoPresentationDto
     }, action);
     expect(state).toEqual(initialState);
   });

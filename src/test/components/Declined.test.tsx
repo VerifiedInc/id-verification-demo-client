@@ -5,7 +5,7 @@ import { MemoryRouter } from 'react-router-dom';
 import Declined from '../../components/Declined';
 import { store } from '../../state';
 import { PresentationActionType } from '../../state/actionTypes/presentation';
-import { dummyDemoNoPresentationDto } from '../mocks';
+import { dummyDeprecatedDemoNoPresentationDto } from '../mocks';
 
 describe('Declined component', () => {
   const component = (
@@ -24,7 +24,7 @@ describe('Declined component', () => {
   it('displays Declined if there is a presentation in state', () => {
     store.dispatch({
       type: PresentationActionType.NOPRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoNoPresentationDto
+      payload: dummyDeprecatedDemoNoPresentationDto
     });
 
     render(component);

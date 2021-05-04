@@ -4,8 +4,9 @@ import { MemoryRouter } from 'react-router-dom';
 
 import Authenticated from '../../components/Authenticated';
 import { store } from '../../state';
+import { AuthActionType } from '../../state/actionTypes/auth';
 import { PresentationActionType } from '../../state/actionTypes/presentation';
-import { dummyDemoPresentationDto, dummyPresentation } from '../mocks';
+import { dummyDeprecatedDemoPresentationDto, dummyDeprecatedPresentation, dummyLocalAuthResult } from '../mocks';
 
 describe('Authenticated component', () => {
   const component = (
@@ -21,20 +22,25 @@ describe('Authenticated component', () => {
     expect(screen.queryByText('Authenticated')).not.toBeInTheDocument();
   });
 
-  it('displays Authenticated if there is a presentation in state', () => {
+  it('displays Authenticated if there is a (deprecated) presentation in state and a logged in user', () => {
     store.dispatch({
       type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoPresentationDto
+      payload: dummyDeprecatedDemoPresentationDto
+    });
+
+    store.dispatch({
+      type: AuthActionType.LOCAL_STRATEGY_SUCCESS,
+      payload: dummyLocalAuthResult
     });
 
     render(component);
-    expect(screen.getByText(`Authenticated as ${dummyPresentation.verifiableCredentials[0].credentialSubject.userEmail}!`)).toBeInTheDocument();
+    expect(screen.getByText(`Authenticated as ${dummyLocalAuthResult.user.email}!`)).toBeInTheDocument();
   });
 
   it('displays Log Out link', () => {
     store.dispatch({
       type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoPresentationDto
+      payload: dummyDeprecatedDemoPresentationDto
     });
 
     render(component);
@@ -44,7 +50,7 @@ describe('Authenticated component', () => {
   it('displays Start Over link', () => {
     store.dispatch({
       type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoPresentationDto
+      payload: dummyDeprecatedDemoPresentationDto
     });
 
     render(component);

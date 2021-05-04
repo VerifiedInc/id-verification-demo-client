@@ -9,7 +9,7 @@ import { PresentationActionType } from '../../../state/actionTypes/presentation'
 import { PresentationRequestActionType } from '../../../state/actionTypes/presentationRequest';
 import { SessionActionType } from '../../../state/actionTypes/session';
 import { initialState } from '../../../state/reducers';
-import { dummyDemoPresentationDto, dummyDemoPresentationRequestoDto, dummySession } from '../../mocks';
+import { dummyDeprecatedDemoPresentationDto, dummyDemoPresentationRequestoDto, dummySession } from '../../mocks';
 
 const mockHistory = {
   push: jest.fn()
@@ -49,7 +49,7 @@ describe('LogoutTab component', () => {
     });
     store.dispatch({
       type: PresentationActionType.PRESENTATION_SHARED_SUCCESS,
-      payload: dummyDemoPresentationDto
+      payload: dummyDeprecatedDemoPresentationDto
     });
 
     render(component);
