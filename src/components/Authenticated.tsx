@@ -27,7 +27,7 @@ const Authenticated: FC = () => {
     <div className='authenticated'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout/content, etc */}
-        <h3><BoldFont>Authenticated as {loggedInUser.email}!</BoldFont></h3>
+        <h3><BoldFont>Authenticated as {loggedInUser.firstName || loggedInUser.email}!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>

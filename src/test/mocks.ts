@@ -180,11 +180,13 @@ export const dummyDeprecatedDemoNoPresentationDto: DeprecatedDemoNoPresentationD
 
 export const dummyUserCreateOptions: DemoUserCreateOptions = {
   email: 'test@unum.id',
+  firstName: 'Gizmo',
   password: 'test'
 };
 
 export const dummyUser: DemoUser = {
   email: dummyUserCreateOptions.email,
+  firstName: dummyUserCreateOptions.firstName,
   uuid: v4(),
   createdAt: now,
   updatedAt: now,

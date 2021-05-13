@@ -6,7 +6,7 @@ import Authenticated from '../../components/Authenticated';
 import { store } from '../../state';
 import { AuthActionType } from '../../state/actionTypes/auth';
 import { PresentationActionType } from '../../state/actionTypes/presentation';
-import { dummyDeprecatedDemoPresentationDto, dummyDeprecatedPresentation, dummyLocalAuthResult } from '../mocks';
+import { dummyDeprecatedDemoPresentationDto, dummyLocalAuthResult } from '../mocks';
 
 describe('Authenticated component', () => {
   const component = (
@@ -34,7 +34,7 @@ describe('Authenticated component', () => {
     });
 
     render(component);
-    expect(screen.getByText(`Authenticated as ${dummyLocalAuthResult.user.email}!`)).toBeInTheDocument();
+    expect(screen.getByText(`Authenticated as ${dummyLocalAuthResult.user.firstName}!`)).toBeInTheDocument();
   });
 
   it('displays Log Out link', () => {
