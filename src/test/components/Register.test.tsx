@@ -19,10 +19,11 @@ describe('Register', () => {
     expect(screen.getByText('1.', { exact: false })).toBeInTheDocument();
   });
 
-  it('shows email, password, and phone inputs', () => {
+  it('shows email, password, first name, and phone inputs', () => {
     render(component);
     expect(screen.getByLabelText('Email', { exact: false })).toBeInTheDocument();
     expect(screen.getByLabelText('Password', { exact: false })).toBeInTheDocument();
+    expect(screen.getByLabelText('First Name', { exact: false })).toBeInTheDocument();
     expect(screen.getByLabelText('Phone', { exact: false })).toBeInTheDocument();
   });
 

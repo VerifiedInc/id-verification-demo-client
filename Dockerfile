@@ -10,11 +10,11 @@ RUN apk update && \
 WORKDIR /app
 
 COPY package.json /app/
-COPY yarn.lock /app/
+COPY package-lock.json /app/
 
 RUN mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 
-RUN --mount=type=ssh,id=github yarn install
+RUN --mount=type=ssh,id=github npm ci
 
 COPY ./ /app/
 
@@ -29,7 +29,7 @@ ENV REACT_APP_ISSUER_DID=${ISSUER_DID}
 ENV REACT_APP_ENV=${ENV}
 ENV REACT_APP_API_KEY=${API_KEY}
 
-RUN yarn build
+RUN SKIP_PREFLIGHT_CHECK=true npm run build
 
 # Stage 1, based on Nginx, to have only the compiled app, ready for production with Nginx
 FROM nginx:1.15

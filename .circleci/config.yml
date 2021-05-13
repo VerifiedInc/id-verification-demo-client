@@ -11,27 +11,34 @@ jobs:
       - image: circleci/node:14.15.0
     steps:
       - checkout
-      - restore_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}--{{ arch }}
+      - restore_cache: # ref: https://circleci.com/docs/2.0/caching/#restoring-cache
+          keys:
+            # Find a cache corresponding to this specific package-lock.json checksum
+            # when this file is changed, this key will fail
+            - v1-npm-deps-{{ checksum "package-lock.json" }}
+            # Find the most recently generated cache used from any branch
+            - v1-npm-deps-
 
       - restore_cache:
-          key: node-v1-{{ checksum "package.json" }}--{{ arch }}
+          key: node-v1-{{ checksum "package.json" }}
 
-      - run: yarn install
-
-      - save_cache:
-          key: yarn-v1-{{ checksum "yarn.lock" }}--{{ arch }}
-          paths:
-            - .cache/yarn
+      - run: npm ci
 
       - save_cache:
-          key: node-v1-{{ checksum "package.json" }}--{{ arch }}
+          key: v1-npm-deps-{{ checksum "package-lock.json" }}
           paths:
             - node_modules
 
+      - save_cache:
+          key: node-v1-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+
+      - run: npm run lint
+
       - run:
-          name: test
-          command: yarn test
+          name: Jest Tests
+          command: npm run test
 
   build-and-push-image:
     executor: aws-cli/default

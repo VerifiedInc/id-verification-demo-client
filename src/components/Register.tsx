@@ -16,6 +16,7 @@ import Italic from './Layout/Italic';
 const Register: FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  const [firstName, setFirstName] = useState('');
   const [password] = useState('password');
   const [formErrorMessage, setFormErrorMessage] = useState('');
 
@@ -41,6 +42,10 @@ const Register: FC = () => {
     setPhone(e.target.value);
   };
 
+  const handleFirstNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    setFirstName(e.target.value);
+  };
+
   const handleSubmit: MouseEventHandler = (e) => {
     e.preventDefault();
 
@@ -58,7 +63,7 @@ const Register: FC = () => {
       return;
     }
 
-    createUser({ email, password, phone });
+    createUser({ email, password, phone, firstName });
   };
 
   return (
@@ -118,6 +123,18 @@ const Register: FC = () => {
                   value={password}
                   disabled
                   explainerBoldText='This password is not checked'
+                />
+
+                <InputGroup
+                  required
+                  labelText='First Name'
+                  inputId='first-name'
+                  type='text'
+                  onChange={handleFirstNameChange}
+                  value={firstName}
+                  disabled={false}
+                  explainerBoldText='Your first name:'
+                  explainerText='We&apos;ll display this to show you when you&apos;ve authenticated'
                 />
 
                 <InputGroup
