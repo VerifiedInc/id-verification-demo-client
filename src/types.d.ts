@@ -7,12 +7,12 @@ import { DemoPresentationDto } from '@unumid/demo-types';
 import {
   Presentation as DeprecatedPresentation,
   NoPresentation as DeprecatedNoPresentation
-} from '@unumid/types-deprecated';
+} from '@unumid/types-deprecated-v1';
 
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 export type FCWithClassName<P = {}> = FC<P & { className?: string }>;

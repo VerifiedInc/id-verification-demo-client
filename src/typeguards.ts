@@ -2,12 +2,12 @@ import { DemoPresentationDto } from '@unumid/demo-types';
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 import { Presentation } from '@unumid/types';
 import {
   NoPresentation as DeprecatedNoPresentation,
   Presentation as DeprecatedPresentation
-} from '@unumid/types-deprecated';
+} from '@unumid/types-deprecated-v1';
 
 import {
   AcceptedPresentation,

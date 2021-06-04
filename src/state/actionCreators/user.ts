@@ -12,6 +12,7 @@ export const createUser = (options: DemoUserCreateOptions) => {
     dispatch({ type: UserActionType.CREATE_USER, payload: options });
     const service = issuerClient.service('user');
     try {
+      // const user = await service.create(options, {query: {version: '3.0.0'}});
       const user = await service.create(options);
       dispatch({
         type: UserActionType.CREATE_USER_SUCCESS,

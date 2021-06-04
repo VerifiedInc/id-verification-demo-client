@@ -8,12 +8,12 @@ import {
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 import { PresentationRequestPostDto } from '@unumid/types';
 import {
   Presentation as DeprecatedPresentation,
   NoPresentation as DeprecatedNoPresentation
-} from '@unumid/types-deprecated';
+} from '@unumid/types-deprecated-v1';
 import { v4 } from 'uuid';
 
 import {
@@ -41,9 +41,10 @@ export const dummySession: DemoSession = {
 export const dummyDemoPresentationRequestCreateOptions: DemoPresentationRequestCreateOptions = {
   credentialRequests: [{
     type: 'TestCredential',
-    issuers: [dummyIssuerDid]
+    issuers: [dummyIssuerDid],
+    required: true
   }],
-  metadata: { sessionUuid: v4() }
+  metadata: { fields: { sessionUuid: v4() } }
 };
 
 export const dummyHolderAppInfo = {
@@ -61,7 +62,8 @@ export const dummyPresentationRequestPostDto: PresentationRequestPostDto = {
     verifier: dummyVerifierDid,
     credentialRequests: [{
       type: 'TestCredential',
-      issuers: [dummyIssuerDid]
+      issuers: [dummyIssuerDid],
+      required: true
     }],
     proof: {
       created: now.toISOString(),
@@ -71,8 +73,9 @@ export const dummyPresentationRequestPostDto: PresentationRequestPostDto = {
       verificationMethod: dummyVerifierDidWithFragment,
       proofPurpose: 'assertionMethod'
     },
-    metadata: {},
-    holderAppUuid: dummyHolderAppUuid
+    metadata: undefined,
+    holderAppUuid: dummyHolderAppUuid,
+    id: v4()
   },
   verifier: {
     name: 'test verifier',

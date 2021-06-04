@@ -3,7 +3,7 @@ import { DemoPresentationDto } from '@unumid/demo-types';
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 
 import { PresentationAction } from '../actions/presentation';
 import { PresentationActionType } from '../actionTypes/presentation';

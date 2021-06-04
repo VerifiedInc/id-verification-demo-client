@@ -1,9 +1,8 @@
 import { FeathersError } from '@feathersjs/errors';
-import { DemoPresentationDto } from '@unumid/demo-types';
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 import { Dispatch } from 'redux';
 
 import {

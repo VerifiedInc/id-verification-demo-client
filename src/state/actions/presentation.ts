@@ -2,7 +2,7 @@ import { DemoPresentationDto } from '@unumid/demo-types';
 import {
   DemoPresentationDto as DeprecatedDemoPresentationDto,
   DemoNoPresentationDto as DeprecatedDemoNoPresentationDto
-} from '@unumid/demo-types-deprecated';
+} from '@unumid/demo-types-deprecated-v1';
 
 import { PresentationActionType } from '../actionTypes/presentation';
 import { ActionWithoutPayload, ActionWithPayload, FeathersErrorAction } from './base';
