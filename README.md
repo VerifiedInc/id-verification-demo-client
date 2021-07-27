@@ -1,3 +1,8 @@
+# ACME Demo Client
+> This project acts as a frontend for a fictional customer, Acme, which uses Unum ID for the [beyond passwordless](https://www.unum.id/solutions/beyond-passwordless) solution for authentication.
+
+Information about the Unum ID demo ecosystem can be found in our [documentation](https://docs.unum.id/#demos).
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -44,3 +49,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Release Instructions
+### Dev
+Just merging changes to `main` will trigger automated deployments to dev.
+
+### Sandbox
+To release version of this project to sandbox push a tag with a preceding `v`. This will trigger an automated deployment to sandbox.
