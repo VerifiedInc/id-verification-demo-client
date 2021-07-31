@@ -60,6 +60,9 @@ jobs:
       issuer_did:
         type: string
         default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
+      log_rocket_id:
+        type: string
+        default: "vm6x8i/acme-verifier-client-dev"
 
     steps:
       - checkout
@@ -74,7 +77,7 @@ jobs:
             echo Logging in to Amazon ECR...
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${DEV_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${DEV_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> -t ${CIRCLE_SHA1} .
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
             echo Pushing the Docker image...
@@ -102,6 +105,9 @@ jobs:
       issuer_did:
         type: string
         default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6"
+      log_rocket_id:
+        type: string
+        default: "vm6x8i/acme-verifier-client-sandbox"
 
     steps:
       - checkout
@@ -116,7 +122,7 @@ jobs:
             echo Logging in to Amazon ECR...
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${SANDBOX_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> -t ${CIRCLE_SHA1} .
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${SANDBOX_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> -t ${CIRCLE_SHA1} .
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-latest
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
             echo Pushing the Docker image...
