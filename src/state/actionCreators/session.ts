@@ -6,11 +6,13 @@ import { SessionAction, ResetSessionStateAction } from '../actions/session';
 
 export const createSession = () => {
   return async (dispatch: Dispatch<SessionAction>): Promise<void> => {
+    console.log('createSession', new Date().toISOString());
     dispatch({ type: SessionActionType.CREATE_SESSION });
 
     const service = verifierClient.service('session');
     try {
       const session = await service.create({});
+      console.log('createSession success', session);
       dispatch({
         type: SessionActionType.CREATE_SESSION_SUCCESS,
         payload: session

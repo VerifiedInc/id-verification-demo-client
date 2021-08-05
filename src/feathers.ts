@@ -7,7 +7,7 @@ import { config } from './config';
 const verifierClient = feathers();
 const issuerClient = feathers();
 
-const verifierSocket = socketio(config.verifierServerUrl);
+export const verifierSocket = socketio(config.verifierServerUrl);
 const issuerSocket = socketio(config.issuerServerUrl);
 
 verifierClient.configure(feathersSocketio(verifierSocket));

@@ -13,6 +13,7 @@ import Register from './Register';
 import Login from './Login';
 import Unumid from './Layout/Unumid';
 import Acme from './Layout/Acme';
+import { verifierClient, verifierSocket } from '../feathers';
 
 const App: FC = () => {
   const { createSession } = useActionCreators();
@@ -22,6 +23,32 @@ const App: FC = () => {
     if (!session) {
       createSession();
     }
+  }, [session]);
+
+  useEffect(() => {
+    verifierSocket.on('connect', async (...args: any[]) => {
+      console.log('verifier socket connect', args);
+
+      // attempt to re-join the session channel
+      console.log('session', session);
+      if (session) {
+        console.log(`joining session channel ${session.uuid}`);
+        try {
+          await verifierClient.service('channel').create({ channel: session.uuid });
+          console.log(`joined session channel ${session.uuid}`);
+        } catch (e) {
+          console.error(`error joining session channel ${session.uuid}`, e);
+        }
+      }
+    });
+
+    verifierSocket.on('disconnect', (...args: any[]) => {
+      console.log('verifier socket disconnect', args);
+    });
+
+    return () => {
+      verifierSocket.removeAllListeners();
+    };
   }, [session]);
 
   return (

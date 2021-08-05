@@ -4,6 +4,7 @@ orbs:
   aws-cli: circleci/aws-cli@0.1.22
   aws-eks: circleci/aws-eks@0.2.3
   kubernetes: circleci/kubernetes@0.4.0
+  slack: circleci/slack@4.4.2 # ref: https://github.com/CircleCI-Public/slack-orb, https://circleci.com/developer/orbs/orb/circleci/slack#usage-examples
 
 jobs:
   test:
@@ -34,7 +35,8 @@ jobs:
           paths:
             - node_modules
 
-      - run: npm run lint
+      # disabling until lint config is fixed
+      # - run: npm run lint
 
       - run:
           name: Jest Tests
@@ -79,10 +81,55 @@ jobs:
             echo Building the Docker image...
             DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${DEV_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> -t ${CIRCLE_SHA1} .
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
             echo Pushing the Docker image...
-            docker push << parameters.reg >>/<< parameters.repo >>:dev-"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            docker push << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
             docker push << parameters.reg >>/<< parameters.repo >>:dev-latest
+          name: Update container image
+
+  build-and-push-image-test:
+    executor: aws-cli/default
+    parameters:
+      reg:
+        type: string
+        default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
+      repo:
+        type: string
+      env:
+        type: string
+        default: "development"
+      issuer_server_url:
+        type: string
+        default: "https://issuer-api.demo.dev-unum.id"
+      verifier_server_url:
+        type: string
+        default: "https://acme-verifier-api.demo.dev-unum.id"
+      issuer_did:
+        type: string
+        default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
+      log_rocket_id:
+        type: string
+        default: "vm6x8i/acme-verifier-client-dev"
+
+    steps:
+      - checkout
+      - aws-cli/setup
+      - setup_remote_docker:
+          version: 19.03.13
+      - add_ssh_keys:
+          fingerprints:
+            - "ae:c4:5c:af:ef:ea:57:12:99:a3:bb:aa:09:e0:57:14"
+      - run:
+          command: |
+            echo Logging in to Amazon ECR...
+            $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
+            echo Building the Docker image...
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${DEV_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> -t ${CIRCLE_SHA1} .
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:test-latest
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            echo Pushing the Docker image...
+            docker push << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            docker push << parameters.reg >>/<< parameters.repo >>:test-latest
           name: Update container image
 
   build-and-push-image-sandbox:
@@ -148,8 +195,25 @@ jobs:
           cluster-name: << parameters.cluster-name >>
       - run:
           command: |
-            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:"dev-${CIRCLE_BRANCH}-${CIRCLE_PREVIOUS_BUILD_NUM}"
+            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_PREVIOUS_BUILD_NUM}"
+
+            # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
+            # ref: https://www.jeffgeerling.com/blog/2018/updating-kubernetes-deployment-and-waiting-it-roll-out-shell-script
+            ATTEMPTS=0
+            ROLLOUT_STATUS_CMD="kubectl rollout status deployment/<< parameters.deployment >>"
+            until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
+              $ROLLOUT_STATUS_CMD
+              ATTEMPTS=$((attempts + 1))
+              sleep 10
+            done
           name: Update container image
+      - slack/notify:
+          event: fail
+          mentions: '@devops-team'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: basic_success_1
 
   deploy-image-sandbox:
     parameters:
@@ -174,7 +238,24 @@ jobs:
       - run:
           command: |
             kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}" -n << parameters.namespace >>
+
+            # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
+            # ref: https://www.jeffgeerling.com/blog/2018/updating-kubernetes-deployment-and-waiting-it-roll-out-shell-script
+            ATTEMPTS=0
+            ROLLOUT_STATUS_CMD="kubectl rollout status deployment/<< parameters.deployment >>"
+            until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
+              $ROLLOUT_STATUS_CMD
+              ATTEMPTS=$((attempts + 1))
+              sleep 10
+            done
           name: Update container image
+      - slack/notify:
+          event: fail
+          mentions: '@devops-team'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 
 workflows:
   build-and-deploy-release:
@@ -198,9 +279,11 @@ workflows:
               ignore: /.*/
 
       - deploy-image-sandbox:
+          context: 
+            - AWS-Dev
+            - Slack-Context
           requires:
             - build-and-push-image-sandbox
-          context: AWS-Dev
           repo: acme-demo-client
           deployment: acme-demo-client
           filters:
@@ -218,6 +301,7 @@ workflows:
                 - main
                 - test-circleci
                 - sandbox
+
   build-and-deploy:
     jobs:
       - test:
@@ -225,8 +309,6 @@ workflows:
             branches:
               only:
                 - main
-                - test-circleci
-                - sandbox
       - build-and-push-image:
           requires:
             - test
@@ -236,10 +318,11 @@ workflows:
             branches:
               only:
                 - main
-                - test-circleci
 
       - deploy-image:
-          context: AWS-Dev
+          context: 
+            - AWS-Dev
+            - Slack-Context
           repo: acme-demo-client
           deployment: acme-demo-client
           requires:
@@ -248,4 +331,33 @@ workflows:
             branches:
               only:
                 - main
+
+  build-and-deploy-test:
+    jobs:
+      - test:
+          filters:
+            branches:
+              only:
+                - test-circleci
+      - build-and-push-image-test:
+          requires:
+            - test
+          context: AWS-Dev
+          repo: acme-demo-client
+          filters:
+            branches:
+              only:
+                - test-circleci
+
+      - deploy-image:
+          context: 
+            - AWS-Dev
+            - Slack-Context
+          repo: acme-demo-client
+          deployment: acme-demo-client
+          requires:
+            - build-and-push-image-test
+          filters:
+            branches:
+              only:
                 - test-circleci
