@@ -82,7 +82,7 @@ const Register: FC = () => {
             <>
               <h2>2. Install ACME App</h2>
               <p>
-                Great, you're registered! Now, install the ACME app from the <a>Apple App Store</a> (for iOS) or <a>Google Play Store</a> (for Android).
+                Great, you're registered! Now, install the ACME app from the <a href='https://apps.apple.com/us/app/acme-unum-id/id1557576599'>Apple App Store</a> (for iOS) or <a href='https://play.google.com/store/apps/details?id=org.unumid.acmedemokotlin.sandbox&hl=en_GB&gl=US'>Google Play Store</a> (for Android).
               </p>
               <p>
                 You can get there by clicking the links above, scanning the QR Code below, or searching "ACME Unum ID" on the app stores.
