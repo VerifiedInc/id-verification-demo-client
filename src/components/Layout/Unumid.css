@@ -1,10 +1,19 @@
 .unum-id {
   font-family: Lato;
   font-weight: 300;
-  padding: 100px;
   text-align: left;
   background-color: var(--unumid-background-color);
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.unum-id-inner {
+  padding: 100px;
+}
+
+.unum-id .spacer {
+  flex: 1;
 }
 
 .unum-id h1, .unum-id h2 {

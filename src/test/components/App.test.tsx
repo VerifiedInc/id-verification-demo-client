@@ -24,7 +24,7 @@ describe('app', () => {
       .calledWith('presentationRequest').mockReturnValue({ create: mockPresentationRequestCreate })
       .calledWith('presentationWebsocket').mockReturnValue({ on: mockOn, removeAllListeners: jest.fn() });
 
-    render(<Provider store={store}><App /></Provider>);
+    render(<div id='root'><Provider store={store}><App /></Provider></div>);
   });
 
   it('creates a session', () => {

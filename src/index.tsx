@@ -1,15 +1,16 @@
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { store } from './state';
+import LogRocket from 'logrocket';
 
 import 'typeface-open-sans';
 import 'typeface-playfair-display';
 import 'typeface-lato';
 
+import { store } from './state';
 import App from './components/App';
 import './index.css';
+import { config } from './config';
 
-import LogRocket from 'logrocket';
-LogRocket.init(process.env.REACT_APP_LOG_ROCKET_ID as string);
+LogRocket.init(config.logRocketId);
 
 render(<Provider store={store}><App /></Provider>, document.querySelector('#root'));
