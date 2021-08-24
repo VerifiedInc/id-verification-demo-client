@@ -35,8 +35,7 @@ jobs:
           paths:
             - node_modules
 
-      # disabling until lint config is fixed
-      # - run: npm run lint
+      - run: npm run lint
 
       - run:
           name: Jest Tests

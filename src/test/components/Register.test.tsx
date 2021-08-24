@@ -5,8 +5,7 @@ import userEvent from '@testing-library/user-event';
 
 import Register from '../../components/Register';
 import { store } from '../../state';
-import { SessionActionType } from '../../state/actionTypes/session';
-import { dummyLocalAuthResult, dummySession, dummyUser } from '../mocks';
+import { dummyLocalAuthResult, dummyUser } from '../mocks';
 import { issuerClient } from '../../feathers';
 
 jest.mock('../../feathers');

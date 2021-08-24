@@ -1,13 +1,13 @@
 import { FeathersError } from '@feathersjs/errors';
 
-export interface Action<T extends string = any, P = any> {
+export interface Action<T extends string, P = unknown> {
   type: T,
   payload?: P;
 }
 
 export type ActionWithoutPayload<T extends string> = Omit<Action<T>, 'payload'>;
 
-export interface ActionWithPayload<T extends string, P = any> extends Action<T, P> {
+export interface ActionWithPayload<T extends string, P = unknown> extends Action<T, P> {
   payload: P;
 }
 

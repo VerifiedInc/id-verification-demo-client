@@ -82,7 +82,7 @@ const Register: FC = () => {
             <>
               <h2>2. Install ACME App</h2>
               <p>
-              Great, you're registered! Now, install the ACME app for <a href='https://apps.apple.com/us/app/acme-unum-id/id1557576599'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=org.unumid.acmedemokotlin.sandbox&hl=en_GB&gl=US'>Android</a>.
+                Great, you're registered! Now, install the ACME app for <a href='https://apps.apple.com/us/app/acme-unum-id/id1557576599'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=org.unumid.acmedemokotlin.sandbox&hl=en_GB&gl=US'>Android</a>.
               </p>
               <p>
                 You can get there by clicking the links above, scanning the QR Code below, or searching "ACME Unum ID" on the app stores.
@@ -96,7 +96,7 @@ const Register: FC = () => {
               </p>
               <Link to='/'><button type='button'>Continue</button></Link>
             </>
-          )
+            )
           : (
             <>
               <form>
@@ -156,7 +156,7 @@ const Register: FC = () => {
                 Already registered?&nbsp;<Link to='/login'>Log in here.</Link>
               </div>
             </>
-          )
+            )
       }
     </div>
   );

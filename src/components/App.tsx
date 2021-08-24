@@ -26,7 +26,7 @@ const App: FC = () => {
   }, [session]);
 
   useEffect(() => {
-    verifierSocket.on('connect', async (...args: any[]) => {
+    verifierSocket.on('connect', async (...args: unknown[]) => {
       console.log('verifier socket connect', args);
 
       // attempt to re-join the session channel
@@ -42,7 +42,7 @@ const App: FC = () => {
       }
     });
 
-    verifierSocket.on('disconnect', (...args: any[]) => {
+    verifierSocket.on('disconnect', (...args: unknown[]) => {
       console.log('verifier socket disconnect', args);
     });
 

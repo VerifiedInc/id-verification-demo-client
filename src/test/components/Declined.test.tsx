@@ -9,7 +9,7 @@ import { dummyDeprecatedDemoNoPresentationDto } from '../mocks';
 
 describe('Declined component', () => {
   const component = (
-    <Provider store={store} >
+    <Provider store={store}>
       <MemoryRouter>
         <Declined />
       </MemoryRouter>

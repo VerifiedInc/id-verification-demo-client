@@ -10,7 +10,7 @@ import { dummyDeprecatedDemoPresentationDto, dummyLocalAuthResult } from '../moc
 
 describe('Authenticated component', () => {
   const component = (
-    <Provider store={store} >
+    <Provider store={store}>
       <MemoryRouter>
         <Authenticated />
       </MemoryRouter>

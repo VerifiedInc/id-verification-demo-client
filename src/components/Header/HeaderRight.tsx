@@ -7,7 +7,7 @@ const HeaderRight: FCWithClassName = ({ children = null, className = undefined }
   const isMobile = useIsMobile();
   const classNames = className ? `header-right ${className}` : 'header-right';
   return (
-    <div className={classNames}>{ isMobile ? null : children}</div>
+    <div className={classNames}>{isMobile ? null : children}</div>
   );
 };
 

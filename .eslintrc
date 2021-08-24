@@ -6,7 +6,9 @@
     "jest"
   ],
   "extends": [
-    // "semistandard-react",
+    "semistandard",
+    "standard-jsx",
+    "standard-react",
     "plugin:@typescript-eslint/eslint-recommended",
     "plugin:@typescript-eslint/recommended"
   ],
@@ -15,7 +17,8 @@
     "@typescript-eslint/no-use-before-define": [
       "error"
     ],
-    "semistandard-react/prop-types": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off"
   },
   "settings": {
     "import/extensions": [

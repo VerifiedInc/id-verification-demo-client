@@ -1,7 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { useActionCreators } from './useActionCreators';
 
-export const useLogout = () => {
+export const useLogout = (): () => void => {
   const history = useHistory();
   const { resetState } = useActionCreators();
 

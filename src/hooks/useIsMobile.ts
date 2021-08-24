@@ -1,4 +1,4 @@
 
 import { useMediaQuery } from 'react-responsive';
 
-export const useIsMobile = () => useMediaQuery({ query: '(max-width: 1224px)' });
+export const useIsMobile = (): boolean => useMediaQuery({ query: '(max-width: 1224px)' });

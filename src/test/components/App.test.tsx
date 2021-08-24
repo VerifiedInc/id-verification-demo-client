@@ -6,7 +6,6 @@ import { store } from '../../../src/state';
 import App from '../../components/App';
 import { verifierClient } from '../../feathers';
 import { dummyDemoPresentationRequestoDto, dummySession } from '../mocks';
-import userEvent from '@testing-library/user-event';
 
 jest.mock('../../feathers');
 
