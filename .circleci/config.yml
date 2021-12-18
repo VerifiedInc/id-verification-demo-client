@@ -205,7 +205,7 @@ jobs:
               ATTEMPTS=$((attempts + 1))
               sleep 10
             done
-          name: Update container image
+          name: Deploy container image to dev
       - slack/notify:
           event: fail
           mentions: '@devops-team'
@@ -247,7 +247,7 @@ jobs:
               ATTEMPTS=$((attempts + 1))
               sleep 10
             done
-          name: Update container image
+          name: Deploy container image to sandbox
       - slack/notify:
           event: fail
           mentions: '@devops-team'
