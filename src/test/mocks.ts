@@ -68,7 +68,7 @@ export const dummyPresentationRequestPostDto: PresentationRequestPostDto = {
     proof: {
       created: now.toISOString(),
       signatureValue: 'dummy signature value',
-      unsignedValue: 'dummy unsigned value',
+      // unsignedValue: 'dummy unsigned value',
       type: 'secp256r1signature2020',
       verificationMethod: dummyVerifierDidWithFragment,
       proofPurpose: 'assertionMethod'
@@ -131,7 +131,6 @@ export const dummyDeprecatedPresentation: DeprecatedPresentation = {
       proof: {
         created: '2021-03-11T01:57:20.187Z',
         signatureValue: 'AN1rKvt22FJSY8NH89MENJfibsgqTbKwH7gBUqREMP6dSK8MhMUL2WX6smvEYNccVfppR1iXoycnoRos827UPTj1brEQk9h9G',
-        unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0","type":"CredentialStatus"},"credentialSubject":{"id":"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696","isAuthorized":true,"userEmail":"jacob@unum.id","userUuid":"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a"},"id":"808befa8-cb80-41f2-a092-3a2542bde1a0","issuanceDate":"2021-03-11T01:57:20.185Z","issuer":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520","type":["VerifiableCredential","DemoAuthCredential"]}',
         type: 'secp256r1Signature2020',
         verificationMethod: 'did:unum:8af05d2e-abda-466b-a70b-7c176401f520',
         proofPurpose: 'AssertionMethod'
@@ -146,8 +145,7 @@ export const dummyDeprecatedPresentation: DeprecatedPresentation = {
     signatureValue: '381yXZDJeBhH2fnJH1Uy6F4FmPVsSCUiCVgDcSVWu9hGfXgctgQKHNufWmRrJ1BH4wiSbsg74mtVu7356ZuS6xqKkdizDr6s',
     type: 'secp256r1Signature2020',
     verificationMethod: 'did:unum:9d79fab6-65d7-455d-9160-780b4c152ef6#38de59ae-d475-45b1-8d6b-38764aeec96f',
-    proofPurpose: 'assertionMethod',
-    unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"presentationRequestUuid":"d0c0c19f-cdfb-422c-b1a1-416e5a6ab890","type":["VerifiablePresentation"],"uuid":"1b42c5bd-f9e3-46ab-bf3a-1d886f712951","verifiableCredential":[{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0","type":"CredentialStatus"},"credentialSubject":{"id":"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696","isAuthorized":true,"userEmail":"jacob@unum.id","userUuid":"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a"},"id":"808befa8-cb80-41f2-a092-3a2542bde1a0","issuanceDate":"2021-03-11T01:57:20.185Z","issuer":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520","proof":{"created":"2021-03-11T01:57:20.187Z","proofPurpose":"AssertionMethod","signatureValue":"AN1rKvt22FJSY8NH89MENJfibsgqTbKwH7gBUqREMP6dSK8MhMUL2WX6smvEYNccVfppR1iXoycnoRos827UPTj1brEQk9h9G","type":"secp256r1Signature2020","unsignedValue":"{\\"@context\\":[\\"https://www.w3.org/2018/credentials/v1\\"],\\"credentialStatus\\":{\\"id\\":\\"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0\\",\\"type\\":\\"CredentialStatus\\"},\\"credentialSubject\\":{\\"id\\":\\"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696\\",\\"isAuthorized\\":true,\\"userEmail\\":\\"jacob@unum.id\\",\\"userUuid\\":\\"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a\\"},\\"id\\":\\"808befa8-cb80-41f2-a092-3a2542bde1a0\\",\\"issuanceDate\\":\\"2021-03-11T01:57:20.185Z\\",\\"issuer\\":\\"did:unum:8af05d2e-abda-466b-a70b-7c176401f520\\",\\"type\\":[\\"VerifiableCredential\\",\\"DemoAuthCredential\\"]}","verificationMethod":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520"},"type":["VerifiableCredential","DemoAuthCredential"]}]}'
+    proofPurpose: 'assertionMethod'
   }
 };
 
@@ -166,7 +164,6 @@ export const dummyDeprecatedNoPresentation: DeprecatedNoPresentation = {
   proof: {
     created: '2021-02-22T21:30:03.377Z',
     signatureValue: 'AN1rKvszAWeMwUW7ghrEG9BfWr7a5n9kWpvqQrW5bQKM9sCS4KDmiwX6PZidMNcYRTvwQ9RLyHELQu33TbcUPVwWEqE23wJHs',
-    unsignedValue: '{"holder":"did:unum:5b329cd1-4832-448c-8d7d-08f49e3c6c6d#bab80ad2-08ad-44e7-8549-3d10dd6f7c03","presentationRequestUuid":"256e9461-4b65-4941-a6cd-e379276a45b4","type":["NoPresentation","NoPresentation"]}',
     type: 'secp256r1Signature2020',
     verificationMethod: 'did:unum:5b329cd1-4832-448c-8d7d-08f49e3c6c6d#bab80ad2-08ad-44e7-8549-3d10dd6f7c03',
     proofPurpose: 'assertionMethod'
@@ -219,7 +216,7 @@ export const dummyAcceptedPresentation: AcceptedPresentation = {
   ],
   verifierDid: dummyVerifierDid,
   uuid: '1b42c5bd-f9e3-46ab-bf3a-1d886f712951',
-  presentationRequestUuid: 'd0c0c19f-cdfb-422c-b1a1-416e5a6ab890',
+  presentationRequestId: 'd0c0c19f-cdfb-422c-b1a1-416e5a6ab890',
   verifiableCredential: [
     {
       id: '808befa8-cb80-41f2-a092-3a2542bde1a0',
@@ -240,7 +237,6 @@ export const dummyAcceptedPresentation: AcceptedPresentation = {
       proof: {
         created: '2021-03-11T01:57:20.187Z',
         signatureValue: 'AN1rKvt22FJSY8NH89MENJfibsgqTbKwH7gBUqREMP6dSK8MhMUL2WX6smvEYNccVfppR1iXoycnoRos827UPTj1brEQk9h9G',
-        unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0","type":"CredentialStatus"},"credentialSubject":{"id":"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696","isAuthorized":true,"userEmail":"jacob@unum.id","userUuid":"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a"},"id":"808befa8-cb80-41f2-a092-3a2542bde1a0","issuanceDate":"2021-03-11T01:57:20.185Z","issuer":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520","type":["VerifiableCredential","DemoAuthCredential"]}',
         type: 'secp256r1Signature2020',
         verificationMethod: 'did:unum:8af05d2e-abda-466b-a70b-7c176401f520',
         proofPurpose: 'AssertionMethod'
@@ -255,8 +251,7 @@ export const dummyAcceptedPresentation: AcceptedPresentation = {
     signatureValue: '381yXZDJeBhH2fnJH1Uy6F4FmPVsSCUiCVgDcSVWu9hGfXgctgQKHNufWmRrJ1BH4wiSbsg74mtVu7356ZuS6xqKkdizDr6s',
     type: 'secp256r1Signature2020',
     verificationMethod: 'did:unum:9d79fab6-65d7-455d-9160-780b4c152ef6#38de59ae-d475-45b1-8d6b-38764aeec96f',
-    proofPurpose: 'assertionMethod',
-    unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"presentationRequestUuid":"d0c0c19f-cdfb-422c-b1a1-416e5a6ab890","type":["VerifiablePresentation"],"uuid":"1b42c5bd-f9e3-46ab-bf3a-1d886f712951","verifiableCredential":[{"@context":["https://www.w3.org/2018/credentials/v1"],"credentialStatus":{"id":"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0","type":"CredentialStatus"},"credentialSubject":{"id":"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696","isAuthorized":true,"userEmail":"jacob@unum.id","userUuid":"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a"},"id":"808befa8-cb80-41f2-a092-3a2542bde1a0","issuanceDate":"2021-03-11T01:57:20.185Z","issuer":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520","proof":{"created":"2021-03-11T01:57:20.187Z","proofPurpose":"AssertionMethod","signatureValue":"AN1rKvt22FJSY8NH89MENJfibsgqTbKwH7gBUqREMP6dSK8MhMUL2WX6smvEYNccVfppR1iXoycnoRos827UPTj1brEQk9h9G","type":"secp256r1Signature2020","unsignedValue":"{\\"@context\\":[\\"https://www.w3.org/2018/credentials/v1\\"],\\"credentialStatus\\":{\\"id\\":\\"https://api.dev-unumid.org//credentialStatus/808befa8-cb80-41f2-a092-3a2542bde1a0\\",\\"type\\":\\"CredentialStatus\\"},\\"credentialSubject\\":{\\"id\\":\\"did:unum:ab8cc239-c146-4d9d-8332-ac8182f94696\\",\\"isAuthorized\\":true,\\"userEmail\\":\\"jacob@unum.id\\",\\"userUuid\\":\\"eef4db1a-1310-4a60-9ef8-9ee5fc32fe8a\\"},\\"id\\":\\"808befa8-cb80-41f2-a092-3a2542bde1a0\\",\\"issuanceDate\\":\\"2021-03-11T01:57:20.185Z\\",\\"issuer\\":\\"did:unum:8af05d2e-abda-466b-a70b-7c176401f520\\",\\"type\\":[\\"VerifiableCredential\\",\\"DemoAuthCredential\\"]}","verificationMethod":"did:unum:8af05d2e-abda-466b-a70b-7c176401f520"},"type":["VerifiableCredential","DemoAuthCredential"]}]}'
+    proofPurpose: 'assertionMethod'
   }
 };
 
@@ -274,7 +269,7 @@ export const dummyDeclinedPresentation: DeclinedPresentation = {
   ],
   verifierDid: dummyVerifierDid,
   uuid: '1b42c5bd-f9e3-46ab-bf3a-1d886f712951',
-  presentationRequestUuid: 'd0c0c19f-cdfb-422c-b1a1-416e5a6ab890',
+  presentationRequestId: 'd0c0c19f-cdfb-422c-b1a1-416e5a6ab890',
   type: [
     'VerifiablePresentation'
   ],
@@ -283,8 +278,7 @@ export const dummyDeclinedPresentation: DeclinedPresentation = {
     signatureValue: '381yXZDJeBhH2fnJH1Uy6F4FmPVsSCUiCVgDcSVWu9hGfXgctgQKHNufWmRrJ1BH4wiSbsg74mtVu7356ZuS6xqKkdizDr6s',
     type: 'secp256r1Signature2020',
     verificationMethod: 'did:unum:9d79fab6-65d7-455d-9160-780b4c152ef6#38de59ae-d475-45b1-8d6b-38764aeec96f',
-    proofPurpose: 'assertionMethod',
-    unsignedValue: '{"@context":["https://www.w3.org/2018/credentials/v1"],"presentationRequestUuid":"d0c0c19f-cdfb-422c-b1a1-416e5a6ab890","type":["VerifiablePresentation"],"uuid":"1b42c5bd-f9e3-46ab-bf3a-1d886f712951","type":["VerifiableCredential","DemoAuthCredential"]}]}'
+    proofPurpose: 'assertionMethod'
   }
 };
 

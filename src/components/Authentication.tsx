@@ -50,7 +50,8 @@ const Authentication: FC = () => {
 
     const presentationRequestOptions: DemoPresentationRequestCreateOptions = {
       credentialRequests,
-      metadata: { fields: { sessionUuid: session.uuid } }
+      metadata: { fields: { sessionUuid: session.uuid } },
+      holderAppUuid: config.holderAppUuid
     };
 
     createPresentationRequest(presentationRequestOptions);
