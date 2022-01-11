@@ -327,7 +327,7 @@ workflows:
             - AWS-Dev
             - Slack-Context
           requires:
-            - build-and-push-image-sandbox
+            - build-and-push-unum-image-sandbox
           repo: acme-demo-client
           deployment: acme-unum-demo-client
           filters:
@@ -388,7 +388,7 @@ workflows:
           repo: acme-demo-client
           deployment: acme-unum-demo-client
           requires:
-            - build-and-push-image
+            - build-and-push-unum-image
           filters:
             branches:
               only:
