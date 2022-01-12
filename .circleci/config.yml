@@ -54,7 +54,6 @@ jobs:
         default: "development"
       issuer_server_url:
         type: string
-        default: "https://issuer-api.demo.dev-unum.id"
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.dev-unum.id"
@@ -101,7 +100,6 @@ jobs:
         default: "development"
       issuer_server_url:
         type: string
-        default: "https://issuer-api.demo.dev-unum.id"
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.dev-unum.id"
@@ -148,7 +146,6 @@ jobs:
         default: "sandbox"
       issuer_server_url:
         type: string
-        default: "https://issuer-api.demo.unum.id"
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.unum.id"
@@ -289,6 +286,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: f1e5393d-1b69-4c5c-bc5b-5ad161c8c084
+          issuer_server_url: https://issuer-api.demo.unum.id
           filters:
             tags:
               only: /^v.*/
@@ -316,6 +314,7 @@ workflows:
           context: AWS-Dev
           repo: acme-unum-demo-client
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
+          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
           filters:
             tags:
               only: /^v.*/
@@ -328,7 +327,7 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-unum-image-sandbox
-          repo: acme-demo-client
+          repo: acme-unum-demo-client
           deployment: acme-unum-demo-client
           filters:
             tags:
@@ -351,6 +350,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: 91514d8e-b5b2-41d9-9744-3cbb2bb9a85d
+          issuer_server_url: https://issuer-api.demo.dev-unum.id
           filters:
             branches:
               only:
@@ -374,8 +374,9 @@ workflows:
           requires:
             - deploy-image
           context: AWS-Dev
-          repo: acme-demo-client
+          repo: acme-unum-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
+          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
           filters:
             branches:
               only:
@@ -385,7 +386,7 @@ workflows:
           context: 
             - AWS-Dev
             - Slack-Context
-          repo: acme-demo-client
+          repo: acme-unum-demo-client
           deployment: acme-unum-demo-client
           requires:
             - build-and-push-unum-image
@@ -409,6 +410,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: 91514d8e-b5b2-41d9-9744-3cbb2bb9a85d
+          issuer_server_url: https://issuer-api.demo.dev-unum.id
           filters:
             branches:
               only:
@@ -432,8 +434,9 @@ workflows:
           requires:
             - deploy-image
           context: AWS-Dev
-          repo: acme-demo-client
+          repo: acme-unum-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
+          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
           filters:
             branches:
               only:
@@ -443,7 +446,7 @@ workflows:
           context: 
             - AWS-Dev
             - Slack-Context
-          repo: acme-demo-client
+          repo: acme-unum-demo-client
           deployment: acme-unum-demo-client
           requires:
             - build-and-push-unum-image-test
