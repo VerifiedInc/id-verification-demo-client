@@ -56,7 +56,7 @@ jobs:
         type: string
       verifier_server_url:
         type: string
-        default: "https://acme-verifier-api.demo.dev-unum.id"
+        default: "https://acme-verifier-api.demo.dev-unumid.co"
       issuer_did:
         type: string
         default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
@@ -102,7 +102,7 @@ jobs:
         type: string
       verifier_server_url:
         type: string
-        default: "https://acme-verifier-api.demo.dev-unum.id"
+        default: "https://acme-verifier-api.demo.dev-unumid.co"
       issuer_did:
         type: string
         default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
@@ -148,7 +148,7 @@ jobs:
         type: string
       verifier_server_url:
         type: string
-        default: "https://acme-verifier-api.demo.unum.id"
+        default: "https://acme-verifier-api.demo.unumid.co"
       issuer_did:
         type: string
         default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6"
@@ -286,7 +286,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: f1e5393d-1b69-4c5c-bc5b-5ad161c8c084
-          issuer_server_url: https://issuer-api.demo.unum.id
+          issuer_server_url: https://issuer-api.demo.unumid.co
           filters:
             tags:
               only: /^v.*/
@@ -314,7 +314,7 @@ workflows:
           context: AWS-Dev
           repo: acme-unum-demo-client
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
-          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           filters:
             tags:
               only: /^v.*/
@@ -350,7 +350,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: 91514d8e-b5b2-41d9-9744-3cbb2bb9a85d
-          issuer_server_url: https://issuer-api.demo.dev-unum.id
+          issuer_server_url: https://issuer-api.demo.dev-unumid.co
           filters:
             branches:
               only:
@@ -376,7 +376,7 @@ workflows:
           context: AWS-Dev
           repo: acme-unum-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
-          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           filters:
             branches:
               only:
@@ -410,7 +410,7 @@ workflows:
           context: AWS-Dev
           repo: acme-demo-client
           holder_app_uuid: 91514d8e-b5b2-41d9-9744-3cbb2bb9a85d
-          issuer_server_url: https://issuer-api.demo.dev-unum.id
+          issuer_server_url: https://issuer-api.demo.dev-unumid.co
           filters:
             branches:
               only:
@@ -436,7 +436,7 @@ workflows:
           context: AWS-Dev
           repo: acme-unum-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
-          issuer_server_url: https://unum-issuer-api.demo.dev-unum.id
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           filters:
             branches:
               only:
