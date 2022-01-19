@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { CredentialRequest } from '@unumid/types';
+import { CredentialRequest, PresentationRequestDto } from '@unumid/types';
 import { DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
 import UnumIDWidget from '@unumid/web-sdk-react';
 
@@ -38,7 +38,7 @@ const Authentication: FC = () => {
   const { request } = useTypedSelector(state => state.presentationRequest);
   const { loggedInUser } = useTypedSelector(state => state.auth);
 
-  const actuallyCreatePresentationRequest = () => {
+  const actuallyCreatePresentationRequest = async () => {
     if (!session) return;
 
     // customize these values for the specific demo (or not)
@@ -121,10 +121,12 @@ const Authentication: FC = () => {
 
   if (!session) return null;
 
+  console.log('loggedInUser', loggedInUser);
+
   const userInfo = loggedInUser && {
     email: loggedInUser.email,
     phone: loggedInUser.phone,
-    pushToken: loggedInUser.pushTokens.map(pt => ({ provider: pt.provider, value: pt.value }))
+    pushToken: loggedInUser.pushTokens?.map(pt => ({ provider: pt.provider, value: pt.value }))
   };
 
   return (
@@ -134,11 +136,12 @@ const Authentication: FC = () => {
           <UnumIDWidget
             env={config.env}
             apiKey={config.apiKey}
-            presentationRequest={request?.presentationRequestPostDto}
+            presentationRequest={request?.presentationRequestPostDto as PresentationRequestDto}
             createPresentationRequest={actuallyCreatePresentationRequest}
             goToLogin={goToLogin}
-            userInfo={userInfo}
+            userInfo={userInfo || undefined}
             createInitialPresentationRequest={false}
+            userCode={loggedInUser?.userCode}
           />
         </ContentBox>
       </MainContent>
