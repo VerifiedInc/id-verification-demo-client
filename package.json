@@ -24,7 +24,7 @@
     "@unumid/types": "git+ssh://git@github.com/UnumID/types.git#3.32.0",
     "@unumid/types-deprecated-v1": "git+ssh://git@github.com/UnumID/types.git#1.5.0",
     "@unumid/types-deprecated-v2": "git+ssh://git@github.com/UnumID/types.git#2.1.0",
-    "@unumid/web-sdk-react": "git+ssh://git@github.com/UnumID/web-sdk-react.git#1.2.0",
+    "@unumid/web-sdk-react": "git+ssh://git@github.com/UnumID/web-sdk-react.git#1.3.1",
     "logrocket": "^2.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
