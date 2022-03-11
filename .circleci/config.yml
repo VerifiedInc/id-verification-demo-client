@@ -377,6 +377,7 @@ workflows:
           repo: acme-unum-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          issuer_did: did:unum:79976e0a-d878-484a-a476-924f003d31b3
           filters:
             branches:
               only:
