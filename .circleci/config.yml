@@ -2,7 +2,7 @@ version: 2.1
 
 orbs:
   aws-cli: circleci/aws-cli@0.1.22
-  aws-eks: circleci/aws-eks@0.2.3
+  aws-eks: circleci/aws-eks@2.1.1
   kubernetes: circleci/kubernetes@0.4.0
   slack: circleci/slack@4.4.2 # ref: https://github.com/CircleCI-Public/slack-orb, https://circleci.com/developer/orbs/orb/circleci/slack#usage-examples
 
@@ -180,6 +180,8 @@ jobs:
           name: Update container image
 
   deploy-image:
+    docker: # Referencing the python image here, see https://github.com/CircleCI-Public/aws-eks-orb/issues/52#issuecomment-1006838213
+    - image: cimg/python:3.10
     parameters:
       cluster-name:
         type: string
@@ -188,7 +190,7 @@ jobs:
         type: string
       deployment:
         type: string
-    executor: aws-eks/python3
+
     steps:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
@@ -218,6 +220,8 @@ jobs:
           template: basic_success_1
 
   deploy-image-sandbox:
+    docker: # Referencing the python image here, see https://github.com/CircleCI-Public/aws-eks-orb/issues/52#issuecomment-1006838213
+    - image: cimg/python:3.10
     parameters:
       cluster-name:
         type: string
@@ -230,7 +234,6 @@ jobs:
         type: string
         default: "demos"
 
-    executor: aws-eks/python3
     steps:
       - kubernetes/install
       - aws-eks/update-kubeconfig-with-authenticator:
