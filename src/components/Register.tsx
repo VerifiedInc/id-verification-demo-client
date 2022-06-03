@@ -12,7 +12,7 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 
 import './Register.css';
 import Italic from './Layout/Italic';
-import { hyperClient } from '../feathers';
+
 import axios from 'axios';
 
 const Register: FC = () => {
@@ -67,15 +67,14 @@ const Register: FC = () => {
 
     // createUser({ email, password, phone, firstName });
 
-    // auth with hyper verge
-    // const hyperLoginService = hyperClient.service('login');
-    // debugger;
-    // const response = await axios.post('https://auth.hyperverge.co/login', {
-    //   appId: 'f5q5lt',
-    //   appKey: 'i9043jskn7ljwtgczjvq',
-    //   expiry: 300
-    // });
-    // localStorage.setItem('authToken', response.data.result.token);
+    // auth with hyper verge NOTE: not working, waiting on fix on their for the CORs policy.
+    debugger;
+    const response = await axios.post('https://auth.hyperverge.co/login', {
+      appId: 'f5q5lt',
+      appKey: 'i9043jskn7ljwtgczjvq',
+      expiry: 300
+    });
+    localStorage.setItem('authToken', response.data.result.token);
 
     localStorage.setItem('doKyc', 'true');
     debugger;

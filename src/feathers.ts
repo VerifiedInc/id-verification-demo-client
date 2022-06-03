@@ -9,7 +9,6 @@ import { config } from './config';
 
 const verifierClient = feathers();
 const issuerClient = feathers();
-const hyperClient = feathers();
 
 export const verifierSocket = socketio(config.verifierServerUrl);
 const issuerSocket = socketio(config.issuerServerUrl);
@@ -21,7 +20,4 @@ issuerClient.configure(feathers.authentication({
   storage: window.localStorage
 }));
 
-const restClient = feathersRestClient('https://auth.hyperverge.co');
-hyperClient.configure(restClient.axios(axios));
-
-export { verifierClient, issuerClient, hyperClient };
+export { verifierClient, issuerClient };
