@@ -30,11 +30,11 @@
     <script>
       const doKyc = localStorage.getItem('doKyc');
       const authToken = localStorage.getItem('authToken');
-      if (doKyc === 'true' && authToken) {
+      if (doKyc === 'true') {
         debugger;
         const defaultDocumentId = 'dl'
         const defaultCountryId = 'usa'
-        const accessToken = authToken;
+        const accessToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImY1cTVsdCIsImhhc2giOiJiY2VhZWEwM2I5OTViMGRlYWYwZTk2Mjg3ZGMyNTJlMDU1NjQzNWU2ZDUyM2Y4OGZiMWNiMjVlNmFjZWM5YWRkIiwiaWF0IjoxNjU0Mjk1MTExLCJleHAiOjE2NTQyOTU0MTEsImp0aSI6ImMzMDA3NTRiLTE2ZjktNDliOS05ODA1LTQwYTBhYzg3OGQ3OSJ9.mt1u4xlBXbA1F5wHL4QRec_hejGo4Q9hkvcafr35hKX7OYc1LM7V2uKOm-cZxTweqfImaIQj2xw4FbmXdx-dw1j7vaUElWtRMKaNrTaom3vNy9oSrIoMEkQr4gWONx5b_5utFywQgWPgkc1cUB7zyB7aBqKFhhQVGka6Q2wqbAo";
         const transactionId = '1'
         const document2 = new Document(true, defaultCountryId, defaultDocumentId);
         const face = new Face();

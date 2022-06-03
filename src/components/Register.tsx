@@ -49,7 +49,7 @@ const Register: FC = () => {
   };
 
   const handleSubmit: MouseEventHandler = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
 
     // const invalidFields = [];
     // if (!validator.isEmail(email)) {
@@ -67,17 +67,17 @@ const Register: FC = () => {
 
     // createUser({ email, password, phone, firstName });
 
-    // auth with hyper verge NOTE: not working, waiting on fix on their for the CORs policy.
-    debugger;
-    const response = await axios.post('https://auth.hyperverge.co/login', {
-      appId: 'f5q5lt',
-      appKey: 'i9043jskn7ljwtgczjvq',
-      expiry: 300
-    });
-    localStorage.setItem('authToken', response.data.result.token);
+    // auth with hyper verge NOTE: NEED TO GET THE AUTH TOKEN FROM BACKEND
+    // debugger;
+    // const response = await axios.post('https://auth.hyperverge.co/login', {
+    //   appId: 'f5q5lt',
+    //   appKey: 'i9043jskn7ljwtgczjvq',
+    //   expiry: 300
+    // });
+    // localStorage.setItem('authToken', response.data.result.token);
 
     localStorage.setItem('doKyc', 'true');
-    debugger;
+    // debugger;
   };
 
   const handleUndo: MouseEventHandler = (e) => {
