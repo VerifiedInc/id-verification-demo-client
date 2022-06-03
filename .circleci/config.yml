@@ -37,9 +37,9 @@ jobs:
 
       - run: npm run lint
 
-      - run:
-          name: Jest Tests
-          command: npm run test
+      # - run:
+      #     name: Jest Tests
+      #     command: npm run test
 
   build-and-push-image:
     executor: aws-cli/default
@@ -185,7 +185,7 @@ jobs:
     parameters:
       cluster-name:
         type: string
-        default: "dev-saas-cluster"
+        default: "dev-customer-cluster"
       repo:
         type: string
       deployment:
@@ -225,7 +225,7 @@ jobs:
     parameters:
       cluster-name:
         type: string
-        default: "sandbox-saas-cluster"
+        default: "sandbox-customer-cluster"
       repo:
         type: string
       deployment:
@@ -284,9 +284,9 @@ workflows:
 
       # Unum Holder
       - build-and-push-image-sandbox:
-          name: "build-and-push-unum-image-sandbox"
+          name: "build-and-push-id-verification-demo-sandbox"
           requires:
-            - deploy-image-sandbox
+            - test
           context: AWS-Dev
           repo: id-verification-demo-client
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
@@ -296,13 +296,14 @@ workflows:
               only: /^v.*/
             branches:
               ignore: /.*/
+
       - deploy-image-sandbox:
-          name: "deploy-unum-image-sandbox"
+          name: "deploy-id-verification-demo-sandbox"
           context: 
             - AWS-Dev
             - Slack-Context
           requires:
-            - build-and-push-unum-image-sandbox
+            - build-and-push-id-verification-demo-sandbox
           repo: id-verification-demo-client
           deployment: id-verification-demo-client
           filters:
@@ -321,9 +322,9 @@ workflows:
       
       # Unum Holder
       - build-and-push-image:
-          name: "build-and-push-unum-image"
+          name: "build-and-push-id-verification-demo"
           requires:
-            - deploy-image
+            - test
           context: AWS-Dev
           repo: id-verification-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
@@ -333,15 +334,16 @@ workflows:
             branches:
               only:
                 - main
+
       - deploy-image:
-          name: "deploy-unum-image"
+          name: "build-and-push-id-verification-demo"
           context: 
             - AWS-Dev
             - Slack-Context
           repo: id-verification-demo-client
           deployment: id-verification-demo-client
           requires:
-            - build-and-push-unum-image
+            - build-and-push-id-verification-demo
           filters:
             branches:
               only:
@@ -357,9 +359,9 @@ workflows:
 
       # Unum Holder
       - build-and-push-image-test:
-          name: "build-and-push-unum-image-test"
+          name: "build-and-push-id-verification-demo-test"
           requires:
-            - deploy-image
+            - test
           context: AWS-Dev
           repo: id-verification-demo-client
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
@@ -369,14 +371,14 @@ workflows:
               only:
                 - test-circleci
       - deploy-image:
-          name: "deploy-unum-image-test"
+          name: "deploy-id-verification-demo-test"
           context: 
             - AWS-Dev
             - Slack-Context
           repo: id-verification-demo-client
           deployment: id-verification-demo-client
           requires:
-            - build-and-push-unum-image-test
+            - build-and-push-id-verification-demo-test
           filters:
             branches:
               only:
