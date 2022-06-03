@@ -62,7 +62,7 @@ jobs:
         default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
       log_rocket_id:
         type: string
-        default: "vm6x8i/id-verification-demo-client-dev"
+        default: "vm6x8i/id-verification-demo-dev"
       holder_app_uuid:
         type: string
 
@@ -108,7 +108,7 @@ jobs:
         default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
       log_rocket_id:
         type: string
-        default: "vm6x8i/id-verification-demo-client-dev"
+        default: "vm6x8i/id-verification-demo-dev"
       holder_app_uuid:
         type: string
 
