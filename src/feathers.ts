@@ -1,6 +1,9 @@
-import feathers from '@feathersjs/client';
+import feathers, { rest } from '@feathersjs/client';
+import feathersRestClient from '@feathersjs/rest-client';
 import socketio from 'socket.io-client';
 import feathersSocketio from '@feathersjs/socketio-client';
+
+import axios from 'axios';
 
 import { config } from './config';
 

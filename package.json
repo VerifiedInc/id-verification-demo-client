@@ -6,6 +6,7 @@
     "@feathersjs/authentication-client": "^4.5.11",
     "@feathersjs/client": "^4.5.11",
     "@feathersjs/feathers": "^4.5.11",
+    "@feathersjs/rest-client": "^4.5.11",
     "@feathersjs/socketio-client": "^4.5.11",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",

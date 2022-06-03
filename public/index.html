@@ -25,6 +25,49 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>ACME</title>
+
+    <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@4.1.1/src/sdk.min.js"></script>
+    <script>
+      const doKyc = localStorage.getItem('doKyc');
+      const authToken = localStorage.getItem('authToken');
+      if (doKyc === 'true' && authToken) {
+        debugger;
+        const defaultDocumentId = 'dl'
+        const defaultCountryId = 'usa'
+        const accessToken = authToken;
+        const transactionId = '1'
+        const document2 = new Document(true, defaultCountryId, defaultDocumentId);
+        const face = new Face();
+        const workflow = [document2, face];
+        const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
+
+      const handler = (HyperKycResult) => {
+          if(HyperKycResult.Cancelled){
+              // user cancelled
+              debugger
+              console.log('cancelled')
+          }else if(HyperKycResult.Failure){
+            // fail
+            debugger
+            console.log('fail')
+            localStorage.setItem('kycInfo', JSON.stringify({
+                // DATA
+                data: true
+            }));
+          }else if(HyperKycResult.Success){
+              // success
+              debugger
+              localStorage.setItem('kycInfo', JSON.stringify({
+                // DATA
+                data: true
+              }));
+              console.log('success')
+          }
+      }
+
+      window.HyperKYCModule.launch(hyperKycConfig, handler);
+    }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>

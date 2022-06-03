@@ -13,6 +13,8 @@ import { useTypedSelector } from '../hooks/useTypedSelector';
 import './Register.css';
 import Italic from './Layout/Italic';
 
+import axios from 'axios';
+
 const Register: FC = () => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -46,24 +48,48 @@ const Register: FC = () => {
     setFirstName(e.target.value);
   };
 
-  const handleSubmit: MouseEventHandler = (e) => {
+  const handleSubmit: MouseEventHandler = async (e) => {
     e.preventDefault();
 
-    const invalidFields = [];
-    if (!validator.isEmail(email)) {
-      invalidFields.push('Email');
-    }
+    // const invalidFields = [];
+    // if (!validator.isEmail(email)) {
+    //   invalidFields.push('Email');
+    // }
 
-    if (phone && !validator.isMobilePhone(phone)) {
-      invalidFields.push('Phone');
-    }
+    // if (phone && !validator.isMobilePhone(phone)) {
+    //   invalidFields.push('Phone');
+    // }
 
-    if (invalidFields.length > 0) {
-      setFormErrorMessage(`The following fields are invalid: ${invalidFields.join(', ')}`);
-      return;
-    }
+    // if (invalidFields.length > 0) {
+    //   setFormErrorMessage(`The following fields are invalid: ${invalidFields.join(', ')}`);
+    //   return;
+    // }
 
-    createUser({ email, password, phone, firstName });
+    // createUser({ email, password, phone, firstName });
+
+    // auth with hyper verge NOTE: not working, waiting on fix on their for the CORs policy.
+    debugger;
+    const response = await axios.post('https://auth.hyperverge.co/login', {
+      appId: 'f5q5lt',
+      appKey: 'i9043jskn7ljwtgczjvq',
+      expiry: 300
+    });
+    localStorage.setItem('authToken', response.data.result.token);
+
+    localStorage.setItem('doKyc', 'true');
+    debugger;
+  };
+
+  const handleUndo: MouseEventHandler = (e) => {
+    e.preventDefault();
+    localStorage.removeItem('doKyc');
+    localStorage.removeItem('authToken');
+  };
+
+  const handlePreFill: MouseEventHandler = (e) => {
+    e.preventDefault();
+    const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
+    console.log(kyc.data);
   };
 
   return (
@@ -146,7 +172,9 @@ const Register: FC = () => {
                   explainerBoldText='Optional:'
                   explainerText='Enter this to see how users can authenticate with links sent by SMS.'
                 />
-                <SubmitButton handleSubmit={handleSubmit} disabled={!email}><BoldFont>Register</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleSubmit}><BoldFont>KYC</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleUndo}><BoldFont>Stop KYC</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill}><BoldFont>Start PreFill</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
               <div>
