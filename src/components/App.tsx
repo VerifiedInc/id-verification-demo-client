@@ -82,7 +82,7 @@ const App: FC = () => {
             </Acme>
           </Route> */}
           <Route
-            path='/redirect' element={
+            path='/proveAuth' element={
               <Acme>
                 <ProveAuthUrlRedirect />
               </Acme>
