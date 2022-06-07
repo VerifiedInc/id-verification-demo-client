@@ -117,6 +117,7 @@ const Register: FC = () => {
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
+      // dob: kyc.dateOfBirth,
       phoneNumber: phone
     });
 
