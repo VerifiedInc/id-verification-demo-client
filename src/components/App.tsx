@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { useActionCreators } from '../hooks/useActionCreators';
 import { useTypedSelector } from '../hooks/useTypedSelector';
@@ -54,37 +54,41 @@ const App: FC = () => {
   return (
     <div>
       <BrowserRouter>
-        <Route exact path='/'>
-          <Acme>
-            <AltHeader />
-            <Authentication />
-          </Acme>
-        </Route>
-        <Route path='/route1'>
-          <PrimaryHeader />
-        </Route>
-        <Route path='/register'>
-          <Unumid>
-            <Register />
-          </Unumid>
-        </Route>
-        <Route path='/login'>
-          <Unumid>
-            <Login />
-          </Unumid>
-        </Route>
-        <Route path='/authenticated'>
-          <Acme>
-            <AltHeader />
-            <Authenticated />
-          </Acme>
-        </Route>
-        <Route path='/declined'>
-          <Acme>
-            <AltHeader />
-            <Declined />
-          </Acme>
-        </Route>
+        <Routes>
+          {/* <Route path='/'>
+            <Acme>
+              <AltHeader />
+              <Authentication />
+            </Acme>
+          </Route>
+          <Route path='/route1'>
+            <PrimaryHeader />
+          </Route> */}
+          <Route
+            path='/register' element={
+              <Unumid>
+                <Register />
+              </Unumid>
+          }
+          />
+          {/* <Route path='/login'>
+            <Unumid>
+              <Login />
+            </Unumid>
+          </Route>
+          <Route path='/authenticated'>
+            <Acme>
+              <AltHeader />
+              <Authenticated />
+            </Acme>
+          </Route>
+          <Route path='/declined'>
+            <Acme>
+              <AltHeader />
+              <Declined />
+            </Acme>
+          </Route> */}
+        </Routes>
       </BrowserRouter>
     </div>
   );

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import MainContent from './Layout/MainContent';
@@ -12,7 +12,7 @@ const Declined: FC = () => {
   const startOver = useStartOver();
 
   if (!sharedNoPresentation) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   return (
