@@ -3,8 +3,6 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { useActionCreators } from '../hooks/useActionCreators';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import Authenticated from './Authenticated';
-import Declined from './Declined';
 
 import AltHeader from './Header/AltHeader';
 import PrimaryHeader from './Header/PrimaryHeader';
@@ -14,6 +12,7 @@ import Login from './Login';
 import Unumid from './Layout/Unumid';
 import Acme from './Layout/Acme';
 import { verifierClient, verifierSocket } from '../feathers';
+import ProveAuthUrlRedirect from './ProveAuthUrlRedirect';
 
 const App: FC = () => {
   const { createSession } = useActionCreators();
@@ -83,9 +82,9 @@ const App: FC = () => {
             </Acme>
           </Route> */}
           <Route
-            path='/declined' element={
+            path='/redirect' element={
               <Acme>
-                <Declined />
+                <ProveAuthUrlRedirect />
               </Acme>
           }
           />
