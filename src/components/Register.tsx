@@ -108,7 +108,7 @@ const Register: FC = () => {
     const eligibilityService = backendClient.service('eligibility');
     // TODO add auth with backend service
     const responseEligibility = await eligibilityService.create({
-      phoneNumber: '14044327575', // TODO get from form input
+      phoneNumber: phone,
       minTrustScore: 500
     });
     debugger;
@@ -117,7 +117,7 @@ const Register: FC = () => {
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
-      phoneNumber: '14044327575' // TODO get from form input
+      phoneNumber: phone
     });
 
     const { userCode, issuerDid } = responseIdentity;

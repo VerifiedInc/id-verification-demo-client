@@ -33,7 +33,7 @@
       if (doKyc === 'true') {
         const defaultDocumentId = 'dl'
         const defaultCountryId = 'usa'
-        const accessToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImY1cTVsdCIsImhhc2giOiJiY2VhZWEwM2I5OTViMGRlYWYwZTk2Mjg3ZGMyNTJlMDU1NjQzNWU2ZDUyM2Y4OGZiMWNiMjVlNmFjZWM5YWRkIiwiaWF0IjoxNjU0NTY1ODg1LCJleHAiOjE2NTQ1OTU4ODUsImp0aSI6IjI3MTNkY2UzLThhNmEtNDZmZC1iNTNiLTdlZjk3ZGYwNmIxOSJ9.dL84BEBtC0erjL_MWaNXrFeth64G62ljzzmmE15C1cs-N7e0OGB05zuwkO-0hAIfRLI6YLiUzrEpsGO4UeBAtMB8pw-od0zfqrnaC5LdOfem7iFIo-UDR2l0NJv1YBUtdzeEvtxxXgfSoPEXZjY7yF6HsnsLe8isurqFerkRUMM"
+        const accessToken = "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBJZCI6ImY1cTVsdCIsImhhc2giOiJiY2VhZWEwM2I5OTViMGRlYWYwZTk2Mjg3ZGMyNTJlMDU1NjQzNWU2ZDUyM2Y4OGZiMWNiMjVlNmFjZWM5YWRkIiwiaWF0IjoxNjU0NjMxNDI2LCJleHAiOjE2NTQ2NjE0MjYsImp0aSI6ImM3ZjFkYWY0LWI5NTUtNDljYS1iMTRmLTk0Y2IzOTRlYjI3OSJ9.roPqUpEZol25rxafgIPYhmH2gywhBbaJtrhVjCw5HlLE3zJcwAUWm9YAGJgJ7GQock2VsRd0rdxxmESINs093cr9_3VB3S09LLM4RMA8eLhP3W6NvSh7OEqdd4bG2fiCrNH72EizmYVOv49HWwhVuNcxUf21vqL8GGXowdy4Owg"
         const transactionId = '1'
         const document2 = new Document(true, defaultCountryId, defaultDocumentId);
         const face = new Face();
@@ -57,9 +57,17 @@
               // success
               debugger
               const {address, age, dateOfBirth, fullName, idType, gender} = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted
+              const proveDob = dateOfBirth.value.split('-');
+              const hold = proveDob[2];
+              proveDob[2] = proveDob[1];
+              proveDob[1] = proveDob[0];
+              proveDob[0] = hold;
+              const dob = proveDob.join('-');
+
+              debugger;
               localStorage.setItem('kycInfo', JSON.stringify({
                 // DATA
-                data: {address, age, dateOfBirth, fullName, idType, gender}
+                data: {address, age, dateOfBirth: dob, fullName, idType, gender} // NOTE dob is in format MM-DD-YYYY and needs to be YYYY-MM-DD for prove
               }));
               console.log('success')
           }
