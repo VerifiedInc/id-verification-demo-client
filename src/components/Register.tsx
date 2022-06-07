@@ -15,6 +15,7 @@ import Italic from './Layout/Italic';
 
 import axios from 'axios';
 import { backendClient } from '../feathers';
+import { config } from '../config';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
@@ -91,8 +92,6 @@ const Register: FC = () => {
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
     console.log(kyc.data);
 
-    // const [searchParams, setSearchParams] = useSearchParams();
-    // const verificationFingerprint = searchParams.get('vfp');
     const urlQueryParams: string = window.location.search;
     const queryParams = new URLSearchParams(urlQueryParams);
     const verificationFingerprint = queryParams.get('vfp');
@@ -120,6 +119,12 @@ const Register: FC = () => {
       dob: '1979-05-23', // TODO get from HyperVerge
       phoneNumber: '14044327575' // TODO get from form input
     });
+
+    const { userCode, issuerDid } = responseIdentity;
+
+    // TODO check 200 success response from backend
+    // redirect to wallet client with query params for user to create DID
+    window.location.href = `${config.walletClientUrl}?userCode=${userCode}&issuer=${issuerDid}`;
     debugger;
   };
 
