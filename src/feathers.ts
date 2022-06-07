@@ -9,6 +9,7 @@ import { config } from './config';
 
 const verifierClient = feathers();
 const issuerClient = feathers();
+const backendClient = feathers();
 
 export const verifierSocket = socketio(config.verifierServerUrl);
 const issuerSocket = socketio(config.issuerServerUrl);
@@ -20,4 +21,7 @@ issuerClient.configure(feathers.authentication({
   storage: window.localStorage
 }));
 
-export { verifierClient, issuerClient };
+const backendSocket = socketio(config.backendServerUrl);
+backendClient.configure(feathersSocketio(backendSocket));
+
+export { verifierClient, issuerClient, backendClient };
