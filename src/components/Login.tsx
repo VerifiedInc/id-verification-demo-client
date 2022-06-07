@@ -6,7 +6,7 @@ import { useActionCreators } from '../hooks/useActionCreators';
 import InputGroup from './Form/InputGroup';
 import SubmitButton from './Form/SubmitButton';
 import ErrorMessage from './Form/ErrorMessage';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import BoldFont from './Layout/BoldFont';
 
 export enum ErrorMessages {
@@ -22,7 +22,7 @@ const Login: FC = () => {
   const password = 'password';
 
   if (loggedInUser) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   if (authError && errorMessage !== ErrorMessages.LOGIN_ERROR) {

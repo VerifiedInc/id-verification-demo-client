@@ -1,10 +1,8 @@
 import { FC, useEffect } from 'react';
-import { BrowserRouter, Route } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import { useActionCreators } from '../hooks/useActionCreators';
 import { useTypedSelector } from '../hooks/useTypedSelector';
-import Authenticated from './Authenticated';
-import Declined from './Declined';
 
 import AltHeader from './Header/AltHeader';
 import PrimaryHeader from './Header/PrimaryHeader';
@@ -14,6 +12,7 @@ import Login from './Login';
 import Unumid from './Layout/Unumid';
 import Acme from './Layout/Acme';
 import { verifierClient, verifierSocket } from '../feathers';
+import ProveAuthUrlRedirect from './ProveAuthUrlRedirect';
 
 const App: FC = () => {
   const { createSession } = useActionCreators();
@@ -54,37 +53,42 @@ const App: FC = () => {
   return (
     <div>
       <BrowserRouter>
-        <Route exact path='/'>
-          <Acme>
-            <AltHeader />
-            <Authentication />
-          </Acme>
-        </Route>
-        <Route path='/route1'>
-          <PrimaryHeader />
-        </Route>
-        <Route path='/register'>
-          <Unumid>
-            <Register />
-          </Unumid>
-        </Route>
-        <Route path='/login'>
-          <Unumid>
-            <Login />
-          </Unumid>
-        </Route>
-        <Route path='/authenticated'>
-          <Acme>
-            <AltHeader />
-            <Authenticated />
-          </Acme>
-        </Route>
-        <Route path='/declined'>
-          <Acme>
-            <AltHeader />
-            <Declined />
-          </Acme>
-        </Route>
+        <Routes>
+          {/* <Route path='/'>
+            <Acme>
+              <AltHeader />
+              <Authentication />
+            </Acme>
+          </Route>
+          <Route path='/route1'>
+            <PrimaryHeader />
+          </Route> */}
+          <Route
+            path='/register' element={
+              <Unumid>
+                <Register />
+              </Unumid>
+          }
+          />
+          {/* <Route path='/login'>
+            <Unumid>
+              <Login />
+            </Unumid>
+          </Route>
+          <Route path='/authenticated'>
+            <Acme>
+              <AltHeader />
+              <Authenticated />
+            </Acme>
+          </Route> */}
+          <Route
+            path='/proveAuth' element={
+              <Acme>
+                <ProveAuthUrlRedirect />
+              </Acme>
+          }
+          />
+        </Routes>
       </BrowserRouter>
     </div>
   );

@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 import { useTypedSelector } from '../hooks/useTypedSelector';
 import { useLogout } from '../hooks/useLogout';
@@ -16,11 +16,11 @@ const Authenticated: FC = () => {
   const startOver = useStartOver();
 
   if (!sharedPresentation) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   if (!loggedInUser) {
-    return <Redirect to='/' />;
+    return <Navigate to='/' />;
   }
 
   return (

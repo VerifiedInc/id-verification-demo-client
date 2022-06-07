@@ -1,5 +1,5 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import validator from 'validator';
 
 import InputGroup from './Form/InputGroup';
@@ -14,6 +14,8 @@ import './Register.css';
 import Italic from './Layout/Italic';
 
 import axios from 'axios';
+import { backendClient } from '../feathers';
+import { config } from '../config';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
@@ -77,7 +79,6 @@ const Register: FC = () => {
     // localStorage.setItem('authToken', response.data.result.token);
 
     localStorage.setItem('doKyc', 'true');
-    // debugger;
   };
 
   const handleUndo: MouseEventHandler = (e) => {
@@ -86,10 +87,46 @@ const Register: FC = () => {
     localStorage.removeItem('authToken');
   };
 
-  const handlePreFill: MouseEventHandler = (e) => {
+  const handlePreFill: MouseEventHandler = async (e) => {
     e.preventDefault();
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
     console.log(kyc.data);
+
+    const urlQueryParams: string = window.location.search;
+    const queryParams = new URLSearchParams(urlQueryParams);
+    const verificationFingerprint = queryParams.get('vfp');
+    // const verificationFingerprint = '4d4751775a446b314f4759745a6a513359693030597a526c4c546c6c4f5459744f4449785a5445354d3252684f4755316644413d3a121a9448d3567789b564295f8a195ec96b16aeebf8283ad33ba6dc73cc98cc25';
+    debugger;
+    const authPathService = backendClient.service('getAuthPath');
+    // TODO add auth with backend service
+    const responseAuthPath = await authPathService.create({
+      verificationFingerprint
+    });
+    debugger;
+    // TODO ensure success response
+
+    const eligibilityService = backendClient.service('eligibility');
+    // TODO add auth with backend service
+    const responseEligibility = await eligibilityService.create({
+      phoneNumber: phone,
+      minTrustScore: 500
+    });
+    debugger;
+
+    const identityService = backendClient.service('identity');
+    // TODO add auth with backend service
+    const responseIdentity = await identityService.create({
+      dob: '1979-05-23', // TODO get from HyperVerge
+      // dob: kyc.dateOfBirth,
+      phoneNumber: phone
+    });
+
+    const { userCode, issuerDid } = responseIdentity;
+
+    // TODO check 200 success response from backend
+    // redirect to wallet client with query params for user to create DID
+    window.location.href = `${config.walletClientUrl}?userCode=${userCode}&issuer=${issuerDid}`;
+    debugger;
   };
 
   return (

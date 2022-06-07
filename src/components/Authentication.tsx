@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CredentialRequest, PresentationRequestDto } from '@unumid/types';
 import { DemoPresentationRequestCreateOptions } from '@unumid/demo-types';
 import UnumIDWidget from '@unumid/web-sdk-react';
@@ -33,7 +33,7 @@ const Authentication: FC = () => {
     handleDeclinedPresentationShared
   } = useActionCreators();
 
-  const history = useHistory();
+  const history = useNavigate();
   const { session } = useTypedSelector(state => state.session);
   const { request } = useTypedSelector(state => state.presentationRequest);
   const { loggedInUser } = useTypedSelector(state => state.auth);
@@ -79,14 +79,14 @@ const Authentication: FC = () => {
           console.log('is an accepted DemoPresentationDto');
           await handleAcceptedPresentationShared(data);
 
-          history.push('/authenticated');
+          history('/authenticated');
         }
 
         // handle declined
         if (isDemoDeclinedPresentationDto(data)) {
           console.log('is a declined DemoPresentationDto');
           handleDeclinedPresentationShared(data);
-          history.push('/declined');
+          history('/declined');
         }
       }
 
@@ -97,7 +97,7 @@ const Authentication: FC = () => {
         console.log('is an accepted deprecated DemoPresentationDto');
         await handleDeprecatedPresentationShared(data);
 
-        history.push('/authenticated');
+        history('/authenticated');
       }
 
       // handle deprecated noPresentation
@@ -105,7 +105,7 @@ const Authentication: FC = () => {
         console.log('is a deprecated declined DemoPresentationDto');
         handleNoPresentationShared(data);
 
-        history.push('/declined');
+        history('/declined');
       }
     });
 
@@ -116,7 +116,7 @@ const Authentication: FC = () => {
 
   const goToLogin = () => {
     console.log('goToLogin');
-    history.push('/login');
+    history('/login');
   };
 
   if (!session) return null;
