@@ -91,8 +91,11 @@ const Register: FC = () => {
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
     console.log(kyc.data);
 
-    const [searchParams, setSearchParams] = useSearchParams();
-    const verificationFingerprint = searchParams.get('vfp');
+    // const [searchParams, setSearchParams] = useSearchParams();
+    // const verificationFingerprint = searchParams.get('vfp');
+    const urlQueryParams: string = window.location.search;
+    const queryParams = new URLSearchParams(urlQueryParams);
+    const verificationFingerprint = queryParams.get('vfp');
     // const verificationFingerprint = '4d4751775a446b314f4759745a6a513359693030597a526c4c546c6c4f5459744f4449785a5445354d3252684f4755316644413d3a121a9448d3567789b564295f8a195ec96b16aeebf8283ad33ba6dc73cc98cc25';
     debugger;
     const authPathService = backendClient.service('getAuthPath');
