@@ -81,13 +81,14 @@ const App: FC = () => {
               <AltHeader />
               <Authenticated />
             </Acme>
-          </Route>
-          <Route path='/declined'>
-            <Acme>
-              <AltHeader />
-              <Declined />
-            </Acme>
           </Route> */}
+          <Route
+            path='/declined' element={
+              <Acme>
+                <Declined />
+              </Acme>
+          }
+          />
         </Routes>
       </BrowserRouter>
     </div>
