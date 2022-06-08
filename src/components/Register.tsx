@@ -139,12 +139,11 @@ const Register: FC = () => {
   return (
     <div className='register'>
       <h1>Register</h1>
-      <p>You need to (1) create an account and (2) install the ACME app from the app store.</p>
+      <p>You need to (1) create an account and (2) use the Unum ID wallet to view and share credentials.</p>
       <p>
-        <BoldFont>Important:</BoldFont> the email and password here simulate what ACME already has in place, prior to implementing Unum ID.
-        This shows that Unum ID can be used <Italic>on top of</Italic> an existing account system for additional authentication factors.
-        It can also fully replace that system, thereby eliminating passwords altogether.
-        We generally recommend a gradual transition from legacy password systems to a fully passwordless approach.
+        <BoldFont>Important:</BoldFont> you will need to click the link that is in the text message sent to you. This is to confirm your mobile number as well as identity information for the identify verification step.
+        This shows that Unum ID can be used <Italic>in conjunction with</Italic> an existing identity verification provider.
+        We can also fully replace that system, using the technologies used here.
       </p>
       {
         loggedInUser
@@ -173,48 +172,13 @@ const Register: FC = () => {
                 <h2>1. Create Account</h2>
                 <InputGroup
                   required
-                  labelText='Email'
-                  inputId='email'
-                  type='text'
-                  onChange={handleEmailChange}
-                  value={email}
-                  disabled={false}
-                  explainerBoldText='Use a real email:'
-                  explainerText='This is where we&apos;ll send your installation link'
-                />
-
-                <InputGroup
-                  required
-                  labelText='Password'
-                  inputId='password'
-                  type='password'
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onChange={() => { }}
-                  value={password}
-                  disabled
-                  explainerBoldText='This password is not checked'
-                />
-
-                <InputGroup
-                  required
-                  labelText='First Name'
-                  inputId='first-name'
-                  type='text'
-                  onChange={handleFirstNameChange}
-                  value={firstName}
-                  disabled={false}
-                  explainerBoldText='Your first name:'
-                  explainerText='We&apos;ll display this to show you when you&apos;ve authenticated'
-                />
-
-                <InputGroup
                   labelText='Phone'
                   inputId='phone'
                   type='text'
                   onChange={handlePhoneChange}
                   value={phone}
-                  explainerBoldText='Optional:'
-                  explainerText='Enter this to see how users can authenticate with links sent by SMS.'
+                  explainerBoldText='Use your real mobile number:'
+                  explainerText='Enter this to facilitate identity verification via SMS.'
                 />
                 <SubmitButton handleSubmit={handleSubmit}><BoldFont>KYC</BoldFont></SubmitButton>
                 <SubmitButton handleSubmit={handleUndo}><BoldFont>Stop KYC</BoldFont></SubmitButton>
@@ -222,7 +186,7 @@ const Register: FC = () => {
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
               <div>
-                By creating an account you agree to our <a href='https://unum.id/terms-of-service.html'>terms of service</a> and <a href='https://unum.id/privacy-policy.html'>privacy policy</a>.
+                By creating an account you agree to our <a href='https://www.unumid.co/legal-materials/terms-of-service'>terms of service</a> and <a href='https://www.unumid.co/legal-materials/privacy-policy'>privacy policy</a>.
               </div>
               <div className='login-link'>
                 Already registered?&nbsp;<Link to='/login'>Log in here.</Link>
