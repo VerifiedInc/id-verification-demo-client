@@ -22,6 +22,7 @@ issuerClient.configure(feathers.authentication({
 }));
 
 console.log(`backenServerURL: ${config.backendServerUrl}\n\n\n`);
+debugger;
 
 // const backendSocket = socketio(config.backendServerUrl);
 const backendRest = rest(config.backendServerUrl);

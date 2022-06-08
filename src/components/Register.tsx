@@ -53,31 +53,6 @@ const Register: FC = () => {
   const handleSubmit: MouseEventHandler = async (e) => {
     e.preventDefault();
 
-    // const invalidFields = [];
-    // if (!validator.isEmail(email)) {
-    //   invalidFields.push('Email');
-    // }
-
-    // if (phone && !validator.isMobilePhone(phone)) {
-    //   invalidFields.push('Phone');
-    // }
-
-    // if (invalidFields.length > 0) {
-    //   setFormErrorMessage(`The following fields are invalid: ${invalidFields.join(', ')}`);
-    //   return;
-    // }
-
-    // createUser({ email, password, phone, firstName });
-
-    // auth with hyper verge NOTE: NEED TO GET THE AUTH TOKEN FROM BACKEND
-    // debugger;
-    // const response = await axios.post('https://auth.hyperverge.co/login', {
-    //   appId: 'f5q5lt',
-    //   appKey: 'i9043jskn7ljwtgczjvq',
-    //   expiry: 300
-    // });
-    // localStorage.setItem('authToken', response.data.result.token);
-
     debugger;
     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
     // TODO add auth with backend service
