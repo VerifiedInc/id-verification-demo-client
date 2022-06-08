@@ -65,6 +65,12 @@ jobs:
         default: "vm6x8i/id-verification-demo-dev"
       holder_app_uuid:
         type: string
+      backend_server_url:
+        type: string
+        default: "https://id-verification-api.demo.dev-unumid.co"
+      prove_auth_url:
+        type: string
+        default: "http://device.staging.payfone.com"
 
     steps:
       - checkout
@@ -111,6 +117,12 @@ jobs:
         default: "vm6x8i/id-verification-demo-dev"
       holder_app_uuid:
         type: string
+      backend_server_url:
+        type: string
+        default: "https://id-verification-api.demo.dev-unumid.co"
+      prove_auth_url:
+        type: string
+        default: "http://device.staging.payfone.com"
 
     steps:
       - checkout
@@ -157,6 +169,12 @@ jobs:
         default: "vm6x8i/id-verification-demo-client-sandbox"
       holder_app_uuid:
         type: string
+      backend_server_url:
+        type: string
+        default: "https://id-verification-api.demo.unumid.co"
+      prove_auth_url:
+        type: string
+        default: "http://device.payfone.com"
 
     steps:
       - checkout
