@@ -21,6 +21,8 @@ issuerClient.configure(feathers.authentication({
   storage: window.localStorage
 }));
 
+console.log(`backenServerURL: ${config.backendServerUrl}\n\n\n`);
+
 // const backendSocket = socketio(config.backendServerUrl);
 const backendRest = rest(config.backendServerUrl);
 backendClient.configure(backendRest.axios(axios));
