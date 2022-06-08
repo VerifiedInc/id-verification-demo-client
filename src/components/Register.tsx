@@ -51,7 +51,7 @@ const Register: FC = () => {
   };
 
   const handleSubmit: MouseEventHandler = async (e) => {
-    // e.preventDefault();
+    e.preventDefault();
 
     // const invalidFields = [];
     // if (!validator.isEmail(email)) {
@@ -78,6 +78,13 @@ const Register: FC = () => {
     // });
     // localStorage.setItem('authToken', response.data.result.token);
 
+    debugger;
+    const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
+    // TODO add auth with backend service
+    const responseAuth = await hyperVergeAuthService.create({});
+    debugger;
+
+    localStorage.setItem('authToken', responseAuth.result.token);
     localStorage.setItem('doKyc', 'true');
   };
 
