@@ -1,5 +1,5 @@
-import feathers, { rest } from '@feathersjs/client';
-import feathersRestClient from '@feathersjs/rest-client';
+import feathers from '@feathersjs/client';
+import rest from '@feathersjs/rest-client';
 import socketio from 'socket.io-client';
 import feathersSocketio from '@feathersjs/socketio-client';
 
@@ -21,7 +21,9 @@ issuerClient.configure(feathers.authentication({
   storage: window.localStorage
 }));
 
-const backendSocket = socketio(config.backendServerUrl);
-backendClient.configure(feathersSocketio(backendSocket));
+// const backendSocket = socketio(config.backendServerUrl);
+const backendRest = rest(config.backendServerUrl);
+backendClient.configure(backendRest.axios(axios));
 
 export { verifierClient, issuerClient, backendClient };
+// export { backendClient }
