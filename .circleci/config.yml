@@ -71,6 +71,9 @@ jobs:
       prove_auth_url:
         type: string
         default: "http://device.staging.payfone.com"
+      wallet_client_url:
+        type: string
+        default: "https://wallet.dev-unumid.co"
 
     steps:
       - checkout
@@ -95,6 +98,7 @@ jobs:
             --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
             --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
+            --build-arg WALLET_CLIENT_URL=<< parameters.wallet_client_url >> \
             -t ${CIRCLE_SHA1} .
 
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
@@ -134,6 +138,9 @@ jobs:
       prove_auth_url:
         type: string
         default: "http://device.staging.payfone.com"
+      wallet_client_url:
+        type: string
+        default: "https://wallet.dev-unumid.co"
 
     steps:
       - checkout
@@ -158,6 +165,7 @@ jobs:
             --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
             --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
+            --build-arg WALLET_CLIENT_URL=<< parameters.wallet_client_url >> \
             -t ${CIRCLE_SHA1} .
 
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:test-latest
