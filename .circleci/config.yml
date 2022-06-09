@@ -205,6 +205,9 @@ jobs:
       prove_auth_url:
         type: string
         default: "http://device.payfone.com"
+      wallet_client_url:
+        type: string
+        default: "https://wallet.sandbox-unumid.co"
 
     steps:
       - checkout
@@ -219,7 +222,19 @@ jobs:
             echo Logging in to Amazon ECR...
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" --build-arg API_KEY=${SANDBOX_API_KEY} --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> --build-arg ENV=<< parameters.env >> --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> --build-arg ISSUER_DID=<< parameters.issuer_did >> --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> -t ${CIRCLE_SHA1} .
+            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" \
+            --build-arg API_KEY=${DEV_API_KEY} \
+            --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
+            --build-arg ENV=<< parameters.env >> \
+            --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
+            --build-arg ISSUER_DID=<< parameters.issuer_did >> \
+            --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
+            --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
+            --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
+            --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
+            --build-arg WALLET_CLIENT_URL=<< parameters.wallet_client_url >> \
+            -t ${CIRCLE_SHA1} .
+
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-latest
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
             echo Pushing the Docker image...
