@@ -23,6 +23,8 @@ const Authenticated: FC = () => {
   //   return <Navigate to='/' />;
   // }
 
+  console.log(`presentation: ${JSON.stringify(sharedPresentation)}\n\n\n`);
+
   debugger;
 
   return (
