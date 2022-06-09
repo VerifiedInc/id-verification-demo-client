@@ -75,13 +75,15 @@ const Register: FC = () => {
     localStorage.setItem('doKyc', 'true');
   };
 
+  const mobileNumber = phone || '14044327575'; // TODO remove, added for easier testing
+
   const handlePreFill1: MouseEventHandler = async (e) => {
     e.preventDefault();
     // kick off prove sms
     // TODO add auth with backend
     const proveAuthUrlService = backendClient.service('getAuthUrl');
     const responseAuthUrl = await proveAuthUrlService.create({
-      mobileNumber: phone
+      mobileNumber
     });
     // TODO ensure success response
   };
@@ -107,7 +109,7 @@ const Register: FC = () => {
     const eligibilityService = backendClient.service('eligibility');
     // TODO add auth with backend service
     const responseEligibility = await eligibilityService.create({
-      phoneNumber: phone,
+      phoneNumber: mobileNumber,
       minTrustScore: 500
     });
     debugger;
@@ -117,14 +119,15 @@ const Register: FC = () => {
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
       // dob: kyc.dateOfBirth,
-      phoneNumber: phone
+      phoneNumber: mobileNumber
     });
 
     const { userCode, issuerDid } = responseIdentity;
 
+    debugger;
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
-    window.location.href = `${config.walletClientUrl}?userCode=${userCode}&issuer=${issuerDid}`;
+    window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
     debugger;
   };
 
