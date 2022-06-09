@@ -50,51 +50,50 @@ const Register: FC = () => {
     setFirstName(e.target.value);
   };
 
-  const handleSubmit: MouseEventHandler = async (e) => {
+  const handleStart: MouseEventHandler = async (e) => {
     e.preventDefault();
 
-    // const invalidFields = [];
-    // if (!validator.isEmail(email)) {
-    //   invalidFields.push('Email');
-    // }
-
-    // if (phone && !validator.isMobilePhone(phone)) {
-    //   invalidFields.push('Phone');
-    // }
-
-    // if (invalidFields.length > 0) {
-    //   setFormErrorMessage(`The following fields are invalid: ${invalidFields.join(', ')}`);
-    //   return;
-    // }
-
-    // createUser({ email, password, phone, firstName });
-
-    // auth with hyper verge NOTE: NEED TO GET THE AUTH TOKEN FROM BACKEND
-    // debugger;
-    // const response = await axios.post('https://auth.hyperverge.co/login', {
-    //   appId: 'f5q5lt',
-    //   appKey: 'i9043jskn7ljwtgczjvq',
-    //   expiry: 300
-    // });
-    // localStorage.setItem('authToken', response.data.result.token);
-
     debugger;
+    // get hv auth token
     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
     // TODO add auth with backend service
     const responseAuth = await hyperVergeAuthService.create({});
+    localStorage.setItem('authToken', responseAuth.result.token);
     debugger;
 
-    localStorage.setItem('authToken', responseAuth.result.token);
+    // // kick off prove sms
+    // // TODO add auth with backend
+    // const proveAuthUrlService = backendClient.service('getAuthUrl');
+    // const responseAuthUrl = await proveAuthUrlService.create({
+    //   mobileNumber: phone
+    // });
+    // // TODO ensure success response
+  };
+
+  const handleDocScan: MouseEventHandler = (e) => {
+    // e.preventDefault();
     localStorage.setItem('doKyc', 'true');
   };
 
-  const handleUndo: MouseEventHandler = (e) => {
+  const mobileNumber = phone || '14044327575'; // TODO remove, added for easier testing
+
+  const handlePreFill1: MouseEventHandler = async (e) => {
     e.preventDefault();
-    localStorage.removeItem('doKyc');
-    localStorage.removeItem('authToken');
+
+    /**
+     * NOTE: Maybe want to just point blank ask for the DOB in the form input and compare against the hyper verge doc scan info prior to kicking off the prove prefill flow...?
+     */
+
+    // kick off prove sms
+    // TODO add auth with backend
+    const proveAuthUrlService = backendClient.service('getAuthUrl');
+    const responseAuthUrl = await proveAuthUrlService.create({
+      mobileNumber
+    });
+    // TODO ensure success response
   };
 
-  const handlePreFill: MouseEventHandler = async (e) => {
+  const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
     console.log(kyc.data);
@@ -115,7 +114,7 @@ const Register: FC = () => {
     const eligibilityService = backendClient.service('eligibility');
     // TODO add auth with backend service
     const responseEligibility = await eligibilityService.create({
-      phoneNumber: phone,
+      phoneNumber: mobileNumber,
       minTrustScore: 500
     });
     debugger;
@@ -125,26 +124,26 @@ const Register: FC = () => {
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
       // dob: kyc.dateOfBirth,
-      phoneNumber: phone
+      phoneNumber: mobileNumber
     });
 
     const { userCode, issuerDid } = responseIdentity;
 
+    debugger;
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
-    window.location.href = `${config.walletClientUrl}?userCode=${userCode}&issuer=${issuerDid}`;
+    window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
     debugger;
   };
 
   return (
     <div className='register'>
       <h1>Register</h1>
-      <p>You need to (1) create an account and (2) install the ACME app from the app store.</p>
+      <p>You need to (1) create an account and (2) use the Unum ID wallet to view and share credentials.</p>
       <p>
-        <BoldFont>Important:</BoldFont> the email and password here simulate what ACME already has in place, prior to implementing Unum ID.
-        This shows that Unum ID can be used <Italic>on top of</Italic> an existing account system for additional authentication factors.
-        It can also fully replace that system, thereby eliminating passwords altogether.
-        We generally recommend a gradual transition from legacy password systems to a fully passwordless approach.
+        <BoldFont>Important:</BoldFont> you will need to click the link that is in the text message sent to you. This is to confirm your mobile number as well as identity information for the identify verification step.
+        This shows that Unum ID can be used <Italic>in conjunction with</Italic> an existing identity verification provider.
+        We can also fully replace that system, using the technologies used here.
       </p>
       {
         loggedInUser
@@ -173,56 +172,22 @@ const Register: FC = () => {
                 <h2>1. Create Account</h2>
                 <InputGroup
                   required
-                  labelText='Email'
-                  inputId='email'
-                  type='text'
-                  onChange={handleEmailChange}
-                  value={email}
-                  disabled={false}
-                  explainerBoldText='Use a real email:'
-                  explainerText='This is where we&apos;ll send your installation link'
-                />
-
-                <InputGroup
-                  required
-                  labelText='Password'
-                  inputId='password'
-                  type='password'
-                  // eslint-disable-next-line @typescript-eslint/no-empty-function
-                  onChange={() => { }}
-                  value={password}
-                  disabled
-                  explainerBoldText='This password is not checked'
-                />
-
-                <InputGroup
-                  required
-                  labelText='First Name'
-                  inputId='first-name'
-                  type='text'
-                  onChange={handleFirstNameChange}
-                  value={firstName}
-                  disabled={false}
-                  explainerBoldText='Your first name:'
-                  explainerText='We&apos;ll display this to show you when you&apos;ve authenticated'
-                />
-
-                <InputGroup
                   labelText='Phone'
                   inputId='phone'
                   type='text'
                   onChange={handlePhoneChange}
                   value={phone}
-                  explainerBoldText='Optional:'
-                  explainerText='Enter this to see how users can authenticate with links sent by SMS.'
+                  explainerBoldText='Use your real mobile number:'
+                  explainerText='Enter this to facilitate identity verification via SMS.'
                 />
-                <SubmitButton handleSubmit={handleSubmit}><BoldFont>KYC</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handleUndo}><BoldFont>Stop KYC</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handlePreFill}><BoldFont>Start PreFill</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
               <div>
-                By creating an account you agree to our <a href='https://unum.id/terms-of-service.html'>terms of service</a> and <a href='https://unum.id/privacy-policy.html'>privacy policy</a>.
+                By creating an account you agree to our <a href='https://www.unumid.co/legal-materials/terms-of-service'>terms of service</a> and <a href='https://www.unumid.co/legal-materials/privacy-policy'>privacy policy</a>.
               </div>
               <div className='login-link'>
                 Already registered?&nbsp;<Link to='/login'>Log in here.</Link>

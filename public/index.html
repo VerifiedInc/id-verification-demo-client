@@ -46,6 +46,7 @@
               // user cancelled
               debugger
               console.log('cancelled')
+              localStorage.removeItem('doKyc');
           }else if(HyperKycResult.Failure){
             // fail
             debugger
@@ -54,6 +55,7 @@
                 // DATA
                 data: true
             }));
+            localStorage.removeItem('doKyc');
           }else if(HyperKycResult.Success){
               // success
               debugger
@@ -70,6 +72,7 @@
                 // DATA
                 data: {address, age, dateOfBirth: dob, fullName, idType, gender} // NOTE dob is in format MM-DD-YYYY and needs to be YYYY-MM-DD for prove
               }));
+              localStorage.removeItem('doKyc');
               console.log('success')
           }
       }

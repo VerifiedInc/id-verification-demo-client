@@ -64,6 +64,13 @@ const App: FC = () => {
             <PrimaryHeader />
           </Route> */}
           <Route
+            path='/' element={
+              <Unumid>
+                <Register />
+              </Unumid>
+          }
+          />
+          <Route
             path='/register' element={
               <Unumid>
                 <Register />
