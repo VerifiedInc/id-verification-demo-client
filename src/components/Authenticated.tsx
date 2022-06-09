@@ -23,6 +23,8 @@ const Authenticated: FC = () => {
   //   return <Navigate to='/' />;
   // }
 
+  debugger;
+
   return (
     <div className='authenticated'>
       <MainContent>
