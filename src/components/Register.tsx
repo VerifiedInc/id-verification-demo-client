@@ -61,6 +61,22 @@ const Register: FC = () => {
     localStorage.setItem('authToken', responseAuth.result.token);
     debugger;
 
+    // // kick off prove sms
+    // // TODO add auth with backend
+    // const proveAuthUrlService = backendClient.service('getAuthUrl');
+    // const responseAuthUrl = await proveAuthUrlService.create({
+    //   mobileNumber: phone
+    // });
+    // // TODO ensure success response
+  };
+
+  const handleDocScan: MouseEventHandler = (e) => {
+    // e.preventDefault();
+    localStorage.setItem('doKyc', 'true');
+  };
+
+  const handlePreFill1: MouseEventHandler = async (e) => {
+    e.preventDefault();
     // kick off prove sms
     // TODO add auth with backend
     const proveAuthUrlService = backendClient.service('getAuthUrl');
@@ -70,12 +86,7 @@ const Register: FC = () => {
     // TODO ensure success response
   };
 
-  const handleDocScan: MouseEventHandler = (e) => {
-    // e.preventDefault();
-    localStorage.setItem('doKyc', 'true');
-  };
-
-  const handlePreFill: MouseEventHandler = async (e) => {
+  const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
     console.log(kyc.data);
@@ -163,7 +174,8 @@ const Register: FC = () => {
                 />
                 <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>
                 <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handlePreFill}><BoldFont>PreFill</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
               <div>
