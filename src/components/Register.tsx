@@ -50,23 +50,29 @@ const Register: FC = () => {
     setFirstName(e.target.value);
   };
 
-  const handleSubmit: MouseEventHandler = async (e) => {
+  const handleStart: MouseEventHandler = async (e) => {
     e.preventDefault();
 
     debugger;
+    // get hv auth token
     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
     // TODO add auth with backend service
     const responseAuth = await hyperVergeAuthService.create({});
+    localStorage.setItem('authToken', responseAuth.result.token);
     debugger;
 
-    localStorage.setItem('authToken', responseAuth.result.token);
-    localStorage.setItem('doKyc', 'true');
+    // kick off prove sms
+    // TODO add auth with backend
+    const proveAuthUrlService = backendClient.service('getAuthUrl');
+    const responseAuthUrl = await proveAuthUrlService.create({
+      mobileNumber: phone
+    });
+    // TODO ensure success response
   };
 
-  const handleUndo: MouseEventHandler = (e) => {
-    e.preventDefault();
-    localStorage.removeItem('doKyc');
-    localStorage.removeItem('authToken');
+  const handleDocScan: MouseEventHandler = (e) => {
+    // e.preventDefault();
+    localStorage.setItem('doKyc', 'true');
   };
 
   const handlePreFill: MouseEventHandler = async (e) => {
@@ -155,9 +161,9 @@ const Register: FC = () => {
                   explainerBoldText='Use your real mobile number:'
                   explainerText='Enter this to facilitate identity verification via SMS.'
                 />
-                <SubmitButton handleSubmit={handleSubmit}><BoldFont>KYC</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handleUndo}><BoldFont>Stop KYC</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handlePreFill}><BoldFont>Start PreFill</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handlePreFill}><BoldFont>PreFill</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
               <div>
