@@ -38,6 +38,11 @@ const Register: FC = () => {
     setFormErrorMessage('Error logging in');
   }
 
+  // const urlQueryParams: string = window.location.search;
+  // const queryParams = new URLSearchParams(urlQueryParams);
+  // const dob = queryParams.get('dob');
+  // setEmail(dob as string); // TODO update: email is being used for dob... this should be fixed.
+
   const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setEmail(e.target.value);
   };
@@ -87,8 +92,12 @@ const Register: FC = () => {
     // kick off prove sms
     // TODO add auth with backend
     const proveAuthUrlService = backendClient.service('getAuthUrl');
+    const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
+
+    debugger;
     const responseAuthUrl = await proveAuthUrlService.create({
-      mobileNumber
+      mobileNumber,
+      dob: kyc.data.dateOfBirth // from the hv doc scan... will present the query params of the resultant sms link.
     });
     // TODO ensure success response
   };
@@ -123,7 +132,7 @@ const Register: FC = () => {
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
-      // dob: kyc.dateOfBirth,
+      // dob: kyc.data.dateOfBirth,
       phoneNumber: mobileNumber
     });
 
