@@ -109,8 +109,10 @@ const Register: FC = () => {
 
     const urlQueryParams: string = window.location.search;
     const queryParams = new URLSearchParams(urlQueryParams);
+
     const verificationFingerprint = queryParams.get('vfp');
-    // const verificationFingerprint = '4d4751775a446b314f4759745a6a513359693030597a526c4c546c6c4f5459744f4449785a5445354d3252684f4755316644413d3a121a9448d3567789b564295f8a195ec96b16aeebf8283ad33ba6dc73cc98cc25';
+    const dob = queryParams.get('dob');
+
     debugger;
     const authPathService = backendClient.service('getAuthPath');
     // TODO add auth with backend service
@@ -132,7 +134,8 @@ const Register: FC = () => {
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
       dob: '1979-05-23', // TODO get from HyperVerge
-      // dob: kyc.data.dateOfBirth,
+      // dob: kyc.data.dateOfBirth, // NOTE: can't actually do this because this is after the sms link soo... need to get from query params like below
+      // dob, // TODO the dob query param needs to be used, but can't because staging data is not what's on my document
       phoneNumber: mobileNumber
     });
 
