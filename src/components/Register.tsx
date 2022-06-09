@@ -114,7 +114,8 @@ const Register: FC = () => {
     const verificationFingerprint = queryParams.get('vfp');
     const dob = queryParams.get('dob');
 
-    const fakeDob = getFakeDob(phone);
+    const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
+    const fakeDob = getFakeDob(mobileNumber);
 
     debugger;
     const authPathService = backendClient.service('getAuthPath');
