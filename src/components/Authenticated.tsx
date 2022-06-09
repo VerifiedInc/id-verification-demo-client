@@ -19,9 +19,9 @@ const Authenticated: FC = () => {
     return <Navigate to='/' />;
   }
 
-  if (!loggedInUser) {
-    return <Navigate to='/' />;
-  }
+  // if (!loggedInUser) {
+  //   return <Navigate to='/' />;
+  // }
 
   return (
     <div className='authenticated'>
