@@ -16,6 +16,7 @@ import Italic from './Layout/Italic';
 import axios from 'axios';
 import { backendClient } from '../feathers';
 import { config } from '../config';
+import { getFakeDob } from '../utils';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
@@ -80,7 +81,7 @@ const Register: FC = () => {
     localStorage.setItem('doKyc', 'true');
   };
 
-  const mobileNumber = phone || '14044327575'; // TODO remove, added for easier testing
+  const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
 
   const handlePreFill1: MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -113,6 +114,8 @@ const Register: FC = () => {
     const verificationFingerprint = queryParams.get('vfp');
     const dob = queryParams.get('dob');
 
+    const fakeDob = getFakeDob(phone);
+
     debugger;
     const authPathService = backendClient.service('getAuthPath');
     // TODO add auth with backend service
@@ -133,7 +136,7 @@ const Register: FC = () => {
     const identityService = backendClient.service('identity');
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
-      dob: '1979-05-23', // TODO get from HyperVerge
+      dob: fakeDob,
       // dob: kyc.data.dateOfBirth, // NOTE: can't actually do this because this is after the sms link soo... need to get from query params like below
       // dob, // TODO the dob query param needs to be used, but can't because staging data is not what's on my document
       phoneNumber: mobileNumber
