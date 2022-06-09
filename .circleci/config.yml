@@ -59,7 +59,7 @@ jobs:
         default: "https://acme-verifier-api.demo.dev-unumid.co"
       issuer_did:
         type: string
-        default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
+        default: "did:unum:5ba46288-e07c-4bec-9aad-8a1031f3d5e2"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"
@@ -126,7 +126,7 @@ jobs:
         default: "https://acme-verifier-api.demo.dev-unumid.co"
       issuer_did:
         type: string
-        default: "did:unum:6ff79cd5-3088-4d69-82b4-4e0b7bbcf3b2"
+        default: "did:unum:5ba46288-e07c-4bec-9aad-8a1031f3d5e2"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"

@@ -71,6 +71,14 @@ const App: FC = () => {
           }
           />
           <Route
+            path='/request' element={
+              <Acme>
+                <AltHeader />
+                <Authentication />
+              </Acme>
+          }
+          />
+          <Route
             path='/register' element={
               <Unumid>
                 <Register />
