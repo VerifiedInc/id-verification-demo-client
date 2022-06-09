@@ -19,6 +19,10 @@ const Authenticated: FC = () => {
     return <Navigate to='/' />;
   }
 
+  const credentialSubjectString = (sharedPresentation.presentation as any).verifiableCredential[0].credentialSubject;
+  const credentialSubject = JSON.parse(credentialSubjectString);
+  const ssn = credentialSubject.ssn;
+
   // if (!loggedInUser) {
   //   return <Navigate to='/' />;
   // }
@@ -31,7 +35,7 @@ const Authenticated: FC = () => {
     <div className='authenticated'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout/content, etc */}
-        <h3><BoldFont>Prove verified data shared successfully!</BoldFont></h3>
+        <h3><BoldFont>Prove verified SSN, {ssn}, shared successfully!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>
