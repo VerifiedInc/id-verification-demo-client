@@ -5,12 +5,12 @@ const proveStagingInfoMap = [
   },
   {
     phone: '2622907459',
-    dob: '5/23/1979'
+    dob: '1988-12-11'
 
   },
   {
     phone: '4146308839',
-    dob: '2/24/1993'
+    dob: '1993-2-24'
 
   }
 ];
