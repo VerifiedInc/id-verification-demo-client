@@ -79,6 +79,11 @@ const Register: FC = () => {
 
   const handlePreFill1: MouseEventHandler = async (e) => {
     e.preventDefault();
+
+    /**
+     * NOTE: Maybe want to just point blank ask for the DOB in the form input and compare against the hyper verge doc scan info prior to kicking off the prove prefill flow...?
+     */
+
     // kick off prove sms
     // TODO add auth with backend
     const proveAuthUrlService = backendClient.service('getAuthUrl');
