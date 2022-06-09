@@ -192,9 +192,9 @@ const Register: FC = () => {
                   explainerBoldText='Use your real mobile number:'
                   explainerText='Enter this to facilitate identity verification via SMS.'
                 />
-                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>&nbsp;
+                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
+                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
                 <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>
