@@ -13,6 +13,7 @@ import Unumid from './Layout/Unumid';
 import Acme from './Layout/Acme';
 import { verifierClient, verifierSocket } from '../feathers';
 import ProveAuthUrlRedirect from './ProveAuthUrlRedirect';
+import Authenticated from './Authenticated';
 
 const App: FC = () => {
   const { createSession } = useActionCreators();
@@ -71,6 +72,14 @@ const App: FC = () => {
           }
           />
           <Route
+            path='/request' element={
+              <Acme>
+                <AltHeader />
+                <Authentication />
+              </Acme>
+          }
+          />
+          <Route
             path='/register' element={
               <Unumid>
                 <Register />
@@ -92,6 +101,14 @@ const App: FC = () => {
             path='/proveAuth' element={
               <Acme>
                 <ProveAuthUrlRedirect />
+              </Acme>
+          }
+          />
+          <Route
+            path='/authenticated' element={
+              <Acme>
+                <AltHeader />
+                <Authenticated />
               </Acme>
           }
           />

@@ -16,6 +16,7 @@ import Italic from './Layout/Italic';
 import axios from 'axios';
 import { backendClient } from '../feathers';
 import { config } from '../config';
+import { getFakeDob } from '../utils';
 
 const Register: FC = () => {
   const [email, setEmail] = useState('');
@@ -80,7 +81,7 @@ const Register: FC = () => {
     localStorage.setItem('doKyc', 'true');
   };
 
-  const mobileNumber = phone || '14044327575'; // TODO remove, added for easier testing
+  const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
 
   const handlePreFill1: MouseEventHandler = async (e) => {
     e.preventDefault();
@@ -112,6 +113,12 @@ const Register: FC = () => {
 
     const verificationFingerprint = queryParams.get('vfp');
     const dob = queryParams.get('dob');
+    const qPhone = queryParams.get('phone');
+
+    // use the phone via the query params from the sms redirect from prove...
+    // TODO this value should not be editable is phone is in the query param
+    const mobileNumber = phone || qPhone || '4044327575';
+    const fakeDob = getFakeDob(mobileNumber);
 
     debugger;
     const authPathService = backendClient.service('getAuthPath');
@@ -133,7 +140,7 @@ const Register: FC = () => {
     const identityService = backendClient.service('identity');
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
-      dob: '1979-05-23', // TODO get from HyperVerge
+      dob: fakeDob,
       // dob: kyc.data.dateOfBirth, // NOTE: can't actually do this because this is after the sms link soo... need to get from query params like below
       // dob, // TODO the dob query param needs to be used, but can't because staging data is not what's on my document
       phoneNumber: mobileNumber
@@ -192,9 +199,9 @@ const Register: FC = () => {
                   explainerBoldText='Use your real mobile number:'
                   explainerText='Enter this to facilitate identity verification via SMS.'
                 />
-                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>
-                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>
+                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>&nbsp;
+                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
+                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
                 <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
                 <ErrorMessage>{formErrorMessage}</ErrorMessage>
               </form>

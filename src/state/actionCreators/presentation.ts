@@ -23,8 +23,9 @@ export const handleDeprecatedPresentationShared = (dto: DeprecatedDemoPresentati
 export const handleAcceptedPresentationShared = (dto: DemoAcceptedPresentationDto) => async (dispatch: Dispatch): Promise<void> => {
   const credentialSubjectString = dto.presentation.verifiableCredential[0].credentialSubject;
   const credentialSubject = JSON.parse(credentialSubjectString);
-  const email = credentialSubject.userEmail;
-  await login({ email, password: 'password' })(dispatch);
+  const ssn = credentialSubject.ssn;
+  debugger;
+  await login({ email: ssn, password: 'password' })(dispatch);
   dispatch({ type: PresentationActionType.PRESENTATION_SHARED_SUCCESS, payload: dto });
 };
 

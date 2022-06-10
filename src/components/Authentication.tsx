@@ -43,7 +43,7 @@ const Authentication: FC = () => {
 
     // customize these values for the specific demo (or not)
     const credentialRequests: CredentialRequest[] = [{
-      type: 'DemoAuthCredential',
+      type: 'PhoneCredential',
       required: true,
       issuers: [config.issuerDid]
     }];
