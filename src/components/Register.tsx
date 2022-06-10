@@ -106,7 +106,8 @@ const Register: FC = () => {
   const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
-    console.log(kyc.data);
+    // console.log(kyc.data);
+    debugger;
 
     const urlQueryParams: string = window.location.search;
     const queryParams = new URLSearchParams(urlQueryParams);
