@@ -113,8 +113,11 @@ const Register: FC = () => {
 
     const verificationFingerprint = queryParams.get('vfp');
     const dob = queryParams.get('dob');
+    const qPhone = queryParams.get('dob');
 
-    const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
+    // use the phone via the query params from the sms redirect from prove...
+    // TODO this value should not be editable is phone is in the query param
+    const mobileNumber = phone || qPhone || '4044327575';
     const fakeDob = getFakeDob(mobileNumber);
 
     debugger;
