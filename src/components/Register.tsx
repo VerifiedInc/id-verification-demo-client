@@ -1,4 +1,10 @@
-import { ChangeEventHandler, FC, MouseEventHandler, useState } from 'react';
+import {
+  ChangeEventHandler,
+  FC,
+  MouseEventHandler,
+  useState,
+  useEffect
+} from 'react';
 
 import InputGroup from './Form/InputGroup';
 import SubmitButton from './Form/SubmitButton';
@@ -39,32 +45,32 @@ const Register: FC = () => {
   // const dob = queryParams.get('dob');
   // setEmail(dob as string); // TODO update: email is being used for dob... this should be fixed.
 
+  useEffect(() => {
+    const authenticate = async () => {
+      // get hv auth token
+      const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
+      // TODO add auth with backend service
+      const responseAuth = await hyperVergeAuthService.create({});
+      setAccessToken(responseAuth.result.token);
+    };
+
+    authenticate();
+  }, []);
+
+  console.log('accessToken', accessToken);
+  console.log('kycData', kycData);
+
   const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPhone(e.target.value);
   };
 
-  const handleStart: MouseEventHandler = async (e) => {
-    e.preventDefault();
-
-    debugger;
-    // get hv auth token
-    const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
-    // TODO add auth with backend service
-    const responseAuth = await hyperVergeAuthService.create({});
-    setAccessToken(responseAuth.result.token);
-    debugger;
-
-    // // kick off prove sms
-    // // TODO add auth with backend
-    // const proveAuthUrlService = backendClient.service('getAuthUrl');
-    // const responseAuthUrl = await proveAuthUrlService.create({
-    //   mobileNumber: phone
-    // });
-    // // TODO ensure success response
-  };
-
   const handleDocScan: MouseEventHandler = (e) => {
     e.preventDefault();
+
+    if (!accessToken) {
+      return;
+    }
+
     const defaultDocumentId = 'dl';
     const defaultCountryId = 'usa';
     const transactionId = '1';
@@ -203,8 +209,7 @@ const Register: FC = () => {
           explainerBoldText='Use your real mobile number:'
           explainerText='Enter this to facilitate identity verification via SMS.'
         />
-        <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>&nbsp;
-        <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
+        <SubmitButton handleSubmit={handleDocScan} disabled={!accessToken}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
         <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
         <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
       </form>
