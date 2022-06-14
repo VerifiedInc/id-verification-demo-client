@@ -1,59 +1,26 @@
 import { ChangeEventHandler, FC, MouseEventHandler, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
-import validator from 'validator';
 
 import InputGroup from './Form/InputGroup';
 import SubmitButton from './Form/SubmitButton';
-import ErrorMessage from './Form/ErrorMessage';
 import BoldFont from './Layout/BoldFont';
-
-import { useActionCreators } from '../hooks/useActionCreators';
-import { useTypedSelector } from '../hooks/useTypedSelector';
 
 import './Register.css';
 import Italic from './Layout/Italic';
 
-import axios from 'axios';
 import { backendClient } from '../feathers';
 import { config } from '../config';
 import { getFakeDob } from '../utils';
 
 const Register: FC = () => {
-  const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [password] = useState('password');
-  const [formErrorMessage, setFormErrorMessage] = useState('');
-
-  const { createUser } = useActionCreators();
-  const { loggedInUser, error: loginError } = useTypedSelector(state => state.auth);
-  const { error: userError } = useTypedSelector(state => state.user);
-
-  if (userError && !formErrorMessage) {
-    console.error('error creating user account', userError);
-    setFormErrorMessage('Error creating account');
-  }
-
-  if (loginError && !formErrorMessage) {
-    console.error('error logging in', loginError);
-    setFormErrorMessage('Error logging in');
-  }
 
   // const urlQueryParams: string = window.location.search;
   // const queryParams = new URLSearchParams(urlQueryParams);
   // const dob = queryParams.get('dob');
   // setEmail(dob as string); // TODO update: email is being used for dob... this should be fixed.
 
-  const handleEmailChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setEmail(e.target.value);
-  };
-
   const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPhone(e.target.value);
-  };
-
-  const handleFirstNameChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    setFirstName(e.target.value);
   };
 
   const handleStart: MouseEventHandler = async (e) => {
@@ -106,7 +73,7 @@ const Register: FC = () => {
   const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
     const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
-    // console.log(kyc.data);
+    console.log(kyc.data);
     debugger;
 
     const urlQueryParams: string = window.location.search;
@@ -165,56 +132,26 @@ const Register: FC = () => {
         This shows that Unum ID can be used <Italic>in conjunction with</Italic> an existing identity verification provider.
         We can also fully replace that system, using the technologies used here.
       </p>
-      {
-        loggedInUser
-          ? (
-            <>
-              <h2>2. Install ACME App</h2>
-              <p>
-                Great, you're registered! Now, install the ACME app for <a href='https://apps.apple.com/us/app/acme-unum-id/id1557576599'>iOS</a> or <a href='https://play.google.com/store/apps/details?id=org.unumid.acmedemokotlin.sandbox&hl=en_GB&gl=US'>Android</a>.
-              </p>
-              <p>
-                You can get there by clicking the links above, scanning the QR Code below, or searching "ACME Unum ID" on the app stores.
-                The app will ask you for your permission to send push notifications.&nbsp;
-                <BoldFont>This is optional, </BoldFont>
-                but it will allow you to see how users can authenticate with push notifications.
-              </p>
-              <p>
-                When you&apos;re logged in to the ACME app,
-                click the button below to continue the demo.
-              </p>
-              <Link to='/'><button type='button'>Continue</button></Link>
-            </>
-            )
-          : (
-            <>
-              <form>
-                <h2>1. Create Account</h2>
-                <InputGroup
-                  required
-                  labelText='Phone'
-                  inputId='phone'
-                  type='text'
-                  onChange={handlePhoneChange}
-                  value={phone}
-                  explainerBoldText='Use your real mobile number:'
-                  explainerText='Enter this to facilitate identity verification via SMS.'
-                />
-                <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>&nbsp;
-                <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
-                <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
-                <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
-                <ErrorMessage>{formErrorMessage}</ErrorMessage>
-              </form>
-              <div>
-                By creating an account you agree to our <a href='https://www.unumid.co/legal-materials/terms-of-service'>terms of service</a> and <a href='https://www.unumid.co/legal-materials/privacy-policy'>privacy policy</a>.
-              </div>
-              <div className='login-link'>
-                Already registered?&nbsp;<Link to='/login'>Log in here.</Link>
-              </div>
-            </>
-            )
-      }
+      <form>
+        <h2>1. Create Account</h2>
+        <InputGroup
+          required
+          labelText='Phone'
+          inputId='phone'
+          type='text'
+          onChange={handlePhoneChange}
+          value={phone}
+          explainerBoldText='Use your real mobile number:'
+          explainerText='Enter this to facilitate identity verification via SMS.'
+        />
+        <SubmitButton handleSubmit={handleStart}><BoldFont>Start</BoldFont></SubmitButton>&nbsp;
+        <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
+        <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
+        <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
+      </form>
+      <div>
+        By creating an account you agree to our <a href='https://www.unumid.co/legal-materials/terms-of-service'>terms of service</a> and <a href='https://www.unumid.co/legal-materials/privacy-policy'>privacy policy</a>.
+      </div>
     </div>
   );
 };
