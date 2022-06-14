@@ -37,7 +37,6 @@ interface KYCData {
 
 const Register: FC = () => {
   const [phone, setPhone] = useState('');
-  const [accessToken, setAccessToken] = useState<string>();
   const [kycData, setKycData] = useState<KYCData>();
 
   // const urlQueryParams: string = window.location.search;
@@ -45,32 +44,35 @@ const Register: FC = () => {
   // const dob = queryParams.get('dob');
   // setEmail(dob as string); // TODO update: email is being used for dob... this should be fixed.
 
-  useEffect(() => {
-    const authenticate = async () => {
-      // get hv auth token
-      const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
-      // TODO add auth with backend service
-      const responseAuth = await hyperVergeAuthService.create({});
-      setAccessToken(responseAuth.result.token);
-    };
+  // useEffect(() => {
+  //   const authenticate = async () => {
+  //     // get hv auth token
+  //     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
+  //     // TODO add auth with backend service
+  //     const responseAuth = await hyperVergeAuthService.create({});
+  //     setAccessToken(responseAuth.result.token);
+  //   };
 
-    authenticate();
-  }, []);
+  //   authenticate();
+  // }, []);
 
-  console.log('accessToken', accessToken);
+  // console.log('accessToken', accessToken);
   console.log('kycData', kycData);
 
   const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPhone(e.target.value);
   };
 
-  const handleDocScan: MouseEventHandler = (e) => {
+  const handleDocScan: MouseEventHandler = async (e) => {
     e.preventDefault();
 
-    if (!accessToken) {
-      return;
-    }
+    // get hyperverge access token
+    const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
+    // TODO add auth with backend service
+    const responseAuth = await hyperVergeAuthService.create({});
+    const accessToken = responseAuth.result.token;
 
+    // hyperverge document scan setup
     const defaultDocumentId = 'dl';
     const defaultCountryId = 'usa';
     const transactionId = '1';
@@ -209,7 +211,7 @@ const Register: FC = () => {
           explainerBoldText='Use your real mobile number:'
           explainerText='Enter this to facilitate identity verification via SMS.'
         />
-        <SubmitButton handleSubmit={handleDocScan} disabled={!accessToken}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
+        <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
         <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
         <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
       </form>
