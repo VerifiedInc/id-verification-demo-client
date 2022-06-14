@@ -11,8 +11,28 @@ import { backendClient } from '../feathers';
 import { config } from '../config';
 import { getFakeDob } from '../utils';
 
+declare global {
+  interface Window {
+    HyperKycConfig?: any;
+    Face?: any;
+    Document?: any;
+    HyperKYCModule?: any;
+  }
+}
+
+interface KYCData {
+  address: string;
+  age: string;
+  dob: string;
+  gender: string;
+  fullName: string;
+  idType: string;
+}
+
 const Register: FC = () => {
   const [phone, setPhone] = useState('');
+  const [accessToken, setAccessToken] = useState<string>();
+  const [kycData, setKycData] = useState<KYCData>();
 
   // const urlQueryParams: string = window.location.search;
   // const queryParams = new URLSearchParams(urlQueryParams);
@@ -31,7 +51,7 @@ const Register: FC = () => {
     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
     // TODO add auth with backend service
     const responseAuth = await hyperVergeAuthService.create({});
-    localStorage.setItem('authToken', responseAuth.result.token);
+    setAccessToken(responseAuth.result.token);
     debugger;
 
     // // kick off prove sms
@@ -44,8 +64,50 @@ const Register: FC = () => {
   };
 
   const handleDocScan: MouseEventHandler = (e) => {
-    // e.preventDefault();
-    localStorage.setItem('doKyc', 'true');
+    e.preventDefault();
+    const defaultDocumentId = 'dl';
+    const defaultCountryId = 'usa';
+    const transactionId = '1';
+    const document2 = new window.Document(true, defaultCountryId, defaultDocumentId);
+    const face = new window.Face();
+    const workflow = [document2, face];
+    const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
+
+    const handler = (HyperKycResult: any) => {
+      if (HyperKycResult.Cancelled) {
+        // user cancelled
+        debugger;
+        console.log('cancelled');
+      } else if (HyperKycResult.Failure) {
+        // fail
+        debugger;
+        console.log('fail');
+      } else if (HyperKycResult.Success) {
+        // success
+        debugger;
+        const { address, age, dateOfBirth, fullName, idType, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
+        const proveDob = dateOfBirth.value.split('-');
+        const hold = proveDob[2];
+        proveDob[2] = proveDob[1];
+        proveDob[1] = proveDob[0];
+        proveDob[0] = hold;
+        const dob = proveDob.join('-');
+
+        setKycData({
+          address,
+          age,
+          dob,
+          fullName,
+          idType,
+          gender
+        });
+
+        debugger;
+        console.log('success');
+      }
+    };
+
+    window.HyperKYCModule.launch(hyperKycConfig, handler);
   };
 
   const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
@@ -60,20 +122,17 @@ const Register: FC = () => {
     // kick off prove sms
     // TODO add auth with backend
     const proveAuthUrlService = backendClient.service('getAuthUrl');
-    const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
 
     debugger;
     const responseAuthUrl = await proveAuthUrlService.create({
       mobileNumber,
-      dob: kyc.data.dateOfBirth // from the hv doc scan... will present the query params of the resultant sms link.
+      dob: kycData?.dob // from the hv doc scan... will present the query params of the resultant sms link.
     });
     // TODO ensure success response
   };
 
   const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
-    const kyc = JSON.parse(localStorage.getItem('kycInfo') as string);
-    console.log(kyc.data);
     debugger;
 
     const urlQueryParams: string = window.location.search;
