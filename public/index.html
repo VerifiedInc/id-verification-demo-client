@@ -27,59 +27,6 @@
     <title>ACME</title>
 
     <script src="https://hv-camera-web-sg.s3-ap-southeast-1.amazonaws.com/hyperverge-web-sdk@4.1.1/src/sdk.min.js"></script>
-    <script>
-      const doKyc = localStorage.getItem('doKyc');
-      const authToken = localStorage.getItem('authToken');
-      if (doKyc === 'true') {
-        debugger;
-        const defaultDocumentId = 'dl'
-        const defaultCountryId = 'usa'
-        const accessToken = authToken
-        const transactionId = '1'
-        const document2 = new Document(true, defaultCountryId, defaultDocumentId);
-        const face = new Face();
-        const workflow = [document2, face];
-        const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
-
-      const handler = (HyperKycResult) => {
-          if(HyperKycResult.Cancelled){
-              // user cancelled
-              debugger
-              console.log('cancelled')
-              localStorage.removeItem('doKyc');
-          }else if(HyperKycResult.Failure){
-            // fail
-            debugger
-            console.log('fail')
-            localStorage.setItem('kycInfo', JSON.stringify({
-                // DATA
-                data: true
-            }));
-            localStorage.removeItem('doKyc');
-          }else if(HyperKycResult.Success){
-              // success
-              debugger
-              const {address, age, dateOfBirth, fullName, idType, gender} = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted
-              const proveDob = dateOfBirth.value.split('-');
-              const hold = proveDob[2];
-              proveDob[2] = proveDob[1];
-              proveDob[1] = proveDob[0];
-              proveDob[0] = hold;
-              const dob = proveDob.join('-');
-
-              debugger;
-              localStorage.setItem('kycInfo', JSON.stringify({
-                // DATA
-                data: {address, age, dateOfBirth: dob, fullName, idType, gender} // NOTE dob is in format MM-DD-YYYY and needs to be YYYY-MM-DD for prove
-              }));
-              localStorage.removeItem('doKyc');
-              console.log('success')
-          }
-      }
-
-      window.HyperKYCModule.launch(hyperKycConfig, handler);
-    }
-    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
