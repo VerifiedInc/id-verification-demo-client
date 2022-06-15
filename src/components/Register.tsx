@@ -2,8 +2,7 @@ import {
   ChangeEventHandler,
   FC,
   MouseEventHandler,
-  useState,
-  useEffect
+  useState
 } from 'react';
 
 import InputGroup from './Form/InputGroup';
@@ -17,6 +16,7 @@ import { backendClient } from '../feathers';
 import { config } from '../config';
 import { getFakeDob } from '../utils';
 
+// types for global variables added by the hyperverge sdk
 declare global {
   interface Window {
     HyperKycConfig?: any;
@@ -69,27 +69,6 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
 
 const Register: FC = () => {
   const [phone, setPhone] = useState('');
-  const [kycData, setKycData] = useState<KYCData>();
-
-  // const urlQueryParams: string = window.location.search;
-  // const queryParams = new URLSearchParams(urlQueryParams);
-  // const dob = queryParams.get('dob');
-  // setEmail(dob as string); // TODO update: email is being used for dob... this should be fixed.
-
-  // useEffect(() => {
-  //   const authenticate = async () => {
-  //     // get hv auth token
-  //     const hyperVergeAuthService = backendClient.service('hyperVergeAuth');
-  //     // TODO add auth with backend service
-  //     const responseAuth = await hyperVergeAuthService.create({});
-  //     setAccessToken(responseAuth.result.token);
-  //   };
-
-  //   authenticate();
-  // }, []);
-
-  // console.log('accessToken', accessToken);
-  console.log('kycData', kycData);
 
   const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPhone(e.target.value);
@@ -143,7 +122,6 @@ const Register: FC = () => {
 
   const handlePreFill2: MouseEventHandler = async (e) => {
     e.preventDefault();
-    debugger;
 
     const urlQueryParams: string = window.location.search;
     const queryParams = new URLSearchParams(urlQueryParams);
@@ -157,13 +135,11 @@ const Register: FC = () => {
     const mobileNumber = phone || qPhone || '4044327575';
     const fakeDob = getFakeDob(mobileNumber);
 
-    debugger;
     const authPathService = backendClient.service('getAuthPath');
     // TODO add auth with backend service
     const responseAuthPath = await authPathService.create({
       verificationFingerprint
     });
-    debugger;
     // TODO ensure success response
 
     const eligibilityService = backendClient.service('eligibility');
@@ -172,7 +148,6 @@ const Register: FC = () => {
       phoneNumber: mobileNumber,
       minTrustScore: 500
     });
-    debugger;
 
     const identityService = backendClient.service('identity');
     // TODO add auth with backend service
@@ -185,11 +160,9 @@ const Register: FC = () => {
 
     const { userCode, issuerDid } = responseIdentity;
 
-    debugger;
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
     window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
-    debugger;
   };
 
   return (
