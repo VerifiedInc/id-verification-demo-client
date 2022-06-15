@@ -35,6 +35,38 @@ interface KYCData {
   idType: string;
 }
 
+const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
+  if (HyperKycResult.Cancelled) {
+    // user cancelled
+    console.log('hyperverge cancelled', HyperKycResult);
+  } else if (HyperKycResult.Failure) {
+    // fail
+    console.log('hyperverge failed', HyperKycResult);
+  } else if (HyperKycResult.Success) {
+    // success
+    console.log('hyperverge success', HyperKycResult);
+    const { address, age, dateOfBirth, fullName, idType, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
+    const proveDob = dateOfBirth.value.split('-');
+    const hold = proveDob[2];
+    proveDob[2] = proveDob[1];
+    proveDob[1] = proveDob[0];
+    proveDob[0] = hold;
+    const dob = proveDob.join('-');
+
+    // eslint-disable-next-line node/no-callback-literal
+    callback({
+      address,
+      age,
+      dob,
+      fullName,
+      idType,
+      gender
+    });
+
+    console.log('success');
+  }
+};
+
 const Register: FC = () => {
   const [phone, setPhone] = useState('');
   const [kycData, setKycData] = useState<KYCData>();
@@ -63,6 +95,25 @@ const Register: FC = () => {
     setPhone(e.target.value);
   };
 
+  /**
+   * calls prove auth service to send an auth url via sms
+   */
+  const sendProveSms = async (dob?: string) => {
+    /**
+     * NOTE: Maybe want to just point blank ask for the DOB in the form input and compare against the hyper verge doc scan info prior to kicking off the prove prefill flow...?
+     */
+
+    // kick off prove sms
+    // TODO add auth with backend
+    const proveAuthUrlService = backendClient.service('getAuthUrl');
+
+    const responseAuthUrl = await proveAuthUrlService.create({
+      mobileNumber: phone,
+      dob // from the hv doc scan... will present the query params of the resultant sms link.
+    });
+    // TODO ensure success response
+  };
+
   const handleDocScan: MouseEventHandler = async (e) => {
     e.preventDefault();
 
@@ -81,62 +132,13 @@ const Register: FC = () => {
     const workflow = [document2, face];
     const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
 
-    const handler = (HyperKycResult: any) => {
-      if (HyperKycResult.Cancelled) {
-        // user cancelled
-        debugger;
-        console.log('cancelled');
-      } else if (HyperKycResult.Failure) {
-        // fail
-        debugger;
-        console.log('fail');
-      } else if (HyperKycResult.Success) {
-        // success
-        debugger;
-        const { address, age, dateOfBirth, fullName, idType, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
-        const proveDob = dateOfBirth.value.split('-');
-        const hold = proveDob[2];
-        proveDob[2] = proveDob[1];
-        proveDob[1] = proveDob[0];
-        proveDob[0] = hold;
-        const dob = proveDob.join('-');
-
-        setKycData({
-          address,
-          age,
-          dob,
-          fullName,
-          idType,
-          gender
-        });
-
-        debugger;
-        console.log('success');
-      }
+    const callback = (data: KYCData) => {
+      sendProveSms(data.dob);
     };
 
+    const handler = makeHandler(callback);
+
     window.HyperKYCModule.launch(hyperKycConfig, handler);
-  };
-
-  const mobileNumber = phone || '4044327575'; // TODO remove, added for easier testing
-
-  const handlePreFill1: MouseEventHandler = async (e) => {
-    e.preventDefault();
-
-    /**
-     * NOTE: Maybe want to just point blank ask for the DOB in the form input and compare against the hyper verge doc scan info prior to kicking off the prove prefill flow...?
-     */
-
-    // kick off prove sms
-    // TODO add auth with backend
-    const proveAuthUrlService = backendClient.service('getAuthUrl');
-
-    debugger;
-    const responseAuthUrl = await proveAuthUrlService.create({
-      mobileNumber,
-      dob: kycData?.dob // from the hv doc scan... will present the query params of the resultant sms link.
-    });
-    // TODO ensure success response
   };
 
   const handlePreFill2: MouseEventHandler = async (e) => {
@@ -212,7 +214,6 @@ const Register: FC = () => {
           explainerText='Enter this to facilitate identity verification via SMS.'
         />
         <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
-        <SubmitButton handleSubmit={handlePreFill1}><BoldFont>PreFill Step 1 From Desktop</BoldFont></SubmitButton>&nbsp;
         <SubmitButton handleSubmit={handlePreFill2}><BoldFont>PreFill Step 2 From Mobile</BoldFont></SubmitButton>
       </form>
       <div>
