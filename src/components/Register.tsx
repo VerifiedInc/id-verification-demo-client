@@ -87,7 +87,7 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
 
   debugger;
 
-  if (!responseEligibility.response.eligibility) {
+  if (!responseEligibility?.response?.eligibility) {
     window.alert('The provided phone number is not eligible for use with this demo');
     return;
   }
