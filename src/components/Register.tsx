@@ -71,39 +71,54 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, dob?: string | null) => {
   console.log('\n\nhandlePrefill');
 
-  const authPathService = backendClient.service('getAuthPath');
-  // TODO add auth with backend service
-  const responseAuthPath = await authPathService.create({
-    verificationFingerprint
-  });
-  // TODO ensure success response
-
-  const eligibilityService = backendClient.service('eligibility');
-  // TODO add auth with backend service
-  const responseEligibility = await eligibilityService.create({
-    phoneNumber: mobileNumber,
-    minTrustScore: 500
-  });
-
-  debugger;
-
-  if (!responseEligibility?.response?.eligibility) {
-    window.alert('The provided phone number is not eligible for use with this demo');
-    return;
+  try {
+    const authPathService = backendClient.service('getAuthPath');
+    // TODO add auth with backend service
+    const responseAuthPath = await authPathService.create({
+      verificationFingerprint
+    });
+  } catch (e) {
+    console.error('error with auth path', e);
+    window.alert('Error interfacing with Prove Prefill service. Please try again.');
   }
 
-  const identityService = backendClient.service('identity');
-  // TODO add auth with backend service
-  const responseIdentity = await identityService.create({
-    dob, // using the dob from the sms result query params, which originates via the HV doc scan
-    phoneNumber: mobileNumber
-  });
+  try {
+    const eligibilityService = backendClient.service('eligibility');
+    // TODO add auth with backend service
+    const responseEligibility = await eligibilityService.create({
+      phoneNumber: mobileNumber,
+      minTrustScore: 500
+    });
 
-  const { userCode, issuerDid } = responseIdentity;
+    debugger;
 
-  // TODO check 200 success response from backend
-  // redirect to wallet client with query params for user to create DID
-  window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
+    if (!responseEligibility?.response?.eligibility) {
+      console.log('phone not eligible');
+      window.alert('The provided phone number is not eligible for use with this demo');
+      return;
+    }
+  } catch (e) {
+    console.log('eligibility error', e);
+    window.alert('The provided phone number is not eligible for use with this demo');
+  }
+
+  try {
+    const identityService = backendClient.service('identity');
+    // TODO add auth with backend service
+    const responseIdentity = await identityService.create({
+      dob, // using the dob from the sms result query params, which originates via the HV doc scan
+      phoneNumber: mobileNumber
+    });
+
+    const { userCode, issuerDid } = responseIdentity;
+
+    // TODO check 200 success response from backend
+    // redirect to wallet client with query params for user to create DID
+    window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
+  } catch (e) {
+    console.log('identity error', e);
+    window.alert('Error interfacing with Prove Prefill service. Please try again.');
+  }
 };
 
 const Register: FC = () => {
