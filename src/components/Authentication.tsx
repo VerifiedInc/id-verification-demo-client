@@ -46,7 +46,16 @@ const Authentication: FC = () => {
       type: 'PhoneCredential',
       required: true,
       issuers: [config.issuerDid]
-    }];
+    }, {
+      type: 'DobCredential',
+      required: false,
+      issuers: [config.issuerDid]
+    }, {
+      type: 'SsnCredential',
+      required: false,
+      issuers: [config.issuerDid]
+    }
+    ];
 
     const presentationRequestOptions: DemoPresentationRequestCreateOptions = {
       credentialRequests,

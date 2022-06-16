@@ -15,7 +15,6 @@ import Italic from './Layout/Italic';
 
 import { backendClient } from '../feathers';
 import { config } from '../config';
-import { getFakeDob } from '../utils';
 import { useSearchParams } from 'react-router-dom';
 
 // types for global variables added by the hyperverge sdk
@@ -71,36 +70,55 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
 
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, dob?: string | null) => {
   console.log('\n\nhandlePrefill');
-  const fakeDob = getFakeDob(mobileNumber);
 
-  const authPathService = backendClient.service('getAuthPath');
-  // TODO add auth with backend service
-  const responseAuthPath = await authPathService.create({
-    verificationFingerprint
-  });
-  // TODO ensure success response
+  try {
+    const authPathService = backendClient.service('getAuthPath');
+    // TODO add auth with backend service
+    const responseAuthPath = await authPathService.create({
+      verificationFingerprint
+    });
+  } catch (e) {
+    console.error('error with auth path', e);
+    window.alert('Error interfacing with Prove Prefill service. Please try again.');
+  }
 
-  const eligibilityService = backendClient.service('eligibility');
-  // TODO add auth with backend service
-  const responseEligibility = await eligibilityService.create({
-    phoneNumber: mobileNumber,
-    minTrustScore: 500
-  });
+  try {
+    const eligibilityService = backendClient.service('eligibility');
+    // TODO add auth with backend service
+    const responseEligibility = await eligibilityService.create({
+      phoneNumber: mobileNumber,
+      minTrustScore: 500
+    });
 
-  const identityService = backendClient.service('identity');
-  // TODO add auth with backend service
-  const responseIdentity = await identityService.create({
-    dob: fakeDob,
-    // dob: kyc.data.dateOfBirth, // NOTE: can't actually do this because this is after the sms link soo... need to get from query params like below
-    // dob, // TODO the dob query param needs to be used, but can't because staging data is not what's on my document
-    phoneNumber: mobileNumber
-  });
+    debugger;
 
-  const { userCode, issuerDid } = responseIdentity;
+    if (!responseEligibility?.response?.eligibility) {
+      console.log('phone not eligible');
+      window.alert('The provided phone number is not eligible for use with this demo');
+      return;
+    }
+  } catch (e) {
+    console.log('eligibility error', e);
+    window.alert('The provided phone number is not eligible for use with this demo');
+  }
 
-  // TODO check 200 success response from backend
-  // redirect to wallet client with query params for user to create DID
-  window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
+  try {
+    const identityService = backendClient.service('identity');
+    // TODO add auth with backend service
+    const responseIdentity = await identityService.create({
+      dob, // using the dob from the sms result query params, which originates via the HV doc scan
+      phoneNumber: mobileNumber
+    });
+
+    const { userCode, issuerDid } = responseIdentity;
+
+    // TODO check 200 success response from backend
+    // redirect to wallet client with query params for user to create DID
+    window.location.href = `${config.walletClientUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
+  } catch (e) {
+    console.log('identity error', e);
+    window.alert('Error interfacing with Prove Prefill service. Please try again.');
+  }
 };
 
 const Register: FC = () => {
