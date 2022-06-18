@@ -50,16 +50,18 @@ const Authentication: FC = () => {
       }, {
         type: 'DobCredential',
         required: false,
-        issuers: [config.proveIssuerDid]
+        issuers: [config.proveIssuerDid, config.hvIssuerDid]
       }, {
         type: 'SsnCredential',
         required: false,
         issuers: [config.proveIssuerDid]
-      }, {
-        type: 'DobCredential',
-        required: false,
-        issuers: [config.hvIssuerDid]
-      }, {
+      },
+      // {
+      //   type: 'DobCredential',
+      //   required: false,
+      //   issuers: [config.hvIssuerDid]
+      // },
+      {
         type: 'GenderCredential',
         required: false,
         issuers: [config.hvIssuerDid]
