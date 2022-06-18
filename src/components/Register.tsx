@@ -29,11 +29,9 @@ declare global {
 
 interface KYCData {
   address: string;
-  age: string;
   dob: string;
   gender: string;
   fullName: string;
-  idType: string;
 }
 
 const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
@@ -46,7 +44,7 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
   } else if (HyperKycResult.Success) {
     // success
     console.log('hyperverge success', HyperKycResult);
-    const { address, age, dateOfBirth, fullName, idType, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
+    const { address, dateOfBirth, fullName, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
     const proveDob = dateOfBirth.value.split('-');
     const hold = proveDob[2];
     proveDob[2] = proveDob[1];
@@ -54,21 +52,20 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
     proveDob[0] = hold;
     const dob = proveDob.join('-');
 
+    debugger;
     // eslint-disable-next-line node/no-callback-literal
     callback({
-      address,
-      age,
+      address: address.value,
       dob,
-      fullName,
-      idType,
-      gender
+      fullName: fullName.value,
+      gender: gender.value
     });
 
     console.log('success');
   }
 };
 
-const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, dob?: string | null) => {
+const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
   console.log('\n\nhandlePrefill');
 
   try {
@@ -107,7 +104,8 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
     // TODO add auth with backend service
     const responseIdentity = await identityService.create({
       dob, // using the dob from the sms result query params, which originates via the HV doc scan
-      phoneNumber: mobileNumber
+      phoneNumber: mobileNumber,
+      userCode: userCodeParam // using the user code from the sms result query params, which originates via the HV doc scan
     });
 
     const { userCode, issuerDid } = responseIdentity;
@@ -127,21 +125,38 @@ const Register: FC = () => {
   const vfpParam = searchParams.get('vfp');
   const dobParam = searchParams.get('dob');
   const phoneParam = searchParams.get('phone');
+  const userCodeParam = searchParams.get('userCode');
 
   useEffect(() => {
     if (vfpParam && phoneParam) {
-      handlePreFill(vfpParam, phoneParam, dobParam);
+      handlePreFill(vfpParam, phoneParam, userCodeParam, dobParam);
     }
-  }, [vfpParam, dobParam, phoneParam]);
+  }, [vfpParam, dobParam, phoneParam, userCodeParam]);
 
   const handlePhoneChange: ChangeEventHandler<HTMLInputElement> = (e) => {
     setPhone(e.target.value);
   };
 
   /**
+   * calls the hvService to persist the data on a user entity for credential issuance later.
+   * the service creates a user and returns the userCode for linking to the prove prefill data
+   */
+  const sendHvDocScanData = async (data: KYCData): Promise<string> => {
+    // const { address, age, dob, gender, fullName, idType } = data;
+
+    // TODO add auth with backend
+    const hvService = backendClient.service('hyperVerge');
+
+    const response = await hvService.create(data);
+    // TODO ensure success response
+
+    return response.userCode;
+  };
+
+  /**
    * calls prove auth service to send an auth url via sms
    */
-  const sendProveSms = async (dob?: string) => {
+  const sendProveSms = async (userCode: string, dob?: string) => {
     /**
      * NOTE: Maybe want to just point blank ask for the DOB in the form input and compare against the hyper verge doc scan info prior to kicking off the prove prefill flow...?
      */
@@ -152,7 +167,8 @@ const Register: FC = () => {
 
     const responseAuthUrl = await proveAuthUrlService.create({
       mobileNumber: phone,
-      dob // from the hv doc scan... will present the query params of the resultant sms link.
+      dob, // from the hv doc scan... will present the query params of the resultant sms link.
+      userCode
     });
     // TODO ensure success response
   };
@@ -175,8 +191,9 @@ const Register: FC = () => {
     const workflow = [document2, face];
     const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
 
-    const callback = (data: KYCData) => {
-      sendProveSms(data.dob);
+    const callback = async (data: KYCData) => {
+      const userCode = await sendHvDocScanData(data);
+      sendProveSms(userCode, data.dob);
     };
 
     const handler = makeHandler(callback);
