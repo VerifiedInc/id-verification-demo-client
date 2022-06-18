@@ -57,9 +57,12 @@ jobs:
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.dev-unumid.co"
-      issuer_did:
+      prove_issuer_did:
         type: string
         default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
+      hv_issuer_did:
+        type: string
+        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"
@@ -93,7 +96,8 @@ jobs:
             --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
             --build-arg ENV=<< parameters.env >> \
             --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
-            --build-arg ISSUER_DID=<< parameters.issuer_did >> \
+            --build-arg PROVE_ISSUER_DID=<< parameters.prove_issuer_did >> \
+            --build-arg HV_ISSUER_DID=<< parameters.hv_issuer_did >> \
             --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
             --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
@@ -124,9 +128,12 @@ jobs:
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.dev-unumid.co"
-      issuer_did:
+      prove_issuer_did:
         type: string
         default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
+      hv_issuer_did:
+        type: string
+        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"
@@ -160,7 +167,8 @@ jobs:
             --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
             --build-arg ENV=<< parameters.env >> \
             --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
-            --build-arg ISSUER_DID=<< parameters.issuer_did >> \
+            --build-arg PROVE_ISSUER_DID=<< parameters.prove_issuer_did >> \
+            --build-arg HV_ISSUER_DID=<< parameters.hv_issuer_did >> \
             --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
             --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
@@ -191,9 +199,12 @@ jobs:
       verifier_server_url:
         type: string
         default: "https://acme-verifier-api.demo.unumid.co"
-      issuer_did:
+      prove_issuer_did:
         type: string
         default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6"
+      hv_issuer_did:
+        type: string
+        default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6" # TODO update to real sandbox did.
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-client-sandbox"
@@ -227,7 +238,8 @@ jobs:
             --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
             --build-arg ENV=<< parameters.env >> \
             --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
-            --build-arg ISSUER_DID=<< parameters.issuer_did >> \
+            --build-arg PROVE_ISSUER_DID=<< parameters.prove_issuer_did >> \
+            --build-arg HV_ISSUER_DID=<< parameters.hv_issuer_did >> \
             --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
             --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \

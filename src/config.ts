@@ -6,7 +6,8 @@ interface Config {
   backendServerUrl: string;
   walletClientUrl: string;
   proveAuthUrl: string;
-  issuerDid: string;
+  proveIssuerDid: string;
+  hvIssuerDid: string;
   env: SaasEnvironment;
   apiKey: string;
   logRocketId: string;
@@ -19,7 +20,8 @@ const {
   REACT_APP_BACKEND_SERVER_URL = '',
   REACT_APP_WALLET_CLIENT_URL = '',
   REACT_APP_PROVE_AUTH_URL = '',
-  REACT_APP_ISSUER_DID = '',
+  REACT_APP_PROVE_ISSUER_DID = '',
+  REACT_APP_HV_ISSUER_DID = '',
   REACT_APP_ENV = 'development',
   REACT_APP_API_KEY = '',
   REACT_APP_LOG_ROCKET_ID = '',
@@ -32,7 +34,8 @@ export const config: Config = {
   backendServerUrl: REACT_APP_BACKEND_SERVER_URL,
   walletClientUrl: REACT_APP_WALLET_CLIENT_URL,
   proveAuthUrl: REACT_APP_PROVE_AUTH_URL,
-  issuerDid: REACT_APP_ISSUER_DID,
+  proveIssuerDid: REACT_APP_PROVE_ISSUER_DID,
+  hvIssuerDid: REACT_APP_HV_ISSUER_DID,
   env: REACT_APP_ENV as SaasEnvironment,
   apiKey: REACT_APP_API_KEY,
   logRocketId: REACT_APP_LOG_ROCKET_ID,
