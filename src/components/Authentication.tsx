@@ -42,19 +42,36 @@ const Authentication: FC = () => {
     if (!session) return;
 
     // customize these values for the specific demo (or not)
-    const credentialRequests: CredentialRequest[] = [{
-      type: 'PhoneCredential',
-      required: true,
-      issuers: [config.issuerDid]
-    }, {
-      type: 'DobCredential',
-      required: false,
-      issuers: [config.issuerDid]
-    }, {
-      type: 'SsnCredential',
-      required: false,
-      issuers: [config.issuerDid]
-    }
+    const credentialRequests: CredentialRequest[] = [
+      {
+        type: 'PhoneCredential',
+        required: true,
+        issuers: [config.proveIssuerDid]
+      }, {
+        type: 'DobCredential',
+        required: false,
+        issuers: [config.proveIssuerDid]
+      }, {
+        type: 'SsnCredential',
+        required: false,
+        issuers: [config.proveIssuerDid]
+      }, {
+        type: 'DobCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'GenderCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'FullNameCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'AddressCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }
     ];
 
     const presentationRequestOptions: DemoPresentationRequestCreateOptions = {

@@ -9,6 +9,7 @@ import BoldFont from './Layout/BoldFont';
 
 import './Authenticated.css';
 import { VerifiableCredential } from '@unumid/types-deprecated-v1';
+import { config } from '../config';
 
 const Authenticated: FC = () => {
   const { sharedPresentation } = useTypedSelector(state => state.presentation);
@@ -20,7 +21,7 @@ const Authenticated: FC = () => {
     return <Navigate to='/' />;
   }
 
-  let phone, ssn, dob;
+  let provePhone, proveSsn, proveDob, hvDob, hvAddress, hvFullName, hvGender;
 
   const vcs = (sharedPresentation.presentation as any).verifiableCredential as VerifiableCredential[];
 
@@ -29,11 +30,19 @@ const Authenticated: FC = () => {
     const credentialSubject = JSON.parse(credentialSubjectString);
 
     if (vc.type.includes('PhoneCredential')) {
-      phone = credentialSubject.phone;
+      provePhone = credentialSubject.phone;
     } else if (vc.type.includes('SsnCredential')) {
-      ssn = credentialSubject.ssn;
-    } else if (vc.type.includes('DobCredential')) {
-      dob = credentialSubject.dob;
+      proveSsn = credentialSubject.ssn;
+    } else if (vc.type.includes('DobCredential') && vc.issuer === config.proveIssuerDid) {
+      proveDob = credentialSubject.dob;
+    } else if (vc.type.includes('DobCredential') && vc.issuer === config.hvIssuerDid) {
+      hvDob = credentialSubject.dob;
+    } else if (vc.type.includes('AddressCredential')) {
+      hvAddress = credentialSubject.address;
+    } else if (vc.type.includes('FullNameCredential')) {
+      hvFullName = credentialSubject.fullName;
+    } else if (vc.type.includes('GenderCredential')) {
+      hvGender = credentialSubject.gender;
     }
   }
 
@@ -46,9 +55,13 @@ const Authenticated: FC = () => {
     <div className='authenticated'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout/content, etc */}
-        <h3><BoldFont>Prove verified phone number, {phone}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>Prove verified SSN, {ssn}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>Prove verified DOB, {dob}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>Prove verified phone number, {provePhone}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>Prove verified SSN, {proveSsn}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>Prove verified DOB, {proveDob}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified DOB, {hvDob}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>
