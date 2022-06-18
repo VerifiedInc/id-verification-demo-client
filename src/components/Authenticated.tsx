@@ -42,7 +42,9 @@ const Authenticated: FC = () => {
     } else if (vc.type.includes('FullNameCredential')) {
       hvFullName = credentialSubject.fullName;
     } else if (vc.type.includes('GenderCredential')) {
+      debugger;
       hvGender = credentialSubject.gender;
+      console.log('gender', credentialSubject);
     }
   }
 
@@ -60,7 +62,7 @@ const Authenticated: FC = () => {
         <h3><BoldFont>Prove verified DOB, {proveDob}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified DOB, {hvDob}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3>
+        {/* <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3> */}
         <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
