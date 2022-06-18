@@ -60,6 +60,9 @@ jobs:
       prove_issuer_did:
         type: string
         default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
+      hv_issuer_did:
+        type: string
+        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"
@@ -127,6 +130,9 @@ jobs:
       prove_issuer_did:
         type: string
         default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
+      hv_issuer_did:
+        type: string
+        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-dev"
