@@ -410,7 +410,7 @@ workflows:
                 - main
 
       - deploy-image:
-          name: "build-and-push-id-verification-demo"
+          name: "deploy-id-verification-demo"
           context: 
             - AWS-Dev
             - Slack-Context
