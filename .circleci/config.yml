@@ -215,7 +215,7 @@ jobs:
         default: "https://id-verification-api.demo.unumid.co"
       prove_auth_url:
         type: string
-        default: "http://device.payfone.com"
+        default: "https://device.staging.payfone.com"
       wallet_client_url:
         type: string
         default: "https://wallet.sandbox-unumid.co"
