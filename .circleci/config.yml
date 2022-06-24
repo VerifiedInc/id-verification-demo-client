@@ -201,10 +201,10 @@ jobs:
         default: "https://acme-verifier-api.demo.unumid.co"
       prove_issuer_did:
         type: string
-        default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6"
+        default: "did:unum:6ace7dcd-75b7-416a-8604-66535387e51d"
       hv_issuer_did:
         type: string
-        default: "did:unum:94f9fc51-1098-4c98-92a1-ba4bbf5aafb6" # TODO update to real sandbox did.
+        default: "did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270"
       log_rocket_id:
         type: string
         default: "vm6x8i/id-verification-demo-client-sandbox"
