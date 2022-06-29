@@ -45,11 +45,33 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
     // success
     console.log('hyperverge success', HyperKycResult);
     const { address, dateOfBirth, fullName, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
+
+    /**
+     * Reformat the DOB from the HV document scan.
+     * dateOfBirthday was taking the format MM-DD-YYYY from HV, but as of 6/23 was updated to dD-mM-YYYY.
+     * and Prove needs it in the format YYYY-MM-DD, so just turning it in that here
+     */
     const proveDob = dateOfBirth.value.split('-');
+
+    // loop through the split data array and ensure all values have at least 2 digits
+    for (let i = 0; i < proveDob.length; i++) {
+      if (proveDob[i].length < 2) {
+        proveDob[i] = '0' + proveDob[i];
+      }
+    }
+
+    // shift values to fit desired format; this was working when HV was returning in format MM-DD-YYYY
+    // const hold = proveDob[2];
+    // proveDob[2] = proveDob[1];
+    // proveDob[1] = proveDob[0];
+    // proveDob[0] = hold;
+
+    // shift values to fit desired format; having to deal with new format of DD-MM-YYYY
     const hold = proveDob[2];
-    proveDob[2] = proveDob[1];
-    proveDob[1] = proveDob[0];
+    proveDob[2] = proveDob[0];
     proveDob[0] = hold;
+
+    // now should be in YYYY-MM-DD format
     const dob = proveDob.join('-');
 
     debugger;
@@ -142,8 +164,6 @@ const Register: FC = () => {
    * the service creates a user and returns the userCode for linking to the prove prefill data
    */
   const sendHvDocScanData = async (data: KYCData): Promise<string> => {
-    // const { address, age, dob, gender, fullName, idType } = data;
-
     // TODO add auth with backend
     const hvService = backendClient.service('hyperVerge');
 
