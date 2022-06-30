@@ -12,6 +12,7 @@ import BoldFont from './Layout/BoldFont';
 
 import './Register.css';
 import Italic from './Layout/Italic';
+import { v1 } from 'uuid';
 
 import { backendClient } from '../feathers';
 import { config } from '../config';
@@ -205,10 +206,10 @@ const Register: FC = () => {
     // hyperverge document scan setup
     const defaultDocumentId = 'dl';
     const defaultCountryId = 'usa';
-    const transactionId = '1';
-    const document2 = new window.Document(true, defaultCountryId, defaultDocumentId);
+    const transactionId = `${v1()}`;
+    const documentHv = new window.Document(true, defaultCountryId, defaultDocumentId);
     const face = new window.Face();
-    const workflow = [document2, face];
+    const workflow = [documentHv, face];
     const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
 
     const callback = async (data: KYCData) => {
