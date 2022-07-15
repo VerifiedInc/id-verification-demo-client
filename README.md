@@ -1,11 +1,16 @@
-# ACME Demo Client
-> This project acts as a frontend for a fictional customer, Acme, which uses Unum ID for the [beyond passwordless](https://www.unum.id/solutions/beyond-passwordless) solution for authentication.
+# Identity Verification Demo Client
+> This project acts as a frontend for a fictional customer that collects information about a user during onboarding then wants to issue Unum ID credentials to them. The demo client also includes a reference to another third party, Acme, which requests the Unum ID Credential data for its own purposes. Using the Unum ID wallet the user is in full control of sharing this information.
 
-Information about the Unum ID demo ecosystem can be found in our [documentation](https://docs.unum.id/#demos).
+Information about the Unum ID demo ecosystem can be found in our [documentation](https://docs.unumid.co/#demos).
 
-# Getting Started with Create React App
+This demo specifically acts as an [Issuer](https://docs.unumid.co/terminology/#issuer) in the Unum ID ecosystem while Acme acts as a [Verifier](https://docs.unumid.co/terminology/#verifier). It is worth noting while this demo interfaces with Acme, the source code for the ACME demo verifier lives in another demo [repository](https://github.com/UnumID/acme-demo-verifier-server).
+## Integration Source Code Examples
+Per the quick step [guide](https://docs.unumid.co/quick-start-guide) in the docs there is mention
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+One can see in the repo the use of the web-sdk to display interface with the [IDV Demo Server](https://github.com/UnumID/id-verification-demo-server) project to create and display a [Presentation Request](https://docs.unumid.co/terminology/#request) QR code. Critically it is interfacing, ultimately, with the [Server SDK](https://github.com/UnumID/server-sdk-typescript)'s [sendRequest](https://docs.unumid.co/server-sdk#sendrequest) function on the backend with the local `createPresentationRequest` function.
+
+## Project Framework
+This is a React application that uses the FeathersJS [Client](https://docs.feathersjs.com/api/client.html) to interface with a [FeatherJS](https://docs.feathersjs.com/) Server, the backend project. Specifically it is using the [Socket.io](https://docs.feathersjs.com/api/socketio.html) FeathersJS client. Please keep these details in mind when using this repo as source code examples.
 
 ## Available Scripts
 
@@ -55,4 +60,4 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 Just merging changes to `main` will trigger automated deployments to dev.
 
 ### Sandbox
-To release version of this project to sandbox push a tag with a preceding `v`. This will trigger an automated deployment to sandbox.
+To release version of this project to sandbox create a Github release with a preceding `v`. This will trigger an automated deployment to sandbox.
