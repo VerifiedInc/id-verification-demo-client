@@ -6,8 +6,6 @@ Information about the Unum ID demo ecosystem can be found in our [documentation]
 This demo specifically acts as an [Issuer](https://docs.unumid.co/terminology/#issuer) in the Unum ID ecosystem while Acme acts as a [Verifier](https://docs.unumid.co/terminology/#verifier). It is worth noting while this demo interfaces with Acme, the source code for the ACME demo verifier lives in another demo [repository](https://github.com/UnumID/acme-demo-verifier-server).
 
 ## Integration Source Code Examples
-Per the quick step [guide](https://docs.unumid.co/quick-start-guide) in the docs there is mention
-
 One can see in the repo the use of the web-sdk to display interface with the [IDV Demo Server](https://github.com/UnumID/id-verification-demo-server) project to create and display a [Presentation Request](https://docs.unumid.co/terminology/#request) QR code. Critically it is interfacing, ultimately, with the [Server SDK](https://github.com/UnumID/server-sdk-typescript)'s [sendRequest](https://docs.unumid.co/server-sdk#sendrequest) function on the backend with the local `createPresentationRequest` function.
 
 ## Project Framework
