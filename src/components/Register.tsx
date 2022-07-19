@@ -31,17 +31,6 @@ declare global {
   }
 }
 
-// interface KYCData {
-//   address: string;
-//   dob: string;
-//   gender: string;
-//   fullName: string;
-//   docImage: string; // base64 image
-//   fullFaceImage: string; // base64 image
-//   liveFace: string;
-//   liveFaceConfidence: string;
-// }
-
 const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
   if (HyperKycResult.Cancelled) {
     // user cancelled
