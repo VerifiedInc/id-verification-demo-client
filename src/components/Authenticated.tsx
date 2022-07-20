@@ -21,7 +21,7 @@ const Authenticated: FC = () => {
     return <Navigate to='/' />;
   }
 
-  let provePhone, proveSsn, proveDob, hvDob, hvAddress, hvFullName, hvGender;
+  let provePhone, proveSsn, proveDob, hvDob, hvAddress, hvFullName, hvGender, hvCountry, hvDocType, hvLiveliness, hvLivelinessConfidence, hvFaceMatch, hvFaceMatchConfidence;
 
   const vcs = (sharedPresentation.presentation as any).verifiableCredential as VerifiableCredential[];
 
@@ -43,6 +43,18 @@ const Authenticated: FC = () => {
       hvFullName = credentialSubject.fullName;
     } else if (vc.type.includes('GenderCredential')) {
       hvGender = credentialSubject.gender;
+    } else if (vc.type.includes('CountryResidenceCredential') && vc.issuer === config.hvIssuerDid) {
+      hvCountry = credentialSubject.country;
+    } else if (vc.type.includes('GovernmentIdTypeCredential')) {
+      hvDocType = credentialSubject.documentType;
+    } else if (vc.type.includes('LivelinessCredential')) {
+      hvLiveliness = credentialSubject.liveliness;
+    } else if (vc.type.includes('LivelinessConfidenceCredential')) {
+      hvLivelinessConfidence = credentialSubject.confidence;
+    } else if (vc.type.includes('FacialMatchCredential')) {
+      hvFaceMatch = credentialSubject.match;
+    } else if (vc.type.includes('FacialMatchConfidenceCredential')) {
+      hvFaceMatchConfidence = credentialSubject.confidence;
     }
   }
 
@@ -50,18 +62,23 @@ const Authenticated: FC = () => {
 
   debugger;
 
-  // How todo conditional rendering based component variables: ssn, dob, phone?
   return (
     <div className='authenticated'>
       <MainContent>
         {/* customize this with branding for the specific demo, better styling/layout/content, etc */}
-        <h3><BoldFont>Prove verified phone number, {provePhone}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>Prove verified SSN, {proveSsn}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>Prove verified DOB, {proveDob}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified DOB, {hvDob}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
+        {provePhone ? <h3><BoldFont>Prove verified phone number, {provePhone}, shared successfully!</BoldFont></h3> : ''}
+        {proveSsn ? <h3><BoldFont>Prove verified SSN, {proveSsn}, shared successfully!</BoldFont></h3> : ''}
+        {proveDob ? <h3><BoldFont>Prove verified DOB, {proveDob}, shared successfully!</BoldFont></h3> : ''}
+        {hvDob ? <h3><BoldFont>HyperVerge verified DOB, {hvDob}, shared successfully!</BoldFont></h3> : ''}
+        {hvAddress ? <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3> : ''}
+        {hvGender ? <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3> : ''}
+        {hvFullName ? <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3> : ''}
+        {hvCountry ? <h3><BoldFont>HyperVerge verified country of residence, {hvCountry}, shared successfully!</BoldFont></h3> : ''}
+        {hvDocType ? <h3><BoldFont>HyperVerge verified document type, {hvDocType}, shared successfully!</BoldFont></h3> : ''}
+        {hvLiveliness ? <h3><BoldFont>HyperVerge verified liveliness, {hvLiveliness}, shared successfully!</BoldFont></h3> : ''}
+        {hvLivelinessConfidence ? <h3><BoldFont>HyperVerge verified liveliness confidence, {hvLivelinessConfidence}, shared successfully!</BoldFont></h3> : ''}
+        {hvFaceMatch ? <h3><BoldFont>HyperVerge verified facial match, {hvFaceMatch}, shared successfully!</BoldFont></h3> : ''}
+        {hvFaceMatchConfidence ? <h3><BoldFont>HyperVerge verified facial match confidence, {hvFaceMatchConfidence}, shared successfully!</BoldFont></h3> : ''}
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>

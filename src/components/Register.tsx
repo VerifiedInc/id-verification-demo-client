@@ -17,6 +17,9 @@ import { v1 } from 'uuid';
 import { backendClient } from '../feathers';
 import { config } from '../config';
 import { useSearchParams } from 'react-router-dom';
+import { HvDocScanData } from '../types';
+
+import { KYCData } from '@unumid/id-verification-types';
 
 // types for global variables added by the hyperverge sdk
 declare global {
@@ -26,13 +29,6 @@ declare global {
     Document?: any;
     HyperKYCModule?: any;
   }
-}
-
-interface KYCData {
-  address: string;
-  dob: string;
-  gender: string;
-  fullName: string;
 }
 
 const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
@@ -45,8 +41,24 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
   } else if (HyperKycResult.Success) {
     // success
     console.log('hyperverge success', HyperKycResult);
-    const { address, dateOfBirth, fullName, gender } = HyperKycResult.Success.data.docListData[0].responseResult.result.details[0].fieldsExtracted;
 
+    const hvDocScanData: HvDocScanData = HyperKycResult.Success.data;
+    const docCountryId = hvDocScanData.selectedCountryId;
+
+    const faceMatchData = hvDocScanData.faceMatchData.responseResult.result.details.match;
+    const faceMatch = faceMatchData.value;
+    const faceMatchConfidence = faceMatchData.confidence;
+
+    const faceData = hvDocScanData.faceData;
+    const fullFaceImage = faceData.fullFaceImagePath;
+    const liveFace = faceData.responseResult.result.details.liveFace.value;
+    const liveFaceConfidence = faceData.responseResult.result.details.liveFace.confidence;
+
+    const docData = hvDocScanData.docListData[0];
+    const docImage = docData.docImagePath;
+    const docType = docData.documentId;
+    const { address, dateOfBirth, fullName, gender } = docData.responseResult.result.details[0].fieldsExtracted;
+    debugger;
     /**
      * Reformat the DOB from the HV document scan.
      * dateOfBirthday was taking the format MM-DD-YYYY from HV, but as of 6/23 was updated to dD-mM-YYYY.
@@ -81,7 +93,15 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
       address: address.value,
       dob,
       fullName: fullName.value,
-      gender: gender.value
+      gender: gender.value,
+      docImage,
+      docType,
+      docCountryId,
+      fullFaceImage,
+      liveFace,
+      liveFaceConfidence,
+      faceMatch,
+      faceMatchConfidence
     });
 
     console.log('success');
