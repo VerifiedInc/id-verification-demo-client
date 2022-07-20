@@ -73,6 +73,33 @@ const Authentication: FC = () => {
         type: 'AddressCredential',
         required: false,
         issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'CountryResidenceCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'GovernmentIdTypeCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'LivelinessCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      }, {
+        type: 'LivelinessConfidenceCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'FacialMatchCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'FacialMatchConfidenceCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
       }
     ];
 

@@ -43,6 +43,18 @@ const Authenticated: FC = () => {
       hvFullName = credentialSubject.fullName;
     } else if (vc.type.includes('GenderCredential')) {
       hvGender = credentialSubject.gender;
+    } else if (vc.type.includes('CountryResidenceCredential') && vc.issuer === config.hvIssuerDid) {
+      hvDob = credentialSubject.country;
+    } else if (vc.type.includes('GovernmentIdTypeCredential')) {
+      hvAddress = credentialSubject.documentType;
+    } else if (vc.type.includes('LivelinessCredential')) {
+      hvFullName = credentialSubject.liveliness;
+    } else if (vc.type.includes('LivelinessConfidenceCredential')) {
+      hvGender = credentialSubject.confidence;
+    } else if (vc.type.includes('FacialMatchCredential')) {
+      hvFullName = credentialSubject.match;
+    } else if (vc.type.includes('FacialMatchConfidenceCredential')) {
+      hvGender = credentialSubject.confidence;
     }
   }
 
