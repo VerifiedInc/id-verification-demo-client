@@ -73,13 +73,13 @@ const Authenticated: FC = () => {
         <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
-        if (hvFullName) <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
-        if (hvCountry) <h3><BoldFont>HyperVerge verified country of residence, {hvCountry}, shared successfully!</BoldFont></h3>
-        if (hvDocType) <h3><BoldFont>HyperVerge verified document type, {hvDocType}, shared successfully!</BoldFont></h3>
-        if (hvLiveliness) <h3><BoldFont>HyperVerge verified liveliness, {hvLiveliness}, shared successfully!</BoldFont></h3>
-        if (hvLivelinessConfidence) <h3><BoldFont>HyperVerge verified liveliness confidence, {hvLivelinessConfidence}, shared successfully!</BoldFont></h3>
-        if (hvFaceMatch) <h3><BoldFont>HyperVerge verified facial match, {hvFaceMatch}, shared successfully!</BoldFont></h3>
-        <h3><BoldFont>HyperVerge verified facial match confidence, {hvFaceMatchConfidence}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified country of residence, {hvCountry}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified document type, {hvDocType}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified liveliness, {hvLiveliness}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified liveliness confidence, {hvLivelinessConfidence}, shared successfully!</BoldFont></h3>
+        {hvFaceMatch ? <h3><BoldFont>HyperVerge verified facial match, {hvFaceMatch}, shared successfully!</BoldFont></h3> : ''}
+        {hvFaceMatchConfidence ? <h3><BoldFont>HyperVerge verified facial match confidence, {hvFaceMatchConfidence}, shared successfully!</BoldFont></h3> : ''}
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>
