@@ -21,7 +21,7 @@ const Authenticated: FC = () => {
     return <Navigate to='/' />;
   }
 
-  let provePhone, proveSsn, proveDob, hvDob, hvAddress, hvFullName, hvGender;
+  let provePhone, proveSsn, proveDob, hvDob, hvAddress, hvFullName, hvGender, hvCountry, hvDocType, hvLiveliness, hvLivelinessConfidence, hvFaceMatch, hvFaceMatchConfidence;
 
   const vcs = (sharedPresentation.presentation as any).verifiableCredential as VerifiableCredential[];
 
@@ -44,17 +44,17 @@ const Authenticated: FC = () => {
     } else if (vc.type.includes('GenderCredential')) {
       hvGender = credentialSubject.gender;
     } else if (vc.type.includes('CountryResidenceCredential') && vc.issuer === config.hvIssuerDid) {
-      hvDob = credentialSubject.country;
+      hvCountry = credentialSubject.country;
     } else if (vc.type.includes('GovernmentIdTypeCredential')) {
-      hvAddress = credentialSubject.documentType;
+      hvDocType = credentialSubject.documentType;
     } else if (vc.type.includes('LivelinessCredential')) {
-      hvFullName = credentialSubject.liveliness;
+      hvLiveliness = credentialSubject.liveliness;
     } else if (vc.type.includes('LivelinessConfidenceCredential')) {
-      hvGender = credentialSubject.confidence;
+      hvLivelinessConfidence = credentialSubject.confidence;
     } else if (vc.type.includes('FacialMatchCredential')) {
-      hvFullName = credentialSubject.match;
+      hvFaceMatch = credentialSubject.match;
     } else if (vc.type.includes('FacialMatchConfidenceCredential')) {
-      hvGender = credentialSubject.confidence;
+      hvFaceMatchConfidence = credentialSubject.confidence;
     }
   }
 
@@ -62,7 +62,6 @@ const Authenticated: FC = () => {
 
   debugger;
 
-  // How todo conditional rendering based component variables: ssn, dob, phone?
   return (
     <div className='authenticated'>
       <MainContent>
@@ -74,6 +73,13 @@ const Authenticated: FC = () => {
         <h3><BoldFont>HyperVerge verified address, {hvAddress}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified gender, {hvGender}, shared successfully!</BoldFont></h3>
         <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
+        if (hvFullName) <h3><BoldFont>HyperVerge verified full name, {hvFullName}, shared successfully!</BoldFont></h3>
+        if (hvCountry) <h3><BoldFont>HyperVerge verified country of residence, {hvCountry}, shared successfully!</BoldFont></h3>
+        if (hvDocType) <h3><BoldFont>HyperVerge verified document type, {hvDocType}, shared successfully!</BoldFont></h3>
+        if (hvLiveliness) <h3><BoldFont>HyperVerge verified liveliness, {hvLiveliness}, shared successfully!</BoldFont></h3>
+        if (hvLivelinessConfidence) <h3><BoldFont>HyperVerge verified liveliness confidence, {hvLivelinessConfidence}, shared successfully!</BoldFont></h3>
+        if (hvFaceMatch) <h3><BoldFont>HyperVerge verified facial match, {hvFaceMatch}, shared successfully!</BoldFont></h3>
+        <h3><BoldFont>HyperVerge verified facial match confidence, {hvFaceMatchConfidence}, shared successfully!</BoldFont></h3>
         <div className='logout' onClick={logout}>Log Out</div>
         <div className='start-over' onClick={startOver}>Start Over</div>
       </MainContent>
