@@ -4,7 +4,7 @@ interface Config {
   verifierServerUrl: string;
   issuerServerUrl: string;
   backendServerUrl: string;
-  walletClientUrl: string;
+  deeplinkServerUrl: string;
   proveAuthUrl: string;
   proveIssuerDid: string;
   hvIssuerDid: string;
@@ -18,7 +18,7 @@ const {
   REACT_APP_VERIFIER_SERVER_URL = '',
   REACT_APP_ISSUER_SERVER_URL = '',
   REACT_APP_BACKEND_SERVER_URL = '',
-  REACT_APP_WALLET_CLIENT_URL = '',
+  REACT_APP_DEEPLINK_SERVER_URL = '',
   REACT_APP_PROVE_AUTH_URL = '',
   REACT_APP_PROVE_ISSUER_DID = '',
   REACT_APP_HV_ISSUER_DID = '',
@@ -32,7 +32,7 @@ export const config: Config = {
   verifierServerUrl: REACT_APP_VERIFIER_SERVER_URL,
   issuerServerUrl: REACT_APP_ISSUER_SERVER_URL,
   backendServerUrl: REACT_APP_BACKEND_SERVER_URL,
-  walletClientUrl: REACT_APP_WALLET_CLIENT_URL,
+  deeplinkServerUrl: REACT_APP_DEEPLINK_SERVER_URL,
   proveAuthUrl: REACT_APP_PROVE_AUTH_URL,
   proveIssuerDid: REACT_APP_PROVE_ISSUER_DID,
   hvIssuerDid: REACT_APP_HV_ISSUER_DID,
