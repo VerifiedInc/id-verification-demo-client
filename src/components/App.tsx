@@ -86,17 +86,13 @@ const App: FC = () => {
               </Unumid>
           }
           />
-          {/* <Route path='/login'>
-            <Unumid>
-              <Login />
-            </Unumid>
-          </Route>
-          <Route path='/authenticated'>
-            <Acme>
-              <AltHeader />
-              <Authenticated />
-            </Acme>
-          </Route> */}
+          <Route
+            path='/login' element={
+              <Unumid>
+                <Login />
+              </Unumid>
+          }
+          />
           <Route
             path='/proveAuth' element={
               <Acme>
