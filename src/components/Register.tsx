@@ -50,12 +50,12 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
     const faceMatchConfidence = faceMatchData.confidence;
 
     const faceData = hvDocScanData.faceData;
-    const fullFaceImage = faceData.fullFaceImagePath;
+    // const fullFaceImage = faceData.fullFaceImagePath;
     const liveFace = faceData.responseResult.result.details.liveFace.value;
     const liveFaceConfidence = faceData.responseResult.result.details.liveFace.confidence;
 
     const docData = hvDocScanData.docListData[0];
-    const docImage = docData.docImagePath;
+    // const docImage = docData.docImagePath;
     const docType = docData.documentId;
     const { address, dateOfBirth, fullName, gender } = docData.responseResult.result.details[0].fieldsExtracted;
     debugger;
