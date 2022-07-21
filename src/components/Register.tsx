@@ -161,7 +161,9 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
 
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
-    window.location.href = `${config.deeplinkServerUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
+    debugger;
+    console.log('deeplinkurl', config.deeplinkServerUrl);
+    window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}`;
   } catch (e) {
     console.log('identity error', e);
     window.alert('Error interfacing with Prove Prefill service. Please try again.');

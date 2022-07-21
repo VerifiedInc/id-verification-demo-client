@@ -49,34 +49,32 @@ jobs:
         default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
       repo:
         type: string
+        default: id-verification-demo-client
       env:
         type: string
         default: "development"
+      image_tag_1: 
+        type: string
+      image_tag_2:
+        type: string
       issuer_server_url:
         type: string
       verifier_server_url:
         type: string
-        default: "https://acme-verifier-api.demo.dev-unumid.co"
       prove_issuer_did:
         type: string
-        default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
       hv_issuer_did:
         type: string
-        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
       log_rocket_id:
         type: string
-        default: "vm6x8i/id-verification-demo-dev"
       holder_app_uuid:
         type: string
       backend_server_url:
         type: string
-        default: "https://id-verification-api.demo.dev-unumid.co"
       prove_auth_url:
         type: string
-        default: "https://device.staging.payfone.com"
       deeplink_server_url:
         type: string
-        default: "https://link.dev-unumid.co"
 
     steps:
       - checkout
@@ -89,6 +87,7 @@ jobs:
       - run:
           command: |
             echo Logging in to Amazon ECR...
+            echo << parameters.deeplink_server_url >>
             $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
             echo Building the Docker image...
             DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" \
@@ -105,153 +104,11 @@ jobs:
             --build-arg DEEPLINK_SERVER_URL=<< parameters.deeplink_server_url >> \
             -t ${CIRCLE_SHA1} .
 
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_1 >>
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_2 >>
             echo Pushing the Docker image...
-            docker push << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
-            docker push << parameters.reg >>/<< parameters.repo >>:dev-latest
-          name: Update container image
-
-  build-and-push-image-test:
-    executor: aws-cli/default
-    parameters:
-      reg:
-        type: string
-        default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
-      repo:
-        type: string
-      env:
-        type: string
-        default: "development"
-      issuer_server_url:
-        type: string
-      verifier_server_url:
-        type: string
-        default: "https://acme-verifier-api.demo.dev-unumid.co"
-      prove_issuer_did:
-        type: string
-        default: "did:unum:f627cae9-fcd8-4776-a921-86605630f6da"
-      hv_issuer_did:
-        type: string
-        default: "did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57"
-      log_rocket_id:
-        type: string
-        default: "vm6x8i/id-verification-demo-dev"
-      holder_app_uuid:
-        type: string
-      backend_server_url:
-        type: string
-        default: "https://id-verification-api.demo.dev-unumid.co"
-      prove_auth_url:
-        type: string
-        default: "http://device.staging.payfone.com"
-      deeplink_server_url:
-        type: string
-        default: "https://link.dev-unumid.co"
-
-    steps:
-      - checkout
-      - aws-cli/setup
-      - setup_remote_docker:
-          version: 19.03.13
-      - add_ssh_keys:
-          fingerprints:
-            - "ae:c4:5c:af:ef:ea:57:12:99:a3:bb:aa:09:e0:57:14"
-      - run:
-          command: |
-            echo Logging in to Amazon ECR...
-            $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-            echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" \
-            --build-arg API_KEY=${DEV_API_KEY} \
-            --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
-            --build-arg ENV=<< parameters.env >> \
-            --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
-            --build-arg PROVE_ISSUER_DID=<< parameters.prove_issuer_did >> \
-            --build-arg HV_ISSUER_DID=<< parameters.hv_issuer_did >> \
-            --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
-            --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
-            --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
-            --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
-            --build-arg DEEPLINK_SERVER_URL=<< parameters.deeplink_server_url >> \
-            -t ${CIRCLE_SHA1} .
-
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:test-latest
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
-            echo Pushing the Docker image...
-            docker push << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
-            docker push << parameters.reg >>/<< parameters.repo >>:test-latest
-          name: Update container image
-
-  build-and-push-image-sandbox:
-    executor: aws-cli/default
-    parameters:
-      reg:
-        type: string
-        default: "248606629437.dkr.ecr.us-west-2.amazonaws.com"
-      repo:
-        type: string
-      env:
-        type: string
-        default: "sandbox"
-      issuer_server_url:
-        type: string
-      verifier_server_url:
-        type: string
-        default: "https://acme-verifier-api.demo.unumid.co"
-      prove_issuer_did:
-        type: string
-        default: "did:unum:6ace7dcd-75b7-416a-8604-66535387e51d"
-      hv_issuer_did:
-        type: string
-        default: "did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270"
-      log_rocket_id:
-        type: string
-        default: "vm6x8i/id-verification-demo-client-sandbox"
-      holder_app_uuid:
-        type: string
-      backend_server_url:
-        type: string
-        default: "https://id-verification-api.demo.unumid.co"
-      prove_auth_url:
-        type: string
-        default: "https://device.staging.payfone.com"
-      deeplink_server_url:
-        type: string
-        default: "https://link.sandbox-unumid.co"
-
-    steps:
-      - checkout
-      - aws-cli/setup
-      - setup_remote_docker:
-          version: 19.03.13
-      - add_ssh_keys:
-          fingerprints:
-            - "ae:c4:5c:af:ef:ea:57:12:99:a3:bb:aa:09:e0:57:14"
-      - run:
-          command: |
-            echo Logging in to Amazon ECR...
-            $(aws ecr get-login --no-include-email --region $AWS_DEFAULT_REGION)
-            echo Building the Docker image...
-            DOCKER_BUILDKIT=1 docker build --ssh github="$HOME/.ssh/id_rsa" \
-            --build-arg API_KEY=${DEV_API_KEY} \
-            --build-arg ISSUER_SERVER_URL=<< parameters.issuer_server_url >> \
-            --build-arg ENV=<< parameters.env >> \
-            --build-arg VERIFIER_SERVER_URL=<< parameters.verifier_server_url >> \
-            --build-arg PROVE_ISSUER_DID=<< parameters.prove_issuer_did >> \
-            --build-arg HV_ISSUER_DID=<< parameters.hv_issuer_did >> \
-            --build-arg LOG_ROCKET_ID=<< parameters.log_rocket_id >> \
-            --build-arg HOLDER_APP_UUID=<< parameters.holder_app_uuid >> \
-            --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
-            --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
-            --build-arg DEEPLINK_SERVER_URL=<< parameters.deeplink_server_url >> \
-            -t ${CIRCLE_SHA1} .
-
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-latest
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
-            echo Pushing the Docker image...
-            docker push << parameters.reg >>/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}"
-            docker push << parameters.reg >>/<< parameters.repo >>:sandbox-latest
+            docker push << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_1 >>
+            docker push << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_2 >>
           name: Update container image
 
   deploy-image:
@@ -263,8 +120,15 @@ jobs:
         default: "dev-customer-cluster"
       repo:
         type: string
+        default: id-verification-demo-client
       deployment:
         type: string
+        default: id-verification-demo-client
+      image_tag:
+        type: string
+      slack_template:
+        type: string
+        default: basic_success_1
 
     steps:
       - kubernetes/install
@@ -276,7 +140,7 @@ jobs:
           command: |
             # Set the image tag then ensure a rollout is triggered. Thanks to the deployment pod spec being set to always pull this should grab the latest image, even with the same tag.
             # ref: https://stackoverflow.com/a/55914480/2631728
-            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:"dev-latest"
+            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:<< parameters.image_tag >>
             kubectl rollout restart deploy << parameters.deployment >>
 
             # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
@@ -295,93 +159,7 @@ jobs:
           template: basic_fail_1
       - slack/notify:
           event: pass
-          template: basic_success_1
-
-  deploy-image-test:
-    docker: # Referencing the python image here, see https://github.com/CircleCI-Public/aws-eks-orb/issues/52#issuecomment-1006838213
-    - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        type: string
-        default: "dev-customer-cluster"
-      repo:
-        type: string
-      deployment:
-        type: string
-
-    steps:
-      - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
-          install-kubectl: true
-          aws-region: ${AWS_REGION}
-          cluster-name: << parameters.cluster-name >>
-      - run:
-          command: |
-            # Set the image tag then ensure a rollout is triggered. Thanks to the deployment pod spec being set to always pull this should grab the latest image, even with the same tag.
-            # ref: https://stackoverflow.com/a/55914480/2631728
-            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:"test-latest"
-            kubectl rollout restart deploy << parameters.deployment >>
-
-            # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
-            # ref: https://www.jeffgeerling.com/blog/2018/updating-kubernetes-deployment-and-waiting-it-roll-out-shell-script
-            ATTEMPTS=0
-            ROLLOUT_STATUS_CMD="kubectl rollout status deployment/<< parameters.deployment >>"
-            until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
-              $ROLLOUT_STATUS_CMD
-              ATTEMPTS=$((attempts + 1))
-              sleep 10
-            done
-          name: Deploy container image to dev
-      - slack/notify:
-          event: fail
-          mentions: '@devops-team'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: basic_success_1
-
-  deploy-image-sandbox:
-    docker: # Referencing the python image here, see https://github.com/CircleCI-Public/aws-eks-orb/issues/52#issuecomment-1006838213
-    - image: cimg/python:3.10
-    parameters:
-      cluster-name:
-        type: string
-        default: "sandbox-customer-cluster"
-      repo:
-        type: string
-      deployment:
-        type: string
-      namespace:
-        type: string
-        default: "demos"
-
-    steps:
-      - kubernetes/install
-      - aws-eks/update-kubeconfig-with-authenticator:
-          install-kubectl: true
-          aws-region: ${AWS_REGION}
-          cluster-name: << parameters.cluster-name >>
-      - run:
-          command: |
-            kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:sandbox-"${CIRCLE_TAG}" -n << parameters.namespace >>
-
-            # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
-            # ref: https://www.jeffgeerling.com/blog/2018/updating-kubernetes-deployment-and-waiting-it-roll-out-shell-script
-            ATTEMPTS=0
-            ROLLOUT_STATUS_CMD="kubectl rollout status deployment/<< parameters.deployment >> -n << parameters.namespace >>"
-            until $ROLLOUT_STATUS_CMD || [ $ATTEMPTS -eq 60 ]; do
-              $ROLLOUT_STATUS_CMD
-              ATTEMPTS=$((attempts + 1))
-              sleep 10
-            done
-          name: Deploy container image to sandbox
-      - slack/notify:
-          event: fail
-          mentions: '@devops-team'
-          template: basic_fail_1
-      - slack/notify:
-          event: pass
-          template: success_tagged_deploy_1
+          template: << parameters.slack_template >>
 
 workflows:
   test:
@@ -404,29 +182,38 @@ workflows:
               ignore: /.*/
 
       # Unum Holder
-      - build-and-push-image-sandbox:
+      - build-and-push-image:
           name: "build-and-push-id-verification-demo-sandbox"
           requires:
             - test
           context: AWS-Dev
-          repo: id-verification-demo-client
+          image_tag_1: sandbox-latest
+          image_tag_2: "sandbox-${CIRCLE_TAG}"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.unumid.co
+          prove_issuer_did: did:unum:6ace7dcd-75b7-416a-8604-66535387e51d
+          hv_issuer_did: did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270
+          log_rocket_id: vm6x8i/id-verification-demo-client-sandbox
+          backend_server_url: https://id-verification-api.demo.unumid.co
+          prove_auth_url: https://device.staging.payfone.com
+          deeplink_server_url: https://link.sandbox-unumid.co
           filters:
             tags:
               only: /^v.*/
             branches:
               ignore: /.*/
 
-      - deploy-image-sandbox:
+      - deploy-image:
           name: "deploy-id-verification-demo-sandbox"
+          cluster-name: sandbox-customer-cluster
           context: 
             - AWS-Dev
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo-sandbox
-          repo: id-verification-demo-client
-          deployment: id-verification-demo-client
+          image_tag: sandbox-"${CIRCLE_TAG}"
+          slack_template: success_tagged_deploy_1
           filters:
             tags:
               only: /^v.*/
@@ -447,9 +234,17 @@ workflows:
           requires:
             - test
           context: AWS-Dev
-          repo: id-verification-demo-client
+          image_tag_1: dev-latest
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
+          prove_issuer_did: did:unum:f627cae9-fcd8-4776-a921-86605630f6da
+          hv_issuer_did: did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57
+          log_rocket_id: vm6x8i/id-verification-demo-dev
+          backend_server_url: https://id-verification-api.demo.dev-unumid.co
+          prove_auth_url: http://device.staging.payfone.com
+          deeplink_server_url: https://link.dev-unumid.co
           filters:
             branches:
               only:
@@ -460,10 +255,9 @@ workflows:
           context: 
             - AWS-Dev
             - Slack-Context
-          repo: id-verification-demo-client
-          deployment: id-verification-demo-client
           requires:
             - build-and-push-id-verification-demo
+          image_tag: dev-latest
           filters:
             branches:
               only:
@@ -478,27 +272,34 @@ workflows:
                 - test-circleci
 
       # Unum Holder
-      - build-and-push-image-test:
+      - build-and-push-image:
           name: "build-and-push-id-verification-demo-test"
           requires:
             - test
           context: AWS-Dev
-          repo: id-verification-demo-client
+          image_tag_1: test-latest
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
+          prove_issuer_did: did:unum:f627cae9-fcd8-4776-a921-86605630f6da
+          hv_issuer_did: did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57
+          log_rocket_id: vm6x8i/id-verification-demo-dev
+          backend_server_url: https://id-verification-api.demo.dev-unumid.co
+          prove_auth_url: http://device.staging.payfone.com
+          deeplink_server_url: https://link.dev-unumid.co
           filters:
             branches:
               only:
                 - test-circleci
-      - deploy-image-test:
+      - deploy-image:
           name: "deploy-id-verification-demo-test"
           context: 
             - AWS-Dev
             - Slack-Context
-          repo: id-verification-demo-client
-          deployment: id-verification-demo-client
           requires:
             - build-and-push-id-verification-demo-test
+          image_tag: test-latest
           filters:
             branches:
               only:
