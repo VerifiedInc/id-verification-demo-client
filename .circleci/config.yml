@@ -53,6 +53,10 @@ jobs:
       env:
         type: string
         default: "development"
+      image_tag_1: 
+        type: string
+      image_tag_2:
+        type: string
       issuer_server_url:
         type: string
       verifier_server_url:
