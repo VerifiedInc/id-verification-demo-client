@@ -177,7 +177,7 @@ workflows:
               ignore: /.*/
 
       # Unum Holder
-      - build-and-push-image-sandbox:
+      - build-and-push-image:
           name: "build-and-push-id-verification-demo-sandbox"
           requires:
             - test
