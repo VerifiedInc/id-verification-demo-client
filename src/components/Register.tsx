@@ -158,13 +158,11 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
     });
 
     const { userCode, issuerDid } = responseIdentity;
-    // const { userCode, issuerDid } = { userCode: '123', issuerDid: 'did:unumid:123' };
 
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
     debugger;
     console.log('deeplinkurl', config.deeplinkServerUrl);
-    // window.location.href = `${config.deeplinkServerUrl}/authenticate?userCode=${userCode}&issuer=${issuerDid}`;
     window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}`;
   } catch (e) {
     console.log('identity error', e);
