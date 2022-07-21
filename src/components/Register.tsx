@@ -19,7 +19,13 @@ import { config } from '../config';
 import { useSearchParams } from 'react-router-dom';
 import { HvDocScanData } from '../types';
 
-import { KYCData } from '@unumid/id-verification-types';
+import { KYCData as _KYCData } from '@unumid/id-verification-types';
+
+interface KYCData extends Omit<_KYCData, 'docImage' | 'fullFaceImage'> {
+  docImage?: string;
+  fullFaceImage?: string;
+
+}
 
 // types for global variables added by the hyperverge sdk
 declare global {
@@ -94,10 +100,10 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
       dob,
       fullName: fullName.value,
       gender: gender.value,
-      docImage,
+      // docImage,
       docType,
       docCountryId,
-      fullFaceImage,
+      // fullFaceImage,
       liveFace,
       liveFaceConfidence,
       faceMatch,
