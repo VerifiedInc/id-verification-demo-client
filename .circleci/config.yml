@@ -291,7 +291,7 @@ workflows:
             branches:
               only:
                 - test-circleci
-      - deploy-image-test:
+      - deploy-image:
           name: "deploy-id-verification-demo-test"
           context: 
             - AWS-Dev
