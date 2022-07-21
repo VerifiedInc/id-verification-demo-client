@@ -99,11 +99,11 @@ jobs:
             --build-arg DEEPLINK_SERVER_URL=<< parameters.deeplink_server_url >> \
             -t ${CIRCLE_SHA1} .
 
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:dev-latest
-            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_1 >>
+            docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_2 >>
             echo Pushing the Docker image...
-            docker push << parameters.reg >>/<< parameters.repo >>:"${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
-            docker push << parameters.reg >>/<< parameters.repo >>:dev-latest
+            docker push << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_1 >>
+            docker push << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_2 >>
           name: Update container image
 
   deploy-image:
@@ -182,6 +182,8 @@ workflows:
           requires:
             - test
           context: AWS-Dev
+          image_tag_1: sandbox-latest
+          image_tag_2: "sandbox-${CIRCLE_TAG}"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.unumid.co
@@ -227,6 +229,8 @@ workflows:
           requires:
             - test
           context: AWS-Dev
+          image_tag_1: dev-latest
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
@@ -248,6 +252,7 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo
+          image_tag: dev-latest
           filters:
             branches:
               only:
@@ -267,6 +272,8 @@ workflows:
           requires:
             - test
           context: AWS-Dev
+          image_tag_1: test-latest
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
@@ -287,6 +294,7 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo-test
+          image_tag: test-latest
           filters:
             branches:
               only:
