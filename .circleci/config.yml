@@ -75,6 +75,8 @@ jobs:
         type: string
       deeplink_server_url:
         type: string
+      prove_enabled:
+        type: string
 
     steps:
       - checkout
@@ -102,6 +104,7 @@ jobs:
             --build-arg BACKEND_SERVER_URL=<< parameters.backend_server_url >> \
             --build-arg PROVE_AUTH_URL=<< parameters.prove_auth_url >> \
             --build-arg DEEPLINK_SERVER_URL=<< parameters.deeplink_server_url >> \
+            --build-arg PROVE_ENABLED=<< parameters.prove_enabled >> \
             -t ${CIRCLE_SHA1} .
 
             docker tag ${CIRCLE_SHA1} << parameters.reg >>/<< parameters.repo >>:<< parameters.image_tag_1 >>
@@ -181,12 +184,13 @@ workflows:
             branches:
               ignore: /.*/
 
-      # Unum Holder
+      # Unum Holder; HV + Prove
       - build-and-push-image:
-          name: "build-and-push-id-verification-demo-sandbox"
+          name: "build-and-push-id-verification-demo-sandbox-hv-prove"
           requires:
             - test
           context: AWS-Dev
+          prove_enabled: "true"
           image_tag_1: sandbox-latest
           image_tag_2: "sandbox-${CIRCLE_TAG}"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
@@ -205,14 +209,55 @@ workflows:
               ignore: /.*/
 
       - deploy-image:
-          name: "deploy-id-verification-demo-sandbox"
+          name: "deploy-id-verification-demo-sandbox-hv-prove"
           cluster-name: sandbox-customer-cluster
           context: 
             - AWS-Dev
             - Slack-Context
           requires:
-            - build-and-push-id-verification-demo-sandbox
+            - build-and-push-id-verification-demo-sandbox-hv-prove
           image_tag: sandbox-"${CIRCLE_TAG}"
+          slack_template: success_tagged_deploy_1
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      # Unum Holder; just HV
+      - build-and-push-image:
+          name: "build-and-push-id-verification-demo-sandbox-hv"
+          requires:
+            - test
+          context: AWS-Dev
+          prove_enabled: "false"
+          image_tag_1: sandbox-latest-hv
+          image_tag_2: "sandbox-${CIRCLE_TAG}-hv"
+          holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.unumid.co
+          prove_issuer_did: did:unum:6ace7dcd-75b7-416a-8604-66535387e51d
+          hv_issuer_did: did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270
+          log_rocket_id: vm6x8i/id-verification-demo-client-sandbox
+          backend_server_url: https://id-verification-api.demo.unumid.co
+          prove_auth_url: https://device.staging.payfone.com
+          deeplink_server_url: https://link.sandbox-unumid.co
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+
+      - deploy-image:
+          name: "deploy-id-verification-demo-sandbox-hv"
+          cluster-name: sandbox-customer-cluster
+          context: 
+            - AWS-Dev
+            - Slack-Context
+          requires:
+            - build-and-push-id-verification-demo-sandbox-hv
+          deployment: id-verification-demo-client-hv
+          image_tag: sandbox-"${CIRCLE_TAG}-hv"
           slack_template: success_tagged_deploy_1
           filters:
             tags:
@@ -228,12 +273,13 @@ workflows:
               only:
                 - main
       
-      # Unum Holder
+      # Unum Holder; HV + Prove
       - build-and-push-image:
-          name: "build-and-push-id-verification-demo"
+          name: "build-and-push-id-verification-demo-hv-prove"
           requires:
             - test
           context: AWS-Dev
+          prove_enabled: "true"
           image_tag_1: dev-latest
           image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
@@ -251,13 +297,50 @@ workflows:
                 - main
 
       - deploy-image:
-          name: "deploy-id-verification-demo"
+          name: "deploy-id-verification-demo-hv-prove"
           context: 
             - AWS-Dev
             - Slack-Context
           requires:
-            - build-and-push-id-verification-demo
+            - build-and-push-id-verification-demo-hv-prove
           image_tag: dev-latest
+          filters:
+            branches:
+              only:
+                - main
+
+      # Unum Holder; just HV
+      - build-and-push-image:
+          name: "build-and-push-id-verification-demo-hv"
+          requires:
+            - test
+          context: AWS-Dev
+          prove_enabled: "false"
+          image_tag_1: dev-latest-hv
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}-hv"
+          holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
+          prove_issuer_did: did:unum:f627cae9-fcd8-4776-a921-86605630f6da
+          hv_issuer_did: did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57
+          log_rocket_id: vm6x8i/id-verification-demo-dev
+          backend_server_url: https://id-verification-api.demo.dev-unumid.co
+          prove_auth_url: http://device.staging.payfone.com
+          deeplink_server_url: https://link.dev-unumid.co
+          filters:
+            branches:
+              only:
+                - main
+
+      - deploy-image:
+          name: "deploy-id-verification-demo-hv"
+          context: 
+            - AWS-Dev
+            - Slack-Context
+          requires:
+            - build-and-push-id-verification-demo-hv
+          deployment: id-verification-demo-client-hv
+          image_tag: dev-latest-hv
           filters:
             branches:
               only:
@@ -271,12 +354,13 @@ workflows:
               only:
                 - test-circleci
 
-      # Unum Holder
+      # Unum Holder; HV + Prove
       - build-and-push-image:
-          name: "build-and-push-id-verification-demo-test"
+          name: "build-and-push-id-verification-demo-test-hv-prove"
           requires:
             - test
           context: AWS-Dev
+          prove_enabled: "true"
           image_tag_1: test-latest
           image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
@@ -293,13 +377,49 @@ workflows:
               only:
                 - test-circleci
       - deploy-image:
-          name: "deploy-id-verification-demo-test"
+          name: "deploy-id-verification-demo-test-hv-prove"
           context: 
             - AWS-Dev
             - Slack-Context
           requires:
-            - build-and-push-id-verification-demo-test
+            - build-and-push-id-verification-demo-test-hv-prove
           image_tag: test-latest
+          filters:
+            branches:
+              only:
+                - test-circleci
+
+      # Unum Holder; just HV
+      - build-and-push-image:
+          name: "build-and-push-id-verification-demo-test-hv"
+          requires:
+            - test
+          context: AWS-Dev
+          prove_enabled: "false"
+          image_tag_1: test-latest-hv
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}-hv"
+          holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
+          issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
+          prove_issuer_did: did:unum:f627cae9-fcd8-4776-a921-86605630f6da
+          hv_issuer_did: did:unum:f6f248f9-8c02-4b05-a9ee-4bcd67c09d57
+          log_rocket_id: vm6x8i/id-verification-demo-dev
+          backend_server_url: https://id-verification-api.demo.dev-unumid.co
+          prove_auth_url: http://device.staging.payfone.com
+          deeplink_server_url: https://link.dev-unumid.co
+          filters:
+            branches:
+              only:
+                - test-circleci
+      - deploy-image:
+          name: "deploy-id-verification-demo-test-hv"
+          context: 
+            - AWS-Dev
+            - Slack-Context
+          requires:
+            - build-and-push-id-verification-demo-test-hv
+          deployment: id-verification-demo-client-hv
+          image_tag: test-latest-hv
           filters:
             branches:
               only:
