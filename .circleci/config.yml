@@ -231,8 +231,8 @@ workflows:
             - test
           context: AWS-Dev
           prove_enabled: "false"
-          image_tag_1: sandbox-latest
-          image_tag_2: "sandbox-${CIRCLE_TAG}"
+          image_tag_1: sandbox-latest-hv
+          image_tag_2: "sandbox-${CIRCLE_TAG}-hv"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.unumid.co
@@ -256,7 +256,8 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo-sandbox-hv
-          image_tag: sandbox-"${CIRCLE_TAG}"
+          deployment: id-verification-demo-client-hv
+          image_tag: sandbox-"${CIRCLE_TAG}-hv"
           slack_template: success_tagged_deploy_1
           filters:
             tags:
@@ -315,8 +316,8 @@ workflows:
             - test
           context: AWS-Dev
           prove_enabled: "false"
-          image_tag_1: dev-latest
-          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+          image_tag_1: dev-latest-hv
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}-hv"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
@@ -338,7 +339,8 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo-hv
-          image_tag: dev-latest
+          deployment: id-verification-demo-client-hv
+          image_tag: dev-latest-hv
           filters:
             branches:
               only:
@@ -394,8 +396,8 @@ workflows:
             - test
           context: AWS-Dev
           prove_enabled: "false"
-          image_tag_1: test-latest
-          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}"
+          image_tag_1: test-latest-hv
+          image_tag_2: "${CIRCLE_BRANCH}-${CIRCLE_BUILD_NUM}-hv"
           holder_app_uuid: 86810c13-47b4-4a2b-ae46-fb13b6a5177a
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
           verifier_server_url: https://acme-verifier-api.demo.dev-unumid.co
@@ -416,7 +418,8 @@ workflows:
             - Slack-Context
           requires:
             - build-and-push-id-verification-demo-test-hv
-          image_tag: test-latest
+          deployment: id-verification-demo-client-hv
+          image_tag: test-latest-hv
           filters:
             branches:
               only:
