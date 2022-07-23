@@ -37,7 +37,7 @@ declare global {
   }
 }
 
-const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
+const makeHvHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any) => {
   if (HyperKycResult.Cancelled) {
     // user cancelled
     console.log('hyperverge cancelled', HyperKycResult);
@@ -114,6 +114,17 @@ const makeHandler = (callback: (data: KYCData) => void) => (HyperKycResult: any)
   }
 };
 
+/**
+ * Redirect to deeplink router to handle subjectDidAssociation
+ * @param userCode
+ * @param issuerDid
+ */
+function redirectToDeeplinkRouter (userCode: string, issuerDid: string) {
+  debugger;
+  console.log('deeplinkurl', config.deeplinkServerUrl);
+  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}`;
+}
+
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
   console.log('\n\nhandlePrefill');
 
@@ -161,9 +172,7 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
 
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
-    debugger;
-    console.log('deeplinkurl', config.deeplinkServerUrl);
-    window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}`;
+    redirectToDeeplinkRouter(userCode, issuerDid);
   } catch (e) {
     console.log('identity error', e);
     window.alert('Error interfacing with Prove Prefill service. Please try again.');
@@ -242,12 +251,20 @@ const Register: FC = () => {
 
     const callback = async (data: KYCData) => {
       const userCode = await sendHvDocScanData(data);
-      sendProveSms(userCode, data.dob);
+
+      debugger;
+      if (config.proveEnabled) {
+        // kick off Prove InstantLink sms
+        sendProveSms(userCode, data.dob);
+      } else {
+        // redirect to the deeplink router with the userCode and issuer did
+        redirectToDeeplinkRouter(userCode, config.hvIssuerDid);
+      }
     };
 
-    const handler = makeHandler(callback);
+    const hvHandler = makeHvHandler(callback);
 
-    window.HyperKYCModule.launch(hyperKycConfig, handler);
+    window.HyperKYCModule.launch(hyperKycConfig, hvHandler);
   };
 
   return (

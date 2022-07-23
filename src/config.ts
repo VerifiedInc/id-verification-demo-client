@@ -7,6 +7,7 @@ interface Config {
   deeplinkServerUrl: string;
   proveAuthUrl: string;
   proveIssuerDid: string;
+  proveEnabled: boolean;
   hvIssuerDid: string;
   env: SaasEnvironment;
   apiKey: string;
@@ -21,6 +22,7 @@ const {
   REACT_APP_DEEPLINK_SERVER_URL = '',
   REACT_APP_PROVE_AUTH_URL = '',
   REACT_APP_PROVE_ISSUER_DID = '',
+  REACT_APP_PROVE_ENABLED = '',
   REACT_APP_HV_ISSUER_DID = '',
   REACT_APP_ENV = 'development',
   REACT_APP_API_KEY = '',
@@ -35,6 +37,7 @@ export const config: Config = {
   deeplinkServerUrl: REACT_APP_DEEPLINK_SERVER_URL,
   proveAuthUrl: REACT_APP_PROVE_AUTH_URL,
   proveIssuerDid: REACT_APP_PROVE_ISSUER_DID,
+  proveEnabled: REACT_APP_PROVE_ENABLED === 'true',
   hvIssuerDid: REACT_APP_HV_ISSUER_DID,
   env: REACT_APP_ENV as SaasEnvironment,
   apiKey: REACT_APP_API_KEY,
