@@ -388,7 +388,7 @@ workflows:
                 - test-circleci
 
       # Unum Holder; just HV
-      - build-and-push-image-hv:
+      - build-and-push-image:
           name: "build-and-push-id-verification-demo-test-hv"
           requires:
             - test
