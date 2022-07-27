@@ -122,7 +122,7 @@ const makeHvHandler = (callback: (data: KYCData) => void) => (HyperKycResult: an
 function redirectToDeeplinkRouter (userCode: string, issuerDid: string) {
   debugger;
   console.log('deeplinkurl', config.deeplinkServerUrl);
-  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}`;
+  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=https://id-verification-hv.demo.dev-unumid.co/request`;
 }
 
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
