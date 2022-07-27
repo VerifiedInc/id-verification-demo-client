@@ -241,8 +241,13 @@ const Register: FC = () => {
     const accessToken = responseAuth.result.token;
 
     // hyperverge document scan setup
-    const defaultDocumentId = 'dl';
-    const defaultCountryId = 'usa';
+    // const defaultDocumentId = 'dl';
+    // const defaultCountryId = 'usa';
+
+    // setting to undefined to force selection by the user
+    const defaultDocumentId = undefined;
+    const defaultCountryId = undefined;
+
     const transactionId = `${v1()}`;
     const documentHv = new window.Document(true, defaultCountryId, defaultDocumentId);
     const face = new window.Face();
