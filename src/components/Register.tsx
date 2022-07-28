@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-closing-tag-location */
 import {
   ChangeEventHandler,
   FC,
@@ -124,7 +125,7 @@ function redirectToDeeplinkRouter (userCode: string, issuerDid: string) {
   const baseUrl = window.location.href;
   console.log('baseUrl', baseUrl);
   console.log('deeplinkurl', config.deeplinkServerUrl);
-  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}request`;
+  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}welcome`;
 }
 
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
@@ -278,23 +279,27 @@ const Register: FC = () => {
     <div className='register'>
       <h1>Register</h1>
       <p>You need to (1) create an account and (2) use the Unum ID wallet to view and share credentials.</p>
-      <p>
-        <BoldFont>Important:</BoldFont> you will need to click the link that is in the text message sent to you. This is to confirm your mobile number as well as identity information for the identify verification step.
-        This shows that Unum ID can be used <Italic>in conjunction with</Italic> an existing identity verification provider.
-        We can also fully replace that system, using the technologies used here.
-      </p>
+      {config.proveEnabled
+        ? <p>
+          <BoldFont>Important:</BoldFont> you will need a government issued document and a phone number that can receive text messages. This is to confirm your mobile number as well as identity information for the identify verification step.
+        </p>
+        : <p>A government issued document is needed for the identity verification.</p>}
+      This demo is meant to exemplify that Unum ID can be used <Italic>in conjunction with</Italic> an existing identity verification provider.
+      We can also fully replace that system, using the technologies used here.
       <form>
         <h2>1. Create Account</h2>
-        <InputGroup
-          required
-          labelText='Phone'
-          inputId='phone'
-          type='text'
-          onChange={handlePhoneChange}
-          value={phone}
-          explainerBoldText='Use your real mobile number:'
-          explainerText='Enter this to facilitate identity verification via SMS.'
-        />
+        {config.proveEnabled
+          ? <InputGroup
+              required
+              labelText='Phone'
+              inputId='phone'
+              type='text'
+              onChange={handlePhoneChange}
+              value={phone}
+              explainerBoldText='Use your real mobile number:'
+              explainerText='Enter this to facilitate identity verification via SMS.'
+            />
+          : ''}
         <SubmitButton handleSubmit={handleDocScan}><BoldFont>Documentation Scan</BoldFont></SubmitButton>&nbsp;
       </form>
       <div>

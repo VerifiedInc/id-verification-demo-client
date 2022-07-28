@@ -14,6 +14,7 @@ import Acme from './Layout/Acme';
 import { verifierClient, verifierSocket } from '../feathers';
 import ProveAuthUrlRedirect from './ProveAuthUrlRedirect';
 import Authenticated from './Authenticated';
+import Welcome from './Welcome';
 
 const App: FC = () => {
   const { createSession } = useActionCreators();
@@ -106,6 +107,13 @@ const App: FC = () => {
                 <AltHeader />
                 <Authenticated />
               </Acme>
+          }
+          />
+          <Route
+            path='/welcome' element={
+              <Unumid>
+                <Welcome />
+              </Unumid>
           }
           />
         </Routes>

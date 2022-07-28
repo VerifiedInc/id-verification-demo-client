@@ -1,0 +1,21 @@
+.authenticated {
+  background-color: var(--primary-background-color);
+}
+
+.authenticated .logout {
+  color: var(--unumid-red);
+  cursor: pointer;
+}
+
+.authenticated .logout:hover {
+  font-weight: 700;
+}
+
+.authenticated .start-over {
+  color: #1f61cc;
+  cursor: pointer;
+}
+
+.authenticated .start-over:hover {
+  font-weight: 700;
+}
