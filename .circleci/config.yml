@@ -121,6 +121,9 @@ jobs:
       cluster-name:
         type: string
         default: "dev-customer-cluster"
+      namespace:
+        type: string
+        default: default
       repo:
         type: string
         default: id-verification-demo-client
@@ -144,7 +147,7 @@ jobs:
             # Set the image tag then ensure a rollout is triggered. Thanks to the deployment pod spec being set to always pull this should grab the latest image, even with the same tag.
             # ref: https://stackoverflow.com/a/55914480/2631728
             kubectl set image deployment/<< parameters.deployment >> << parameters.deployment >>=${AWS_ECR_URL}/<< parameters.repo >>:<< parameters.image_tag >>
-            kubectl rollout restart deploy << parameters.deployment >>
+            kubectl rollout restart deploy << parameters.deployment >> -n << parameters.namespace >>
 
             # Check deployment rollout status every 10 seconds (max 10 minutes) until complete.
             # ref: https://www.jeffgeerling.com/blog/2018/updating-kubernetes-deployment-and-waiting-it-roll-out-shell-script
@@ -155,7 +158,7 @@ jobs:
               ATTEMPTS=$((attempts + 1))
               sleep 10
             done
-          name: Deploy container image to dev
+          name: Deploy container image
       - slack/notify:
           event: fail
           mentions: '@devops-team'
@@ -211,6 +214,7 @@ workflows:
       - deploy-image:
           name: "deploy-id-verification-demo-sandbox-hv-prove"
           cluster-name: sandbox-customer-cluster
+          namespace: demos
           context: 
             - AWS-Dev
             - Slack-Context
@@ -251,6 +255,7 @@ workflows:
       - deploy-image:
           name: "deploy-id-verification-demo-sandbox-hv"
           cluster-name: sandbox-customer-cluster
+          namespace: demos
           context: 
             - AWS-Dev
             - Slack-Context
