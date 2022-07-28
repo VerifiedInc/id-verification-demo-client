@@ -25,7 +25,7 @@ const Authenticated: FC = () => {
         <BoldFont>But Really:</BoldFont> thanks for using this demo. This page is just a place holder for the continuation of a signup flow, to allow for Unum ID's web wallet to give the context back to customer.
         <p>
           If you would like to continue with the demonstration, <BoldFont>please click the button below to go to the third party, ACME's, request for credentials page</BoldFont> to then use your newly minted credentials.
-          This shows that Unum ID can be used <Italic>with any other</Italic> participating third party in our network.
+          This shows that the credentials just created can be used and shared securely <Italic>with any other</Italic> participating third party in our network.
         </p>
       </p>
       <form>
