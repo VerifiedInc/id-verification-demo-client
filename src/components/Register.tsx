@@ -122,10 +122,11 @@ const makeHvHandler = (callback: (data: KYCData) => void) => (HyperKycResult: an
  */
 function redirectToDeeplinkRouter (userCode: string, issuerDid: string) {
   debugger;
-  const baseUrl = window.location.href;
+  const baseUrl = window.location.origin;
   console.log('baseUrl', baseUrl);
   console.log('deeplinkurl', config.deeplinkServerUrl);
-  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}welcome`;
+  console.log('userCode', userCode);
+  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}/welcome`;
 }
 
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
@@ -172,6 +173,9 @@ const handlePreFill = async (verificationFingerprint: string, mobileNumber: stri
     });
 
     const { userCode, issuerDid } = responseIdentity;
+
+    debugger;
+    console.log('responseIdentity', responseIdentity);
 
     // TODO check 200 success response from backend
     // redirect to wallet client with query params for user to create DID
