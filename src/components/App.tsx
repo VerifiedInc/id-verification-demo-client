@@ -87,13 +87,13 @@ const App: FC = () => {
               </Unumid>
           }
           />
-          <Route
+          {/* <Route
             path='/login' element={
               <Unumid>
                 <Login />
               </Unumid>
           }
-          />
+          /> */}
           <Route
             path='/proveAuth' element={
               <Acme>

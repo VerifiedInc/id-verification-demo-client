@@ -193,7 +193,7 @@ const Authentication: FC = () => {
             apiKey={config.apiKey}
             presentationRequest={request?.presentationRequestPostDto as PresentationRequestDto}
             createPresentationRequest={actuallyCreatePresentationRequest}
-            goToLogin={goToLogin}
+            // goToLogin={goToLogin}
             userInfo={userInfo || undefined}
             createInitialPresentationRequest={false}
             userCode={loggedInUser?.userCode}
