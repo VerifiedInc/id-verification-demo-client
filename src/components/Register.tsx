@@ -124,7 +124,7 @@ function redirectToDeeplinkRouter (userCode: string, issuerDid: string) {
   const baseUrl = window.location.href;
   console.log('baseUrl', baseUrl);
   console.log('deeplinkurl', config.deeplinkServerUrl);
-  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}request`;
+  window.location.href = `${config.deeplinkServerUrl}/${config.holderAppUuid}/subjectDidAssociation?userCode=${userCode}&issuer=${issuerDid}&issuerCallback=${baseUrl}welcome`;
 }
 
 const handlePreFill = async (verificationFingerprint: string, mobileNumber: string, userCodeParam?: string | null, dob?: string | null) => {
