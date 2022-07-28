@@ -28,4 +28,3 @@ const backendRest = rest(config.backendServerUrl);
 backendClient.configure(backendRest.axios(axios));
 
 export { verifierClient, issuerClient, backendClient };
-// export { backendClient }
