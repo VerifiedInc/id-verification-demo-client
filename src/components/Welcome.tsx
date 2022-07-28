@@ -18,7 +18,7 @@ const Authenticated: FC = () => {
   };
 
   return (
-    <div className='register'>
+    <div className='welcome'>
       <h1>Welcome!</h1>
       <p>Thanks for signing up.</p>
       <p>
