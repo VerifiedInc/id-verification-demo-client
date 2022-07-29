@@ -45,22 +45,17 @@ const Authentication: FC = () => {
     const credentialRequests: CredentialRequest[] = [
       {
         type: 'PhoneCredential',
-        required: true,
+        required: false,
         issuers: [config.proveIssuerDid]
       }, {
         type: 'DobCredential',
-        required: false,
+        required: true,
         issuers: [config.proveIssuerDid, config.hvIssuerDid]
       }, {
         type: 'SsnCredential',
         required: false,
         issuers: [config.proveIssuerDid]
       },
-      // {
-      //   type: 'DobCredential',
-      //   required: false,
-      //   issuers: [config.hvIssuerDid]
-      // },
       {
         type: 'GenderCredential',
         required: false,
