@@ -41,20 +41,11 @@ const Authentication: FC = () => {
   const actuallyCreatePresentationRequest = async () => {
     if (!session) return;
 
-    // customize these values for the specific demo (or not)
-    const credentialRequests: CredentialRequest[] = [
+    let credentialRequests: CredentialRequest[] = [
       {
-        type: 'PhoneCredential',
-        required: false,
-        issuers: [config.proveIssuerDid]
-      }, {
         type: 'DobCredential',
         required: true,
-        issuers: [config.proveIssuerDid, config.hvIssuerDid]
-      }, {
-        type: 'SsnCredential',
-        required: false,
-        issuers: [config.proveIssuerDid]
+        issuers: [config.hvIssuerDid]
       },
       {
         type: 'GenderCredential',
@@ -97,6 +88,65 @@ const Authentication: FC = () => {
         issuers: [config.hvIssuerDid]
       }
     ];
+
+    // customize these values for the specific demo
+    if (config.proveEnabled) {
+      credentialRequests = [
+        {
+          type: 'PhoneCredential',
+          required: false,
+          issuers: [config.proveIssuerDid]
+        }, {
+          type: 'DobCredential',
+          required: true,
+          issuers: [config.proveIssuerDid, config.hvIssuerDid]
+        }, {
+          type: 'SsnCredential',
+          required: false,
+          issuers: [config.proveIssuerDid]
+        },
+        {
+          type: 'GenderCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }, {
+          type: 'FullNameCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }, {
+          type: 'AddressCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        },
+        {
+          type: 'CountryResidenceCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }, {
+          type: 'GovernmentIdTypeCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }, {
+          type: 'LivelinessCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }, {
+          type: 'LivelinessConfidenceCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        },
+        {
+          type: 'FacialMatchCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        },
+        {
+          type: 'FacialMatchConfidenceCredential',
+          required: false,
+          issuers: [config.hvIssuerDid]
+        }
+      ];
+    }
 
     const presentationRequestOptions: DemoPresentationRequestCreateOptions = {
       credentialRequests,
