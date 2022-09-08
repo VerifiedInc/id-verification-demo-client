@@ -194,6 +194,7 @@ workflows:
             - test
           context: AWS-Dev
           prove_enabled: "true"
+          env: "sandbox"
           image_tag_1: sandbox-latest
           image_tag_2: "sandbox-${CIRCLE_TAG}"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
@@ -235,6 +236,7 @@ workflows:
             - test
           context: AWS-Dev
           prove_enabled: "false"
+          env: "sandbox"
           image_tag_1: sandbox-latest-hv
           image_tag_2: "sandbox-${CIRCLE_TAG}-hv"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
