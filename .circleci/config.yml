@@ -199,11 +199,11 @@ workflows:
           image_tag_2: "sandbox-${CIRCLE_TAG}"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
-          verifier_server_url: https://acme-verifier-api.demo.unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.sandbox-unumid.co
           prove_issuer_did: did:unum:6ace7dcd-75b7-416a-8604-66535387e51d
           hv_issuer_did: did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270
           log_rocket_id: vm6x8i/id-verification-demo-sandbox
-          backend_server_url: https://id-verification-api.demo.unumid.co
+          backend_server_url: https://id-verification-api.demo.sandbox-unumid.co
           prove_auth_url: https://device.staging.payfone.com
           deeplink_server_url: https://link.sandbox-unumid.co
           filters:
@@ -241,11 +241,11 @@ workflows:
           image_tag_2: "sandbox-${CIRCLE_TAG}-hv"
           holder_app_uuid: b8820ef7-8ae8-4fa9-9a99-84629b2ea147
           issuer_server_url: https://unum-issuer-api.demo.dev-unumid.co
-          verifier_server_url: https://acme-verifier-api.demo.unumid.co
+          verifier_server_url: https://acme-verifier-api.demo.sandbox-unumid.co
           prove_issuer_did: did:unum:6ace7dcd-75b7-416a-8604-66535387e51d
           hv_issuer_did: did:unum:1b145bc6-d9ed-49bc-9e8b-6a23cc559270
           log_rocket_id: vm6x8i/id-verification-demo-sandbox
-          backend_server_url: https://id-verification-api.demo.unumid.co
+          backend_server_url: https://id-verification-api.demo.sandbox-unumid.co
           prove_auth_url: https://device.staging.payfone.com
           deeplink_server_url: https://link.sandbox-unumid.co
           filters:
