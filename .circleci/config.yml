@@ -215,7 +215,7 @@ workflows:
       - deploy-image:
           name: "deploy-id-verification-demo-sandbox-hv-prove"
           cluster-name: sandbox-customer-cluster
-          namespace: demos
+          namespace: default
           context: 
             - AWS-Dev
             - Slack-Context
@@ -257,7 +257,7 @@ workflows:
       - deploy-image:
           name: "deploy-id-verification-demo-sandbox-hv"
           cluster-name: sandbox-customer-cluster
-          namespace: demos
+          namespace: default
           context: 
             - AWS-Dev
             - Slack-Context
