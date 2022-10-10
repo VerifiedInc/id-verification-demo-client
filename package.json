@@ -80,7 +80,7 @@
     "@types/validator": "^13.1.3",
     "@typescript-eslint/eslint-plugin": "^4.15.2",
     "@typescript-eslint/parser": "^4.15.2",
-    "@unumid/id-verification-types": "file:../idv-types",
+    "@unumid/id-verification-types": "git+ssh://git@github.com/UnumID/id-verification-types#v5",
     "eslint": "^7.20.0",
     "eslint-config-semistandard": "^16.0.0",
     "eslint-config-standard": "^16.0.3",
