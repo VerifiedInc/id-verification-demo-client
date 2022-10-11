@@ -18,37 +18,9 @@ import { v1 } from 'uuid';
 import { backendClient } from '../feathers';
 import { config } from '../config';
 import { useSearchParams } from 'react-router-dom';
-import { HvDocScanData } from '../types';
 
-import { KYCData as _KYCData, HvClientResponse } from '@unumid/id-verification-types';
+import { KYCData as _KYCData, HvClientResponse, HyperVergeResponse } from '@unumid/id-verification-types';
 
-// export interface HVDetails {
-//   dateOfBirth: string;
-//   firstName: string;
-//   fullName: string;
-//   // eslint-disable-next-line camelcase
-//   id_back_imagePath: string;
-//   idNumber: string;
-//   lastName: string;
-//   middleName: string;
-// }
-
-// export interface HvResult {
-//   status: string;
-//   transactionId: string;
-//   details: HVDetails;
-// }
-
-// interface KYCData extends Omit<_KYCData, 'docImage' | 'fullFaceImage'> {
-//   docImage?: string;
-//   fullFaceImage?: string;
-// }
-
-// interface HvDocScanResult {
-//   status: string;
-// }
-
-// types for global variables added by the hyperverge sdk
 declare global {
   interface Window {
     HyperKycConfig?: any;
@@ -74,51 +46,6 @@ const makeHvHandler = (callback: (data: HvClientResponse) => void) => (HyperKycR
       // workflow success
       break;
   }
-
-  // const hvDocScanData: HvDocScanData = HyperKycResult.Success.data;
-  // const docCountryId = hvDocScanData.selectedCountryId;
-
-  // const faceMatchData = hvDocScanData.faceMatchData.responseResult.result.details.match;
-  // const faceMatch = faceMatchData.value;
-  // const faceMatchConfidence = faceMatchData.confidence;
-
-  // const faceData = hvDocScanData.faceData;
-  // // const fullFaceImage = faceData.fullFaceImagePath;
-  // const liveFace = faceData.responseResult.result.details.liveFace.value;
-  // const liveFaceConfidence = faceData.responseResult.result.details.liveFace.confidence;
-
-  // const docData = hvDocScanData.docListData[0];
-  // // const docImage = docData.docImagePath;
-  // const docType = docData.documentId;
-  // const { address, dateOfBirth, fullName, gender } = docData.responseResult.result.details[0].fieldsExtracted;
-  // debugger;
-  // /**
-  //  * Reformat the DOB from the HV document scan.
-  //  * dateOfBirthday was taking the format MM-DD-YYYY from HV, but as of 6/23 was updated to dD-mM-YYYY.
-  //  * and Prove needs it in the format YYYY-MM-DD, so just turning it in that here
-  //  */
-  // const proveDob = dateOfBirth.value.split('-');
-
-  // // loop through the split data array and ensure all values have at least 2 digits
-  // for (let i = 0; i < proveDob.length; i++) {
-  //   if (proveDob[i].length < 2) {
-  //     proveDob[i] = '0' + proveDob[i];
-  //   }
-  // }
-
-  // // shift values to fit desired format; this was working when HV was returning in format MM-DD-YYYY
-  // // const hold = proveDob[2];
-  // // proveDob[2] = proveDob[1];
-  // // proveDob[1] = proveDob[0];
-  // // proveDob[0] = hold;
-
-  // // shift values to fit desired format; having to deal with new format of DD-MM-YYYY
-  // const hold = proveDob[2];
-  // proveDob[2] = proveDob[0];
-  // proveDob[0] = hold;
-
-  // // now should be in YYYY-MM-DD format
-  // const dob = proveDob.join('-');
 
   debugger;
   // eslint-disable-next-line node/no-callback-literal
@@ -223,14 +150,14 @@ const Register: FC = () => {
    * calls the hvService to persist the data on a user entity for credential issuance later.
    * the service creates a user and returns the userCode for linking to the prove prefill data
    */
-  const sendHvDocScanData = async (data: HvClientResponse): Promise<string> => {
+  const sendHvDocScanData = async (data: HvClientResponse): Promise<HyperVergeResponse> => {
     // TODO add auth with backend
     const hvService = backendClient.service('hyperVerge');
 
     const response = await hvService.create(data);
     // TODO ensure success response
 
-    return response.userCode;
+    return response;
   };
 
   /**
@@ -262,30 +189,18 @@ const Register: FC = () => {
     const responseAuth = await hyperVergeAuthService.create({});
     const accessToken = responseAuth.result.token;
 
-    // hyperverge document scan setup
-    // const defaultDocumentId = 'dl';
-    // const defaultCountryId = 'usa';
-
-    // setting to undefined to force selection by the user
-    const defaultDocumentId = undefined;
-    const defaultCountryId = undefined;
-
     const transactionId = `${v1()}`;
-    const documentHv = new window.Document(true, defaultCountryId, defaultDocumentId);
-    const face = new window.Face();
-    // const workflow = [documentHv, face];
-    // const workflowId = 'global_workflow';
-    const workflowId = 'USA_DL_Workflow';
+    const workflowId = 'global_workflow';
+    // const workflowId = 'USA_DL_Workflow';
     const hyperKycConfig = new window.HyperKycConfig(accessToken, workflowId, transactionId);
-    // const hyperKycConfig = new window.HyperKycConfig(accessToken, workflow, transactionId, defaultCountryId);
 
     const callback = async (data: HvClientResponse) => {
-      const userCode = await sendHvDocScanData(data);
+      const { userCode, dob } = await sendHvDocScanData(data);
 
       debugger;
       if (config.proveEnabled) {
         // kick off Prove InstantLink sms
-        // sendProveSms(userCode, data.dob);
+        sendProveSms(userCode, dob);
       } else {
         // redirect to the deeplink router with the userCode and issuer did
         redirectToDeeplinkRouter(userCode, config.hvIssuerDid);
