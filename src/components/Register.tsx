@@ -190,8 +190,8 @@ const Register: FC = () => {
     const accessToken = responseAuth.result.token;
 
     const transactionId = `${v1()}`;
-    const workflowId = 'global_workflow';
-    // const workflowId = 'USA_DL_Workflow';
+    // const workflowId = 'global_workflow';
+    const workflowId = 'workflow_cMLdsoq'; // any US doc type. Also, pretty sure HB made this always skip any potential review step
     const hyperKycConfig = new window.HyperKycConfig(accessToken, workflowId, transactionId);
 
     const callback = async (data: HvClientResponse) => {
