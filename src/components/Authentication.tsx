@@ -86,6 +86,21 @@ const Authentication: FC = () => {
         type: 'FacialMatchConfidenceCredential',
         required: false,
         issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'GovernmentIdDocumentImageCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'GovernmentIdDocumentBackImageCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
+      },
+      {
+        type: 'FacialImageCredential',
+        required: false,
+        issuers: [config.hvIssuerDid]
       }
     ];
 
